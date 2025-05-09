@@ -1,0 +1,47 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './frontend/home';
+import AccountType from './frontend/auth/signup/accountType';
+import ClinicSignUp from './frontend/auth/signup/clinicSignUp';
+import OwnerSignUp from './frontend/auth/signup/ownerSignUp';
+import Login from './frontend/auth/login/login';
+import Map from './frontend/navbar/map';
+import AboutUs from './frontend/navbar/aboutUs';
+import PetInfo from './frontend/navbar/petInfo';
+import Dogs from './frontend/navbar/pets/dogs';
+import Cats from './frontend/navbar/pets/cats';
+import SmallPets from './frontend/navbar/pets/smallPets'
+import Pharmacy from './frontend/navbar/pharmacy';
+import PrivacyPolicy from './frontend/privacy/privacyPolicy';
+import Accessibility from './frontend/privacy/accessibility';
+import Terms from './frontend/privacy/terms';
+import Formular from './frontend/clinics/formular';
+import ClinicDashboard from './frontend/clinics/clinic';
+import ClientPage from './frontend/client/clientPage';
+
+
+function App() {
+  return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/accountType" element={<AccountType />} />
+        <Route path="/signupAsClinic" element={<ClinicSignUp />} />
+        <Route path="/signupAsPetOwner" element={<OwnerSignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/map" element={<Map />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/petInfo" element={<PetInfo />} />
+        <Route path="/dogs" element={<Dogs />} />
+        <Route path="/cats" element={<Cats />} />
+        <Route path="/smallPets" element={<SmallPets />} />
+        <Route path="/pharmacy" element={<Pharmacy />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy/>} />
+        <Route path="/accessibility" element={<Accessibility/>} />
+        <Route path="/terms" element={<Terms/>} />
+        <Route path="/form" element={<Formular/>} />
+        <Route path="/clinic/profile" element={<ClinicDashboard/>} />
+        <Route path="/client" element={<ClientPage/>} />
+      </Routes>
+  );
+}
+
+export default App;

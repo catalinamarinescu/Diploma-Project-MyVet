@@ -1,0 +1,219 @@
+.pet-info-page{
+    background-color: #f8f8f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+ }
+ 
+ .content-petInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ .petInfo-box {
+  text-align: left;
+  width: 600px;
+  height: 700px;
+  background-color: #adc6b8;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+.petInfo-box h1 {
+  font-size: 50px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 150px;
+  margin-left:15px
+}
+
+.petInfo-box p {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.left-images-petInfo,
+.right-images-petInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 500px;
+  height: 700px;
+  gap: 0;
+}
+
+.left-images-petInfo img,
+.right-images-petInfo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.navbar-petInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f8;
+    padding: 15px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo-petInfo {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(214, 184, 139);
+}
+
+.navbar-petInfo-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-petInfo-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #014421;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.nav-petInfo-button:hover {
+    background-color: #012010;
+}
+
+.auth-petInfo-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.login-petInfo-button, .sign-petInfo-up-button {
+    text-decoration: none;
+    background: #000000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.login-petInfo-button:hover, .sign-petInfo-up-button:hover {
+    background-color: #012010;
+}
+
+.sign-petInfo-up-button {
+    margin-right: 50px;
+}
+
+.pets-buttons {
+    display: flex;
+    gap: 40px;
+    margin-left:40px;
+    margin-right: 10px;
+}
+
+.pet-button {
+    text-decoration: none;
+    background: #014421;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 7px;
+    font-size: 20px;
+    transition: background 0.3s;
+}
+
+.pet-button:hover {
+    background-color: #012010;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    background-color: #014421;
+    padding: 0px;
+    flex-wrap: nowrap;
+    min-height: 300px;
+    border-top: 1px solid #ccc;
+}
+
+.footer-column {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+    flex-direction: column;
+    display: flex;
+}
+  
+  .footer-column:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-color: white; /* sau altă culoare dacă vrei */
+  }
+  
+  .footer-logo {
+    color:rgb(214, 184, 139);
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column p, .footer-column a {
+    color: #f7f7f7;
+    font-size: 16px;
+    margin: 8px 0;
+    text-decoration: none;
+  }
+  
+  .quick-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .quick-links h4 {
+    color: #f7f7f7;
+    text-decoration: solid;
+  }
+  
+  .quick-links li {
+    margin-bottom: 10px;
+  }
+  
+  .quick-links a:hover {
+    color: #a1a7a4;
+    text-decoration: underline;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: flex;
+    margin-top: 10px;
+    gap: 15px;
+    margin-left: 0px;
+  }
+  
+  .social-icons img {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    align-self: left;
+  }
+  
+  .social-icons img:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+  }
+  
+  .copyright {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 20px;
+  }

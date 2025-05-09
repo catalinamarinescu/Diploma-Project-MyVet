@@ -1,0 +1,64 @@
+.client-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #014421;
+  padding: 15px 30px;
+  color: white;
+}
+
+.logo-client {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(214, 184, 139);
+}
+
+.navbar-buttons-client {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-button-client, .profile-btn {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.logout-btn {
+  margin-left: 10px;
+  background: #fff;
+  color: #014421;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clinic-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+.clinic-card {
+  background: #adc6b8;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.clinic-card:hover {
+  transform: scale(1.02);
+}
+
+.clinic-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}

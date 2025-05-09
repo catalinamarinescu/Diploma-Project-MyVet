@@ -1,0 +1,35 @@
+[
+    {
+      "name": "Hamster",
+      "image": "/imagini/hamster.png",
+      "description": "Hamsters are small, nocturnal rodents known for their love of burrowing and hoarding food. They are popular pets due to their small size and relatively low maintenance.",
+      "life_span": "2-3 years",
+      "origin": "Syria, Greece, Belgium",
+      "fun_fact": "Hamsters can stuff up to 20% of their body weight in their cheek pouches!"
+    },
+    {
+      "name": "Rabbit",
+      "image": "/imagini/iepure.png",
+      "description": "Rabbits are social and intelligent animals that require lots of care and attention. They are known for their gentle personalities and strong legs adapted for jumping.",
+      "life_span": "5-10 years",
+      "origin": "Europe and parts of Asia",
+      "fun_fact": "Rabbits' teeth never stop growing; they have to chew constantly to keep them trimmed!"
+    },
+    {
+      "name": "Guinea Pig",
+      "image": "/imagini/porcusor.png",
+      "description": "Guinea pigs are gentle, social rodents known for their adorable squeaks and strong bonds with their owners. They require daily vitamin C in their diets.",
+      "life_span": "5-7 years",
+      "origin": "South America",
+      "fun_fact": "Guinea pigs are very vocal and have over 10 different sounds to communicate!"
+    },
+    {
+      "name": "Parrot",
+      "image": "/imagini/parrot.png",
+      "description": "Parrots are intelligent, colorful birds known for their ability to mimic human speech and their social nature. They need constant mental stimulation.",
+      "life_span": "20-80 years (depending on species)",
+      "origin": "Tropical and subtropical regions worldwide",
+      "fun_fact": "The African Grey Parrot is considered one of the most intelligent bird species!"
+    }
+  ]
+  

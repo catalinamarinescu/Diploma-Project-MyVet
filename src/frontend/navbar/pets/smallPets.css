@@ -1,0 +1,78 @@
+.small-page {
+    background-color: #f8f8f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .small-page h1 {
+    color: #014421;
+    font-size: 48px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    margin-left: 640px;
+  }
+
+  .small-pets-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.small-pets-content h1 {
+    font-size: 36px;
+    color: #014421;
+    margin-bottom: 40px;
+}
+
+.pets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.pet-card {
+    background: #adc6b8;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.pet-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.pet-card h2 {
+    margin-top: 10px;
+    color: #014421;
+}
+
+.pet-card p {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #555;
+}
+
+  .back-button {
+    background-color: #014421;
+    color: white;
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 100px;
+    text-align: center;
+    padding-top: 3px;
+  }
+  
+.back-button:hover {
+    background-color: #012d1a;
+  }

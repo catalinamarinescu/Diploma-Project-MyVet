@@ -1,0 +1,232 @@
+.clinic-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background:#014421;
+  padding: 15px 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-clinic {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(214, 184, 139);
+  }
+  
+  .navbar-buttons-clinic {
+    display: flex;
+    gap: 50px;
+  }
+  
+  .nav-button-clinic {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:#f8f8f8;
+    color: #014421;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 10000;
+    transition: background 0.3s;
+  }
+  
+  .nav-button-clinic:hover {
+    background-color:#f3f3f3;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 0px;
+    align-items: left;
+  }
+  
+  .logout-btn,
+  .notif-btn {
+    background-color: white;
+    color: #014421;
+    border: none;
+    margin-right: 50px;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .logout-btn:hover {
+    background-color: #f3f3f3;
+  }
+  
+  .clinic-profile-content {
+    max-width: 800px;
+    margin: 30px auto;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .gallery img {
+    width: 300px;          
+    height: 200px;           
+    object-fit: cover;        
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .card {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h3 {
+    margin-top: 0;
+    color: #014421;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 35px;
+  }
+  
+  .clinic-profile-content h2 {
+    font-size: 50px;
+    text-align: center;
+    color: #014421;
+    margin-top: 100px;
+    margin-bottom: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .edit-form label {
+    font-weight: bold;
+    color: #014421;
+  }
+  
+  .edit-form input,
+  .edit-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .edit-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .button-edit {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:#f8f8f8;
+    color: #014421;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+
+    transition: background 0.3s;
+
+  } 
+
+  .button-edit:hover{
+    background-color:#abd8b7;
+  }
+
+  .service-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #e4f0e7;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .service-card label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    color: #014421;
+  }
+  
+  .service-card input,
+  .service-card textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 10px;
+  }
+  
+  .service-card textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  
+  .delete-btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c9302c;
+  }
+  
+  .employee-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #e4f0e7;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .employee-card label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    color: #014421;
+  }
+  
+  .employee-card input,
+  .employee-card textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 10px;
+  }
+  
+  .employee-card textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
