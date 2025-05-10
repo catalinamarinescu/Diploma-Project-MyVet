@@ -45,7 +45,7 @@ const ClientPage = () => {
                         <img src={`http://localhost:5000/${clinic.imagine}`} alt="clinica" />
                         <h3>{clinic.name}</h3>
                         <p><strong>Descriere:</strong>{clinic.descriere}</p>
-                        <p><strong>Locatie:</strong>{clinic.latitudine}, {clinic.longitudine}</p>    
+                        <p><strong>Adresa:</strong>{clinic.adresa}</p>    
                     </div>    
                 ))}
             </div>

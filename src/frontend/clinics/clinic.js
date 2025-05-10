@@ -10,7 +10,8 @@ const ClinicDashboard = () => {
     name: '',
     descriere: '',
     latitudine: '',
-    longitudine: ''
+    longitudine: '',
+    adresa: ''
   });
   const [editServicii, setEditServicii] = useState(false);
   const [formServicii, setFormServicii] = useState([]);
@@ -34,7 +35,8 @@ const ClinicDashboard = () => {
           name: data.name,
           descriere: data.descriere,
           latitudine: data.latitudine,
-          longitudine: data.longitudine
+          longitudine: data.longitudine,
+          adresa: data.adresa
         });
         setFormServicii(data.servicii);
         setFormAngajati(data.angajati);
@@ -252,7 +254,7 @@ const ClinicDashboard = () => {
             <label>Latitudine:</label>
             <input
                 type="number"
-                disabled={editMode}
+                disabled={!editMode}
                 value={formValues.latitudine}
                 onChange={(e) => setFormValues({ ...formValues, latitudine: e.target.value })}
             />
@@ -260,9 +262,17 @@ const ClinicDashboard = () => {
             <label>Longitudine:</label>
             <input
                 type="number"
-                disabled={editMode}
+                disabled={!editMode}
                 value={formValues.longitudine}
                 onChange={(e) => setFormValues({ ...formValues, longitudine: e.target.value })}
+            />
+
+            <label>Adresa:</label>
+            <input
+                type="text"
+                disabled={!editMode}
+                value={formValues.adresa}
+                onChange={(e) => setFormValues({ ...formValues, adresa: e.target.value })}
             />
 
             {!editMode ? (

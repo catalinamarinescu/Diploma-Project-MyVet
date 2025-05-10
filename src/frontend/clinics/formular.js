@@ -7,6 +7,7 @@ const Formular = () => {
     const[description, setDescription] = useState('');
     const[latitude, setLatitude] = useState('');
     const[longitude, setLongitude] = useState('');
+    const[adresa, setAdresa] = useState('');
     const[images, setImages] = useState([]);
     const[services, setServices] = useState([]);
     const[employees, setEmployees] = useState([]);
@@ -51,6 +52,7 @@ const Formular = () => {
         data.append('description', description);
         data.append('latitude', latitude);
         data.append('longitude', longitude);
+        data.append('address', adresa);
 
         for (let i = 0; i < images.length; i++) {
             data.append('images', images[i]);
@@ -86,6 +88,7 @@ const Formular = () => {
             <textarea placeholder='Description' value={description} onChange={e => setDescription(e.target.value)} required />
             <input type="number" placeholder="Latitude" value={latitude} onChange={e => setLatitude(e.target.value)} required />
             <input type="number" placeholder="Longitude" value={longitude} onChange={e => setLongitude(e.target.value)} required />
+            <input type="text" placeholder="Address" value={adresa} onChange={e => setAdresa(e.target.value)} required />
             <div className="file-upload-wrapper">
                 <label htmlFor="file-upload" className="file-upload-label">
                     Choose Files

@@ -47,9 +47,8 @@ router.post('/loginAsPetOwner', async (req, res) => {
   
       const match = await bcrypt.compare(password, user.PASSWORD);
       if (!match) return res.status(401).json({ message: 'Invalid password' });
-  
       const token = jwt.sign(
-        { id: user.ID_PETOWNER, role: 'petowner', username: user.Username },
+        { id: user.ID_PET_OWNER, role: 'petowner', username: user.Username },
         SECRET_KEY,
         { expiresIn: '2h' }
       );

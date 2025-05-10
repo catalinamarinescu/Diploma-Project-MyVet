@@ -17,6 +17,8 @@ import Terms from './frontend/privacy/terms';
 import Formular from './frontend/clinics/formular';
 import ClinicDashboard from './frontend/clinics/clinic';
 import ClientPage from './frontend/client/clientPage';
+import ClientClinicDetails from './frontend/client/clinicDetails';
+import MyPets from './frontend/client/myPets';
 
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/form" element={<Formular/>} />
         <Route path="/clinic/profile" element={<ClinicDashboard/>} />
         <Route path="/client" element={<ClientPage/>} />
+        <Route path="/client/clinic/:id" element={<ClientClinicDetails/>} />
+        <Route path="/client/pets" element={<MyPets/>} />
       </Routes>
   );
 }
