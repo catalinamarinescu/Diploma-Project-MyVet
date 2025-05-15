@@ -1,232 +1,252 @@
+/* ========== Layout și Reset ========== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+  color: #1f2937;
+}
+
+h1, h3 {
+  margin: 0 0 1rem 0;
+}
+
+h1 {
+  font-size: 55px;
+  color: #00421f;
+}
+
+.loading-message {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+}
+
+/* ========== Navbar ========== */
 .clinic-navbar {
+  background-color: #00421f;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background:#014421;
-  padding: 15px 30px;
-  position: fixed;
+  padding: 1rem 2rem;
+}
+
+.logo-clinic {
+  color: #f9c784;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.navbar-buttons-clinic a {
+  background-color: white;
+  color: #065f46;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.actions  {
+  display: flex;
+  gap: 1rem;
+}
+
+.logout-btn .notif-btn {
+  background-color: #0d1117;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #001610;
+}
+
+/* ========== Dashboard Content ========== */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  padding: 2rem 4rem;
+}
+
+.dashboard-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: #00421f;
+}
+
+/* ========== Tabs ========== */
+.tab-buttons {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.tab-buttons button {
+  background-color: #e5e7eb;
+  border: none;
+  margin-right: 1rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tab-buttons .active-tab {
+  background-color:#00421f;
+  color: white;
+  font-weight: bold;
+}
+
+.tab-buttons button:hover:not(.active-tab) {
+  background-color: #d1d5db;
+}
+
+/* ========== Profile Layout ========== */
+.profile-section-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.profile-form-card,
+.profile-gallery-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  flex: 1;
+  min-width: 350px;
+}
+
+.profile-form-card label {
+  display: block;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.profile-form-card input,
+.profile-form-card textarea {
   width: 100%;
-  top: 0;
-  left: 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f3f4f6;
+}
+
+.profile-form-card textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.edit-actions .button-edit {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  color:#00421f;
+  border-color: #00421f;
+  background-color: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-button {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  background-color: #ffffff;
+  color:#00421f;
+  border-color: #00421f;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #d1d5db;
+}
+
+.edit-actions .button-edit:hover {
+  background-color:#d1d5db;
+}
+
+.edit-actions .button-edit.cancel {
+  background-color: #ffffff;
+}
+
+.edit-actions .button-edit.cancel:hover {
+  background-color: #d1d5db;
+}
+
+/* ========== Gallery ========== */
+/* ========== Galerie de imagini ========== */
+
+.profile-gallery-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  flex: 1;
+  min-width: 300px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gallery img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* ========== Upload Button stilizat ========== */
+.upload-label {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color:#00421f;
+  border-color: #00421f;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.upload-label:hover {
+  background-color: #d1d5db;
+}
+
+/* ========== Media Queries ========== */
+@media (max-width: 768px) {
+  .dashboard-main {
+    padding: 1.5rem;
   }
-  
-  .logo-clinic {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(214, 184, 139);
-  }
-  
-  .navbar-buttons-clinic {
-    display: flex;
-    gap: 50px;
-  }
-  
-  .nav-button-clinic {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color:#f8f8f8;
-    color: #014421;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 10000;
-    transition: background 0.3s;
-  }
-  
-  .nav-button-clinic:hover {
-    background-color:#f3f3f3;
-  }
-  
-  .actions {
-    display: flex;
-    gap: 0px;
-    align-items: left;
-  }
-  
-  .logout-btn,
-  .notif-btn {
-    background-color: white;
-    color: #014421;
-    border: none;
-    margin-right: 50px;
-    border-radius: 6px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  .logout-btn:hover {
-    background-color: #f3f3f3;
-  }
-  
-  .clinic-profile-content {
-    max-width: 800px;
-    margin: 30px auto;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  .gallery {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  
-  .gallery img {
-    width: 300px;          
-    height: 200px;           
-    object-fit: cover;        
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .card {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
-    margin-top: 0;
-    color: #014421;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 35px;
-  }
-  
-  .clinic-profile-content h2 {
-    font-size: 50px;
-    text-align: center;
-    color: #014421;
-    margin-top: 100px;
-    margin-bottom: 30px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  }
-  
-  .edit-form {
-    display: flex;
+
+  .tab-buttons {
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .edit-form label {
-    font-weight: bold;
-    color: #014421;
-  }
-  
-  .edit-form input,
-  .edit-form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    width: 100%;
-  }
-  
-  .edit-form textarea {
-    resize: vertical;
-    min-height: 80px;
+    gap: 0.5rem;
   }
 
-  .button-edit {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color:#f8f8f8;
-    color: #014421;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-
-    transition: background 0.3s;
-
-  } 
-
-  .button-edit:hover{
-    background-color:#abd8b7;
+  .profile-section-grid {
+    flex-direction: column;
   }
-
-  .service-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #e4f0e7;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-  
-  .service-card label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-    color: #014421;
-  }
-  
-  .service-card input,
-  .service-card textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 10px;
-  }
-  
-  .service-card textarea {
-    resize: vertical;
-    min-height: 60px;
-  }
-  
-  .delete-btn {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c9302c;
-  }
-  
-  .employee-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #e4f0e7;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-  
-  .employee-card label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-    color: #014421;
-  }
-  
-  .employee-card input,
-  .employee-card textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 10px;
-  }
-  
-  .employee-card textarea {
-    resize: vertical;
-    min-height: 60px;
-  }
+}

@@ -12,6 +12,7 @@ const clinicServicesRoute = require('./routes/clinicInfo/servicii');
 const clinicEmployeesRoute = require('./routes/clinicInfo/angajati');
 const clinicsRoute = require('./routes/clinicInfo/clinics');
 const petsRoute = require('./routes/client/pets');
+const imagesRoute = require('./images');
 
 // Middleware
 app.use(cors()); // permite cereri de pe alte porturi (ex: React)
@@ -25,7 +26,8 @@ app.use('/api', clinicServicesRoute);
 app.use('/api', clinicEmployeesRoute);
 app.use('/api', clinicsRoute);
 app.use('/uploads', express.static('uploads'));
-app.use('/api/client', petsRoute);   
+app.use('/api/client', petsRoute); 
+app.use('/api', imagesRoute);  
 
 const PORT = 5000;
 app.listen(PORT, () => {

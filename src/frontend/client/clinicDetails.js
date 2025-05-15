@@ -31,6 +31,7 @@ const ClientClinicDetails = () => {
                     MyVet
                 </div>
                 <div className="navbar-buttons-clinicDetails">
+                    <Link to="/client" className="nav-button-clinicDetails">Clinics</Link>
                     <Link to="/client/pets" className="nav-button-clinicDetails">My Pets</Link>
                     <Link to="/client/clinic" className="nav-button-clinicDetails">My Clinic</Link>
                     <Link to="/client/appointments" className="nav-button-clinicDetails">My Appointments</Link>
@@ -52,55 +53,75 @@ const ClientClinicDetails = () => {
                 </div>
             </div>
             
-            <div className="title">
-                <h1>Get to know our services and our team!</h1>
-                <div className="section-buttons">
-                    {uniqueTypes.map((tip, i) =>(
+            <div className="clinic-info-wrapper">
+                <h2 className="section-title">Get to Know Our Services and Team</h2>
+                <p className="section-subtitle">
+                    We offer a wide range of veterinary services and have a team of dedicated professionals ready to care for your pets.
+                </p>
+
+                <div className="toggle-tabs">
+                    <button className={!viewTeam ? "active-tab" : ""} onClick={() => setViewTeam(false)}>Services</button>
+                    <button className={viewTeam ? "active-tab" : ""} onClick={() => setViewTeam(true)}>Our Team</button>
+                </div>
+
+                {!viewTeam && (
+                    <>
+                    <div className="filter-buttons">
+                        {uniqueTypes.map((tip, i) => (
                         <button
-                            key = {i}
+                            key={i}
                             className={selectedType === tip ? "selected" : ""}
-                            onClick={() => {
-                                setSelectedType(tip);
-                                setViewTeam(false);
-                            }}
+                            onClick={() => setSelectedType(tip)}
                         >
                             {tip}
                         </button>
-                    ))}
-                    <button onClick={() => {
-                        setSelectedType(null);
-                        setViewTeam(true);
-                    }}
-                    >
-                        Our Team
-                    </button>
-                </div>
-
-                {clinic && !viewTeam && selectedType && (
-                    <div className="services-section">
-                        {clinic.servicii.filter(s => s.tip === selectedType).map((s, i) => (
-                            <div key={i} className="service-box">
-                                <h4>{s.denumire}</h4>
-                                <p>{s.descriere}</p>
-                                <p><strong>{s.pret} RON</strong></p>
-                            </div>   
                         ))}
-                    </div>    
-                )}
+                        <button onClick={() => setSelectedType(null)}>All Services</button>
+                    </div>
 
-                {clinic && viewTeam && (
-                    <div className="team-section">
-                        {clinic.angajati.map((a, i) => (
-                            <div key={i} className="employee-box">
-                                <h4>{a.nume} {a.prenume}</h4>
-                                <p>{a.tip}</p>
-                                <p>Email: {a.email}</p>
-                                <p>Telefon: {a.telefon}</p>
-                            </div>    
+                    <div className="service-cards">
+                        {(clinic?.servicii || [])
+                        .filter(s => !selectedType || s.tip === selectedType)
+                        .map((s, i) => (
+                            <div key={i} className="service-card">
+                            <div className="badge">{s.tip}</div>
+                            <h3>{s.denumire}</h3>
+                            <p className="description">{s.descriere}</p>
+                            <div className="card-footer">
+                                <span className="price">{s.pret} RON</span>
+                            </div>
+                            </div>
                         ))}
                     </div>
+                    </>
                 )}
-            </div>
+
+               {clinic && viewTeam && (
+                <div className="team-cards">
+                    {clinic.angajati.map((a, i) => (
+                    <div key={i} className="team-card">
+                        {a.poza ? (
+                        <img
+                            src={`http://localhost:5000/${a.poza}`}
+                            alt={`${a.nume} ${a.prenume}`}
+                            className="team-avatar"
+                        />
+                        ) : (
+                        <div className="team-avatar initials">
+                            {a.nume[0]}{a.prenume[0]}
+                        </div>
+                        )}
+                        <h3>{a.nume} {a.prenume}</h3>
+                        <span className="badge">{a.tip}</span>
+                        <p>Email: {a.email}</p>
+                        <p>Phone: {a.telefon}</p>
+                    </div>
+                    ))}
+                </div>
+                )}
+
+                </div>
+
         </div>
     );
 };

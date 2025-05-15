@@ -48,7 +48,7 @@ router.get('/clinic/profile', clinicOnly, async (req, res) => {
       .input('ID_CLINICA', clinicID)
       .query(`
         SELECT A.ID, A.NUME, A.PRENUME, A.TIP_ANGAJAT,
-       A.EMAIL, A.TELEFON, -- ✅ le adăugăm aici
+       A.EMAIL, A.TELEFON, A.POZA, -- ✅ le adăugăm aici
        S.DENUMIRE_SERVICIU
       FROM ANGAJATI A
       LEFT JOIN ANGAJATI_SERVICII ASG ON A.ID = ASG.ANGAJAT_ID
@@ -68,11 +68,14 @@ router.get('/clinic/profile', clinicOnly, async (req, res) => {
           tip: row.TIP_ANGAJAT,
           email: row.EMAIL,
           telefon: row.TELEFON,
-          servicii: []
+          poza: row.POZA,
+          servicii: [],
+          serviciiIds: []
         };
       }
       if (row.DENUMIRE_SERVICIU) {
         angajatiMap[row.ID].servicii.push(row.DENUMIRE_SERVICIU);
+        angajatiMap[row.ID].serviciiIds.push(row.SERVICIU_ID);
       }
     });
 

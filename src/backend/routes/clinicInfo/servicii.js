@@ -17,28 +17,41 @@ router.put('/clinic/servicii', clinicOnly, async (req, res) => {
     const pool = await poolPromise;
 
     for (const s of servicii) {
-      const request = pool.request()
-        .input('TIP_SERVICIU', s.tip)
+      const checkExist = await pool.request()
         .input('DENUMIRE_SERVICIU', s.denumire)
-        .input('PRET', s.pret)
-        .input('DESCRIERE', s.descriere)
-        .input('ID_CLINICA', clinicID);
-    
-      if (s.id) {
-        request.input('ID', s.id);
-        await request.query(`
-          UPDATE SERVICII
-          SET TIP_SERVICIU = @TIP_SERVICIU,
+        .input('ID_CLINICA', clinicID)
+        .query(`
+          SELECT ID FROM SERVICII
+          WHERE DENUMIRE_SERVICIU = @DENUMIRE_SERVICIU AND ID_CLINICA = @ID_CLINICA
+        `);
+
+      if (checkExist.recordset.length > 0) {
+        const existingID = checkExist.recordset[0].ID;
+        await pool.request()
+          .input('ID', existingID)
+          .input('TIP_SERVICIU', s.tip)
+          .input('DENUMIRE_SERVICIU', s.denumire)
+          .input('PRET', s.pret)
+          .input('DESCRIERE', s.descriere)
+          .query(`
+            UPDATE SERVICII
+              SET TIP_SERVICIU = @TIP_SERVICIU,
               DENUMIRE_SERVICIU = @DENUMIRE_SERVICIU,
               PRET = @PRET,
               DESCRIERE = @DESCRIERE
-          WHERE ID = @ID AND ID_CLINICA = @ID_CLINICA
-        `);
+              WHERE ID = @ID
+          `);
       } else {
-        await request.query(`
-          INSERT INTO SERVICII (ID_CLINICA, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE)
-          VALUES (@ID_CLINICA, @TIP_SERVICIU, @DENUMIRE_SERVICIU, @PRET, @DESCRIERE)
-        `);
+        await pool.request()
+          .input('TIP_SERVICIU', s.tip)
+          .input('DENUMIRE_SERVICIU', s.denumire)
+          .input('PRET', s.pret)
+          .input('DESCRIERE', s.descriere)
+          .input('ID_CLINICA', clinicID)
+          .query(`
+              INSERT INTO SERVICII (ID_CLINICA, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE)
+              VALUES (@ID_CLINICA, @TIP_SERVICIU, @DENUMIRE_SERVICIU, @PRET, @DESCRIERE)
+          `)
       }
     }
 

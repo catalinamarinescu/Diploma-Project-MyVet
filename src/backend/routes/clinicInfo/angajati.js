@@ -5,52 +5,88 @@ const path = require('path');
 const { poolPromise } = require('../../db'); // conexiune MSSQL
 const { clinicOnly } = require('../middleware');
 const { petOwnerOnly } = require('../middleware');
+const { request } = require('http');
 
-router.put('/clinic/angajati', clinicOnly, async (req, res) => {
-  const clinicID = req.user.id;
-  const angajati = req.body.angajati;
+const fs = require('fs');
 
-  if (!Array.isArray(angajati)) {
-    return res.status(400).json({ error: 'Format invalid: așteptam un array de angajati.' });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = './uploads';
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
   }
+});
+
+const upload = multer({ storage });
+
+router.put('/clinic/angajati/:id', clinicOnly, upload.single('poza'), async (req, res) => {
+  const clinicID = req.user.id;
+  const angajatID = parseInt(req.params.id);
+  const { nume, prenume, email, telefon, tip } = req.body;
+  const poza = req.file ? req.file.path.replace(/\\/g, '/') : null;
 
   try {
     const pool = await poolPromise;
 
-    for (const a of angajati) {
-      const request = pool.request()
-        .input('NUME', a.nume)
-        .input('PRENUME', a.prenume)
-        .input('EMAIL', a.email)
-        .input('TELEFON', a.telefon)
-        .input('TIP_ANGAJAT', a.tip)
-        .input('ID_CLINICA', clinicID);
-    
-      if (a.id) {
-        request.input('ID', a.id);
-        await request.query(`
-          UPDATE ANGAJATI
-          SET NUME = @NUME,
-              PRENUME = @PRENUME,
-              EMAIL = @EMAIL,
-              TELEFON = @TELEFON,
-              TIP_ANGAJAT = @TIP_ANGAJAT
-          WHERE ID = @ID AND ID_CLINICA = @ID_CLINICA
-        `);
-      } else {
-        await request.query(`
-          INSERT INTO ANGAJATI (ID_CLINICA, NUME, PRENUME, EMAIL, TELEFON, TIP_ANGAJAT)
-          VALUES (@ID_CLINICA, @NUME, @PRENUME, @EMAIL, @TELEFON, @TIP_ANGAJAT)
-        `);
-      }
-    }
+    const query = poza
+      ? `
+        UPDATE ANGAJATI
+        SET NUME = @NUME,
+            PRENUME = @PRENUME,
+            EMAIL = @EMAIL,
+            TELEFON = @TELEFON,
+            TIP_ANGAJAT = @TIP_ANGAJAT,
+            POZA = @POZA
+        WHERE ID = @ID AND ID_CLINICA = @ID_CLINICA
+      `
+      : `
+        UPDATE ANGAJATI
+        SET NUME = @NUME,
+            PRENUME = @PRENUME,
+            EMAIL = @EMAIL,
+            TELEFON = @TELEFON,
+            TIP_ANGAJAT = @TIP_ANGAJAT
+        WHERE ID = @ID AND ID_CLINICA = @ID_CLINICA
+      `;
 
-    res.status(200).json({ message: 'Angajati actualizati cu succes!' });
+    const request = pool.request()
+      .input('ID', angajatID)
+      .input('ID_CLINICA', clinicID)
+      .input('NUME', nume)
+      .input('PRENUME', prenume)
+      .input('EMAIL', email)
+      .input('TELEFON', telefon)
+      .input('TIP_ANGAJAT', tip);
+
+    if (poza) request.input('POZA', poza);
+
+    await request.query(query);
+    const servicii = req.body.servicii ? JSON.parse(req.body.servicii) : [];
+
+    await pool.request()
+      .input('ANGAJAT_ID', angajatID)
+      .query(`DELETE FROM ANGAJATI_SERVICII WHERE ANGAJAT_ID = @ANGAJAT_ID`);
+
+    for (const serviceID of servicii) {
+      await pool.request()
+        .input('ANGAJAT_ID', angajatID)
+        .input('SERVICIU_ID', serviceID)
+        .query(`
+          INSERT INTO ANGAJATI_SERVICII (ANGAJAT_ID, SERVICIU_ID)
+          VALUES (@ANGAJAT_ID, @SERVICIU_ID)
+        `);
+    }
+    res.status(200).json({ message: 'Angajat actualizat cu succes!' });
   } catch (err) {
-    console.error('Eroare la actualizare angajati:', err);
-    res.status(500).json({ error: 'Eroare server' });
+    console.error('Eroare la actualizare angajat:', err);
+    res.status(500).json({ error: 'Eroare server la update' });
   }
 });
+
 
 router.delete('/clinic/angajati/:id', clinicOnly, async(req, res) =>{
   const clinicID = req.user.id;
@@ -78,5 +114,44 @@ router.delete('/clinic/angajati/:id', clinicOnly, async(req, res) =>{
     res.status(500).json({error: " Eroare server la stergere"});
   }
 });
+
+router.post('/clinic/angajati', clinicOnly, upload.single('poza'), async (req, res) => {
+  const { nume, prenume, email, telefon, tip } = req.body;
+  const poza = req.file ? req.file.path.replace(/\\/g, '/') : null;
+  const servicii = req.body.servicii ? JSON.parse(req.body.servicii) : [];
+
+  try {
+    const pool = await poolPromise;
+
+    const insertResult = await pool.request()
+      .input('ID_CLINICA', req.user.id)
+      .input('NUME', nume)
+      .input('PRENUME', prenume)
+      .input('EMAIL', email)
+      .input('TELEFON', telefon)
+      .input('TIP_ANGAJAT', tip)
+      .input('POZA', poza)
+      .query(`
+        INSERT INTO ANGAJATI (ID_CLINICA, NUME, PRENUME, EMAIL, TELEFON, TIP_ANGAJAT, POZA)
+        OUTPUT INSERTED.ID
+        VALUES (@ID_CLINICA, @NUME, @PRENUME, @EMAIL, @TELEFON, @TIP_ANGAJAT, @POZA)
+      `);
+
+    const angajatID = insertResult.recordset[0].ID;
+
+    for (const id of servicii) {
+      await pool.request()
+        .input('ANGAJAT_ID', angajatID)
+        .input('SERVICIU_ID', id)
+        .query(`INSERT INTO ANGAJATI_SERVICII (ANGAJAT_ID, SERVICIU_ID) VALUES (@ANGAJAT_ID, @SERVICIU_ID)`);
+    }
+
+    res.status(201).json({ message: 'Angajat adăugat cu succes!' });
+  } catch (err) {
+    console.error('Eroare la inserare angajat:', err);
+    res.status(500).json({ error: 'Eroare server la inserare' });
+  }
+});
+
 
 module.exports = router;

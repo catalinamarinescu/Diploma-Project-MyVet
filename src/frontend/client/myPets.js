@@ -14,8 +14,7 @@ const MyPets = () => {
     nume: '',
     tip: '',
     rasa: '',
-    varsta: '',
-    poza: ''
+    varsta: ''
   });
 
   const fetchPets = async () => {
@@ -31,18 +30,16 @@ const MyPets = () => {
   };
 
   useEffect(() => {
-  if (token) {
-    fetchPets();
-  }
-}, [token]);
+    if (token) {
+      fetchPets();
+    }
+  }, [token]);
 
-  // ✅ Logout
   const handleLogout = () => {
     localStorage.removeItem('myvet_token');
     navigate('/');
   };
 
-  // 📤 Salvare animal
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -50,10 +47,7 @@ const MyPets = () => {
     formData.append('tip', form.tip);
     formData.append('rasa', form.rasa);
     formData.append('varsta', form.varsta);
-
-    if (petImage) {
-      formData.append('poza', petImage); // 🔥 Fix aici
-    }
+    if (petImage) formData.append('poza', petImage);
 
     const url = form.id
       ? `http://localhost:5000/api/client/pets/${form.id}`
@@ -69,9 +63,9 @@ const MyPets = () => {
 
       if (!res.ok) throw new Error("Eroare la salvare");
 
-      await fetchPets(); // reîncarcă animalele
+      await fetchPets();
       setShowForm(false);
-      setForm({ id: null, nume: '', tip: '', rasa: '', varsta: '', poza: '' });
+      setForm({ id: null, nume: '', tip: '', rasa: '', varsta: '' });
       setPetImage(null);
     } catch (err) {
       alert("Eroare la salvare animal.");
@@ -79,8 +73,6 @@ const MyPets = () => {
     }
   };
 
-
-  // ✏️ Editare
   const handleEdit = (pet) => {
     setForm({
       id: pet.ID,
@@ -95,61 +87,161 @@ const MyPets = () => {
 
   return (
     <div className="mypets-page">
-      <nav className="myPets-navbar">
-        <div className="logo-myPets">MyVet</div>
-        <div className="navbar-buttons-myPets">
-          <Link to="/client" className="nav-button-myPets">Clinics</Link>
-          <Link to="/client/clinic" className="nav-button-myPets">My Clinic</Link>
-          <Link to="/client/appointments" className="nav-button-myPets">My Appointments</Link>
+      <nav className="navbar-pets">
+        <div className="logo-pets">MyVet</div>
+        <div className="nav-links-pets">
+          <Link to="/client" className="nav-btn-pets">Clinics</Link>
+          <Link to="/client/clinic" className="nav-btn-pets">My Clinic</Link>
+          <Link to="/client/appointments" className="nav-btn-pets">My Appointments</Link>
         </div>
-        <div className="actions-myPets">
-          <Link to="/client/profile" className="profile-btn-myPets">MyProfile</Link>
-          <button className="logout-btn-myPets" onClick={handleLogout}>Logout</button>
+        <div className="nav-actions-pets">
+          <Link to="/client/profile" className="profile-btn-pets">My Profile</Link>
+          <button className="logout-btn-pets" onClick={handleLogout}>Logout</button>
         </div>
       </nav>
 
-      <div className="create-btn-wrapper">
-        <button className="create-btn" onClick={() => {
-          setForm({ id: null, nume: '', tip: '', rasa: '', varsta: '' });
-          setPetImage(null);
-          setShowForm(true);
-        }}>
-          {form.id ? 'Edit Pet Profile' : 'Create a PetProfile'}
-        </button>
-      </div>
-
-      {showForm && (
-        <form className="pet-form" onSubmit={handleSubmit}>
-          <input type="text" placeholder="Nume" value={form.nume} onChange={e => setForm({ ...form, nume: e.target.value })} required />
-          <input type="text" placeholder="Tip Animal" value={form.tip} onChange={e => setForm({ ...form, tip: e.target.value })} required />
-          <input type="text" placeholder="Rasa" value={form.rasa} onChange={e => setForm({ ...form, rasa: e.target.value })} required />
-          <input type="number" placeholder="Varsta" value={form.varsta} onChange={e => setForm({ ...form, varsta: e.target.value })} required />
-         <label htmlFor="pet-image-upload" className="file-upload-label">
-            Upload Image
-          </label>
-          <input
-            id="pet-image-upload"
-            type="file"
-            accept="uploads/*"
-            style={{ display: 'none' }}
-            onChange={(e) => setPetImage(e.target.files[0])}
-          />
-
-          <button type="submit">Save</button>
-        </form>
+      <h2 className="pets-title">My Pets</h2>
+      <p className='pets-paragraf'> Here you can create profiles for each one of your pets.</p>
+      {pets.length === 0 && !showForm && (
+        <div className="no-pets">
+          <p>You haven't added any pets yet.</p>
+          <button className="add-pet-btn" onClick={() => setShowForm(true)}>
+            +Add Your First Pet
+          </button>
+        </div>
       )}
 
-      <div className="pet-list">
-        {pets.map((p, i) => (
-          <div key={i} className="pet-card">
-            {p.POZA && <img src={`http://localhost:5000/${p.POZA}`} alt={p.NUME} />}
-            <h4>{p.NUME}</h4>
-            <p>{p.TIP} - {p.RASA}</p>
-            <p>Vârstă: {p.VARSTA} ani</p>
-            <button className="edit-btn" onClick={() => handleEdit(p)}>✏️ Edit</button>
+      {pets.length > 0 && !showForm && (
+        <div className="top-add-btn">
+          <button className="add-pet-btn" onClick={() => setShowForm(true)}>
+            +Add New Pet
+          </button>
+        </div>
+      )}
+
+      {showForm && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <form className="pet-form" onSubmit={handleSubmit}>
+              <h3>{form.id ? "Edit Pet" : "Add New Pet"}</h3>
+
+              <label>Pet Name</label>
+              <input type="text" placeholder="Enter pet name" value={form.nume} onChange={e => setForm({ ...form, nume: e.target.value })} required />
+
+              <label>Pet Type</label>
+              <select value={form.tip} onChange={e => setForm({ ...form, tip: e.target.value })} required>
+                <option value="">Select pet type</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <label>Breed</label>
+              <input type="text" placeholder="Enter breed" value={form.rasa} onChange={e => setForm({ ...form, rasa: e.target.value })} required />
+
+              <label>Age (years)</label>
+              <input type="number" placeholder="Enter age" value={form.varsta} onChange={e => setForm({ ...form, varsta: e.target.value })} required />
+
+              <label htmlFor="pet-image" className="file-upload-label">Upload Image</label>
+              <input
+                id="pet-image"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setPetImage(e.target.files[0])}
+              />
+
+              {form.poza && !petImage && (
+                <div className="image-preview">
+                  <img src={`http://localhost:5000/${form.poza}`} alt="Preview" />
+                  <p style={{ fontSize: '0.8rem', color: '#555' }}>Current image</p>
+                </div>
+              )}
+
+              <div className="form-buttons">
+                <button type="submit" className="save-btn">Save</button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => {
+                    setShowForm(false);
+                    setForm({ id: null, nume: '', tip: '', rasa: '', varsta: '', poza: '' });
+                    setPetImage(null);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+     <div className="pet-list">
+      {pets.map((p, i) => (
+        <div key={i} className="pet-card">
+          {p.POZA ? (
+            <img
+              src={`http://localhost:5000/${p.POZA}`}
+              alt={p.NUME}
+              className="pet-image"
+            />
+          ) : (
+            <div className="pet-image placeholder">
+              <span>No Image</span>
+            </div>
+          )}
+
+          <div className="pet-details">
+            <h4>{p.NUME}</h4>
+            <p><strong>Type:</strong> {p.TIP}</p>
+            <p><strong>Breed:</strong> {p.RASA}</p>
+            <p><strong>Age:</strong> {p.VARSTA} years</p>
+          </div>
+
+          <button className="edit-btn" onClick={() => handleEdit(p)}>
+            Edit
+          </button>
+        </div>
+
+      ))}
+    </div>
+        <footer className="footer">
+          <div className="footer-column">
+              <h2 className="footer-logo">MyVet</h2>
+              <p>+40 712 345 678</p>
+              <p>support@myvet.com</p>
+              <p>Str. Animăluțelor nr. 5, București</p>
+              <div className="social-icons">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                  <img src="/imagini/instagram.png" alt="Instagram" />
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                  <img src="/imagini/facebook.png" alt="Facebook" />
+              </a>
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
+                  <img src="/imagini/tiktok.png" alt="TikTok" />
+              </a>
+              </div>
+          </div>
+
+          <div className="footer-column">
+              <ul className="quick-links">
+              <h4>Quick Links</h4>    
+              <li><a href="/client">Clinics</a></li>
+              <li><a href="/client/clinic">MyClinic</a></li>
+              <li><a href="/client/appointments">MyAppointments</a></li>
+              </ul>       
+          </div>
+
+          <div className="footer-column">
+              <ul className="quick-links">
+              <li><a href="/privacypolicy">Privacy Policy</a></li>
+              <li><a href="/accessibility">Accessibility</a></li>
+              <li><a href="/terms">Terms & Conditions</a></li>
+              </ul>
+              <p className="copyright">© 2025 by MyVet</p>
+          </div>
+      </footer>
     </div>
   );
 };

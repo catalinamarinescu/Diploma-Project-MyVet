@@ -77,7 +77,7 @@ router.get('/clinics/:id', async (req, res) => {
     const angRes = await pool.request()
       .input('ID_CLINICA', clinicID)
       .query(`
-        SELECT NUME, PRENUME, TIP_ANGAJAT, EMAIL, TELEFON
+        SELECT NUME, PRENUME, TIP_ANGAJAT, EMAIL, TELEFON, POZA
         FROM ANGAJATI
         WHERE ID_CLINICA = @ID_CLINICA
       `);
@@ -86,7 +86,8 @@ router.get('/clinics/:id', async (req, res) => {
       prenume: a.PRENUME,
       tip: a.TIP_ANGAJAT,
       email: a.EMAIL,
-      telefon: a.TELEFON
+      telefon: a.TELEFON,
+      poza: a.POZA
     }));
 
     // ✔️ Răspuns complet
