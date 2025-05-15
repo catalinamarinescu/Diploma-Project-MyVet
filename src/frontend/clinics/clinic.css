@@ -250,3 +250,94 @@ h1 {
     flex-direction: column;
   }
 }
+
+.footer {
+display: flex;
+justify-content: space-around;
+align-items: stretch;
+background-color: #014421;
+padding: 0px;
+flex-wrap: nowrap;
+min-height: 300px;
+border-top: 1px solid #ccc;
+position: relative;
+}
+
+.footer-column {
+flex: 1;
+padding: 20px;
+text-align: left;
+flex-direction: column;
+position: relative;
+justify-content: flex-start;
+display: flex;
+}
+
+.footer-column:not(:last-child)::after {
+content: "";
+position: absolute;
+top: 0;
+right: 0;
+width: 1px;
+height: 100%;
+background-color: white; /* sau altă culoare dacă vrei */
+}
+
+.footer-logo {
+color:rgb(214, 184, 139);
+font-size: 32px;
+font-weight: bold;
+margin-bottom: 20px;
+}
+
+.footer-column p, .footer-column a {
+color: #f7f7f7;
+font-size: 16px;
+margin: 8px 0;
+text-decoration: none;
+}
+
+.quick-links {
+list-style: none;
+padding: 0;
+}
+
+.quick-links h4 {
+color: #f7f7f7;
+text-decoration: solid;
+}
+
+.quick-links li {
+margin-bottom: 10px;
+}
+
+.quick-links a:hover {
+color: #a1a7a4;
+text-decoration: underline;
+}
+
+.social-icons {
+display: flex;
+justify-content: flex;
+margin-top: 10px;
+gap: 15px;
+margin-left: 0px;
+}
+
+.social-icons img {
+width: 28px;
+height: 28px;
+transition: transform 0.3s ease, filter 0.3s ease;
+align-self: left;
+}
+
+.social-icons img:hover {
+transform: scale(1.2);
+filter: brightness(1.2);
+}
+
+.copyright {
+font-size: 14px;
+color: #ffffff;
+margin-top: 20px;
+}

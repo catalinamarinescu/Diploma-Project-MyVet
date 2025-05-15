@@ -50,13 +50,14 @@ router.get('/clinics/:id', async (req, res) => {
 
     // 2. Imagine (prima din listă)
     const imgRes = await pool.request()
-      .input('ID_CLINICA', clinicID)
-      .query(`
-        SELECT TOP 1 CALE_IMAGINE 
-        FROM IMAGINI_CLINICA 
-        WHERE ID_CLINICA = @ID_CLINICA
-      `);
-    const imagine = imgRes.recordset[0]?.CALE_IMAGINE || '';
+    .input('ID_CLINICA', clinicID)
+    .query(`
+      SELECT CALE_IMAGINE 
+      FROM IMAGINI_CLINICA 
+      WHERE ID_CLINICA = @ID_CLINICA
+    `);
+
+    const imagini = imgRes.recordset.map(img => img.CALE_IMAGINE.replace(/\\/g, '/'));
 
     // 3. Servicii
     const servRes = await pool.request()
@@ -90,6 +91,8 @@ router.get('/clinics/:id', async (req, res) => {
       poza: a.POZA
     }));
 
+    
+
     // ✔️ Răspuns complet
     res.json({
       name: info.NAME,
@@ -97,7 +100,7 @@ router.get('/clinics/:id', async (req, res) => {
       latitudine: info.LATITUDINE,
       longitudine: info.LONGITUDINE,
       adresa: info.ADRESA,
-      imagine,
+      imagini,
       servicii,
       angajati
     });

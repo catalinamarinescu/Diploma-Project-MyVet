@@ -10,12 +10,27 @@ const ClientClinicDetails = () => {
     const [viewTeam, setViewTeam] = useState(false);
     const navigate = useNavigate();
 
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
     useEffect(() => {
         fetch(`http://localhost:5000/api/clinics/${id}`)
             .then(res => res.json())
             .then(data => setClinic(data))
-            .then(err => console.error("Eroare la detalii cliica:", err));
+            .catch(err => console.error("Eroare la detalii clinica:", err));
     }, [id]);
+
+   useEffect(() => {
+        if (!clinic?.imagini || clinic.imagini.length === 0) return;
+
+        const interval = setInterval(() => {
+            setCurrentImageIndex(prev =>
+                (prev + 1) % clinic.imagini.length
+            );
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [clinic?.imagini]);
+
 
     const uniqueTypes = clinic?.servicii ? [...new Set(clinic.servicii.map(s => s.tip))] : [];
 
@@ -48,10 +63,16 @@ const ClientClinicDetails = () => {
                     <p><strong>Adresa:</strong>{clinic?.adresa}</p>
                     <button className="join-btn">Join Now</button>
                 </div>
-                <div className="clinic-image">
-                    <img src={`http://localhost:5000/${clinic?.imagine}`} alt="clinic" />
+                {clinic?.imagini?.length > 0 && (
+                <div className="clinic-gallery-client">
+                    <img
+                    className="clinic-gallery-client-img"
+                    src={`http://localhost:5000/${clinic.imagini[currentImageIndex]}`}
+                    alt="clinic slide"
+                    />
                 </div>
-            </div>
+                )}
+                </div>
             
             <div className="clinic-info-wrapper">
                 <h2 className="section-title">Get to Know Our Services and Team</h2>
@@ -119,9 +140,44 @@ const ClientClinicDetails = () => {
                     ))}
                 </div>
                 )}
-
+                </div>
+            <footer className="footer">
+                <div className="footer-column">
+                    <h2 className="footer-logo">MyVet</h2>
+                    <p>+40 712 345 678</p>
+                    <p>support@myvet.com</p>
+                    <p>Str. Animăluțelor nr. 5, București</p>
+                    <div className="social-icons">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                        <img src="/imagini/instagram.png" alt="Instagram" />
+                    </a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                        <img src="/imagini/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
+                        <img src="/imagini/tiktok.png" alt="TikTok" />
+                    </a>
+                    </div>
                 </div>
 
+                <div className="footer-column">
+                    <ul className="quick-links">
+                    <h4>Quick Links</h4>    
+                    <li><a href="/client/pets">MyPets</a></li>
+                    <li><a href="/client/clinic">MyClinic</a></li>
+                    <li><a href="/client/appointments">MyAppointments</a></li>
+                    </ul>       
+                </div>
+
+                <div className="footer-column">
+                    <ul className="quick-links">
+                    <li><a href="/privacypolicy">Privacy Policy</a></li>
+                    <li><a href="/accessibility">Accessibility</a></li>
+                    <li><a href="/terms">Terms & Conditions</a></li>
+                    </ul>
+                    <p className="copyright">© 2025 by MyVet</p>
+                </div>
+            </footer>
         </div>
     );
 };
