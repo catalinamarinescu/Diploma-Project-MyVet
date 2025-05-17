@@ -1,0 +1,61 @@
+/* Secțiune generală */
+.profile-section {
+  flex: 2;
+  min-width: 300px;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* Layout tip grid pentru câmpuri */
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.input-grid div {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-grid label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input-grid input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.input-grid input:disabled {
+  color: #6b7280;
+  background-color: #f3f4f6;
+}
+
+.file-upload-label1 {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #014421;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+.file-upload-label1:hover {
+  background-color: #026e3e;
+}

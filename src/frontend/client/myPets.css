@@ -17,9 +17,10 @@
 }
 
 .logo-pets {
-  color: #f9c784;
-  font-size: 1.8rem;
+  color: rgb(214, 184, 139);
+  font-size: 24px;
   font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .nav-links-pets, .nav-actions-pets {
@@ -29,20 +30,20 @@
 
 .nav-btn-pets, .profile-btn-pets {
   background-color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  padding: 8px 14px;
+  border-radius: 5px;
   color: #00421f;
-  font-weight: 600;
   text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .logout-btn-pets {
-  background-color: #0d1117;
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
+  background-color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  color: #00421f;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;;
 }
 
 

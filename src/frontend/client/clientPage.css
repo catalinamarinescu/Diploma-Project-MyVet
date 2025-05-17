@@ -21,6 +21,7 @@
  font-size: 24px;
   font-weight: bold;
   color: rgb(214, 184, 139);
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .nav-links,
@@ -32,11 +33,18 @@
 .nav-btn,
 .profile-btn,
 .logout-btn {
- background: white;
+  background: white;
   color: #014421;
   padding: 8px 14px;
   border-radius: 5px;
   text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav-btn:hover,
+.profile-btn:hover,
+.logout-btn:hover {
+  background-color: #a1a7a4;
 }
 
 .header-section {

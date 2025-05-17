@@ -117,7 +117,7 @@ const ClinicDashboard = () => {
         </div>
         <div className="actions">
           <button className="notif-btn" onClick={() => alert("În lucru!")}>🔔</button>
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          <button className="logout-button-clinic" onClick={handleLogout}>Logout</button>
         </div>
       </nav>
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom"
-import "./home.css"
+import {Link} from "react-router-dom";
+import "./home.css";
 
 const images = [
     "/imagini/poza14.jpg",

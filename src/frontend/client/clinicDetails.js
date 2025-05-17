@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 import "./clinicDetails.css";
+import JoinClinicForm from "./joinClinic";
 
 const ClientClinicDetails = () => {
     const {id} = useParams();
@@ -9,7 +10,7 @@ const ClientClinicDetails = () => {
     const [selectedType, setSelectedType] = useState(null);
     const [viewTeam, setViewTeam] = useState(false);
     const navigate = useNavigate();
-
+    const [showJoinForm, setShowJoinForm] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
@@ -47,7 +48,6 @@ const ClientClinicDetails = () => {
                 </div>
                 <div className="navbar-buttons-clinicDetails">
                     <Link to="/client" className="nav-button-clinicDetails">Clinics</Link>
-                    <Link to="/client/pets" className="nav-button-clinicDetails">My Pets</Link>
                     <Link to="/client/clinic" className="nav-button-clinicDetails">My Clinic</Link>
                     <Link to="/client/appointments" className="nav-button-clinicDetails">My Appointments</Link>
                 </div>
@@ -61,7 +61,7 @@ const ClientClinicDetails = () => {
                     <h1>{clinic?.name}</h1>
                     <p>{clinic?.descriere}</p>
                     <p><strong>Adresa:</strong>{clinic?.adresa}</p>
-                    <button className="join-btn">Join Now</button>
+                    <button className="join-btn" onClick={() => setShowJoinForm(true)}>Join Now</button>
                 </div>
                 {clinic?.imagini?.length > 0 && (
                 <div className="clinic-gallery-client">
@@ -178,6 +178,12 @@ const ClientClinicDetails = () => {
                     <p className="copyright">© 2025 by MyVet</p>
                 </div>
             </footer>
+            {showJoinForm && (
+                <JoinClinicForm
+                    clinicId={clinic?.id}
+                    onClose={() => setShowJoinForm(false)}
+                />
+            )}
         </div>
     );
 };

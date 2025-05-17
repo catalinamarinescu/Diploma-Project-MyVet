@@ -1,0 +1,116 @@
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import ProfileTab from './tabs/profileTab';
+import PetsTab from './tabs/petsTab';
+
+import './profile.css';
+
+const ClientProfile = () => {
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const [activeTab, setActiveTab] = useState("profile");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/client/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("myvet_token")}`
+          }
+        });
+        const data = await res.json();
+        setProfile(data);
+      } catch (err) {
+        console.error("Eroare la profil:", err);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (!profile) return <p style={{ padding: "2rem" }}>Se încarcă profilul...</p>;
+
+  return (
+    <div className="profile-page">
+      <nav className="profile-navbar">
+        <div className="logo-profile">MyVet</div>
+        <div className="nav-links-profile">
+          <Link to="/client" className="nav-btn-profile">Clinics</Link>
+          <Link to="/client/clinic" className="nav-btn-profile">My Clinic</Link>
+        </div>
+        <div className="nav-actions-profile">
+          <Link to="/client/profile" className="profile-btn">My Profile</Link>
+          <button className="logout-btn-profile" onClick={() => {
+            localStorage.removeItem('myvet_token');
+            navigate('/');
+          }}>Logout</button>
+        </div>
+      </nav>
+
+      <div className="profile-header">
+        <div className="profile-avatar">
+          {profile.IMAGE ? (
+            <img src={`http://localhost:5000/${profile.IMAGE}`} alt="Profile" />
+          ) : (
+            <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "#ccc" }} />
+          )}
+        </div>
+        <div className="profile-info">
+          <h2>{profile.FIRST_NAME} {profile.LAST_NAME} <span className="role-badge">Pet Owner</span></h2>
+          <p className="member-since">
+            Member since {new Date(profile.CREATED_AT).toLocaleDateString('eng', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            })}
+          </p>
+          <p><i className="fa fa-envelope"></i> {profile.EMAIL}</p>
+          <p><i className="fa fa-phone"></i> {profile.PHONE}</p>
+          <p><i className="fa fa-map-marker"></i> {profile.ADDRESS}</p>
+        </div>
+        {editing ? (
+          <button className="edit-profile-btn" onClick={() => setEditing(false)}>Cancel</button>
+        ) : (
+          <button className="edit-profile-btn" onClick={() => setEditing(true)}>Edit profile</button>
+        )}
+      </div>
+
+      <div className="profile-tabs">
+        <div className={`tab ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')}>Profile</div>
+        <div className={`tab ${activeTab === 'pets' ? 'active' : ''}`} onClick={() => setActiveTab('pets')}>Pets</div>
+        <div className={`tab ${activeTab === 'appointments' ? 'active' : ''}`} onClick={() => setActiveTab('appointments')}>Appointments</div>
+        <div className={`tab ${activeTab === 'clinics' ? 'active' : ''}`} onClick={() => setActiveTab('clinics')}>Fav Clinics</div>
+      </div>
+
+      {activeTab === 'profile' && (
+        <div className="profile-main">
+          <div className="profile-card">
+            <ProfileTab
+              profile={profile}
+              setProfile={setProfile}
+              setEditing={setEditing}
+              editing={editing}
+            />
+          </div>
+          {!editing && (
+            <div className="profile-card">
+              <div className="profile-summary">
+                <h3>Account Summary</h3>
+                <p><strong>Pets:</strong> 3</p>
+                <p><strong>Future Appointments:</strong> 0</p>
+                <p><strong>Fav Clinics:</strong> 0</p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'pets' && <PetsTab />}
+      {activeTab === 'appointments' && <div style={{ padding: "2rem" }}>Conținut pentru programări</div>}
+      {activeTab === 'clinics' && <div style={{ padding: "2rem" }}>Conținut pentru clinici</div>}
+    </div>
+  );
+};
+
+export default ClientProfile;

@@ -24,45 +24,63 @@ h1 {
 
 /* ========== Navbar ========== */
 .clinic-navbar {
-  background-color: #00421f;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  background: #014421;
+  padding: 15px 30px;
 }
 
 .logo-clinic {
-  color: #f9c784;
-  font-size: 1.8rem;
+ font-size: 24px;
   font-weight: bold;
+  color: rgb(214, 184, 139);
+  font-family: 'Courier New', Courier, monospace
 }
 
-.navbar-buttons-clinic a {
-  background-color: white;
-  color: #065f46;
+.navbar-buttons-clinic {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-button-clinic{
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  border-radius: 6px;
-  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav-button-clinic:hover {
+  background-color: #a1a7a4;
 }
 
 .actions  {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
 }
 
-.logout-btn .notif-btn {
-  background-color: #0d1117;
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
+.notif-btn {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.actions button:hover {
-  background-color: #001610;
+.logout-button-clinic {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.logout-button-clinic:hover .notif-btn:hover {
+  background-color: #a1a7a4;
 }
 
 /* ========== Dashboard Content ========== */

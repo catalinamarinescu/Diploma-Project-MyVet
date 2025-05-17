@@ -33,7 +33,6 @@ const ClientPage = () => {
       <nav className="client-navbar">
         <div className="logo-client">MyVet</div>
         <div className="nav-links">
-          <Link to="/client/pets" className="nav-btn">My Pets</Link>
           <Link to="/client/clinic" className="nav-btn">My Clinic</Link>
           <Link to="/client/appointments" className="nav-btn">My Appointments</Link>
         </div>

@@ -19,6 +19,7 @@ import ClinicDashboard from './frontend/clinics/clinic';
 import ClientPage from './frontend/client/clientPage';
 import ClientClinicDetails from './frontend/client/clinicDetails';
 import MyPets from './frontend/client/myPets';
+import ClientProfile from './frontend/client/profile';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/client" element={<ClientPage/>} />
         <Route path="/client/clinic/:id" element={<ClientClinicDetails/>} />
         <Route path="/client/pets" element={<MyPets/>} />
+        <Route path="/client/profile" element={<ClientProfile/>} />
       </Routes>
   );
 }
