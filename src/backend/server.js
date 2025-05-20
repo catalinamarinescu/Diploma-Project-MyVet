@@ -14,6 +14,12 @@ const clinicsRoute = require('./routes/clinicInfo/clinics');
 const petsRoute = require('./routes/client/pets');
 const imagesRoute = require('./images');
 const clientProfileRoutes = require('./routes/client/profile');
+const favRoute = require('./routes/client/favs');
+const summaryRoute = require('./routes/client/summary');
+const joinRoute = require('./routes/client/joinClinic');
+const notifRoute = require('./routes/clinicInfo/notif');
+const patientsRoute = require('./routes/clinicInfo/patients');
+const medrecRoute = require('./routes/clinicInfo/medicalRecord');
 
 // Middleware
 app.use(cors()); // permite cereri de pe alte porturi (ex: React)
@@ -29,7 +35,14 @@ app.use('/api', clinicsRoute);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/client', petsRoute); 
 app.use('/api', imagesRoute);
-app.use('/api/client', clientProfileRoutes);  
+app.use('/api/client', clientProfileRoutes);
+app.use('/api/client', favRoute);  
+app.use('/api/client', summaryRoute);  
+app.use('/api/client', joinRoute);
+app.use('/api/clinic', notifRoute);
+app.use('/api/clinic', patientsRoute);
+app.use('/api/clinic', medrecRoute);   
+
 
 const PORT = 5000;
 app.listen(PORT, () => {

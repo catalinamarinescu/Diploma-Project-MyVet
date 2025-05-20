@@ -14,12 +14,13 @@ import Pharmacy from './frontend/navbar/pharmacy';
 import PrivacyPolicy from './frontend/privacy/privacyPolicy';
 import Accessibility from './frontend/privacy/accessibility';
 import Terms from './frontend/privacy/terms';
-import Formular from './frontend/clinics/formular';
-import ClinicDashboard from './frontend/clinics/clinic';
+import Formular from './frontend/clinics/clinicData/formular';
+import ClinicDashboard from './frontend/clinics/clinicData/clinic';
 import ClientPage from './frontend/client/clientPage';
 import ClientClinicDetails from './frontend/client/clinicDetails';
 import MyPets from './frontend/client/myPets';
 import ClientProfile from './frontend/client/profile';
+import ClinicPatients from './frontend/clinics/patients/patients';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/client/clinic/:id" element={<ClientClinicDetails/>} />
         <Route path="/client/pets" element={<MyPets/>} />
         <Route path="/client/profile" element={<ClientProfile/>} />
+        <Route path="/clinic/patients" element={<ClinicPatients/>} />
       </Routes>
   );
 }

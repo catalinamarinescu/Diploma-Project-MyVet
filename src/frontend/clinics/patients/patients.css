@@ -1,0 +1,196 @@
+/* Pagina principală */
+.patients-page {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Container central al paginii */
+.patients-container {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titlu + Subtitlu */
+.patients-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #014421;
+}
+
+.patients-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Bara de filtre */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.filters input {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Lista pacienților */
+.patients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Card pacient */
+.patient-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: box-shadow 0.2s;
+  height: 30px;
+}
+
+.patient-card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+
+/* Avatar pacient */
+.avatar {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Informații pacient */
+.patient-info {
+  margin-left: 20px;
+  flex-grow: 1;
+}
+
+.patient-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #222;
+  margin-top: 2px;
+}
+
+.last-visit {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Status badge */
+.status {
+  margin-left: auto;
+}
+
+.badge.active {
+  background-color: #e6f7ec;
+  color: #28a745;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.badge.inactive {
+  background-color: #f2f2f2;
+  color: #999;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+/* Navbar sus */
+.patients-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #014421;
+  padding: 15px 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo-patients {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(214, 184, 139);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.navbar-buttons-patients {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-button-patients {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.nav-button-patients:hover {
+  background-color: #a1a7a4;
+}
+
+/* Logout button */
+.actions-patients {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-button-patients {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.logout-button-patients:hover {
+  background-color: #a1a7a4;
+}

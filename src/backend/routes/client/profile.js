@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { poolPromise } = require('../../db');
-const { petOwnerOnly } = require('../middleware');
-
+const { petOwnerOnly, clinicOnly } = require('../middleware');
 const multer = require('multer');
 const path = require('path');
 
@@ -142,5 +141,40 @@ router.put('/profile', petOwnerOnly, upload.single('image'), async (req, res) =>
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
+router.get('/:id/profile', clinicOnly, async (req, res) => {
+  const clientId = req.params.id;
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('ID_PET_OWNER', clientId)
+      .query(`
+        SELECT 
+          cp.FIRST_NAME, 
+          cp.LAST_NAME, 
+          cp.PHONE, 
+          cp.ADDRESS, 
+          cp.IMAGE,
+          cp.CREATED_AT,
+          po.EMAIL
+        FROM CLIENT_PROFILE cp
+        JOIN PET_OWNERS po ON cp.ID_PET_OWNER = po.ID_PET_OWNER
+        WHERE cp.ID_PET_OWNER = @ID_PET_OWNER
+      `);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+
+    res.json(result.recordset[0]);
+
+  } catch (err) {
+    console.error('Eroare la GET /client/:id/profile:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
 
 module.exports = router;

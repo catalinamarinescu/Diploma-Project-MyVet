@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { poolPromise } = require('../../db');
-const { petOwnerOnly } = require('../middleware');
+const { petOwnerOnly, clinicOnly } = require('../middleware');
 
 router.get('/pets', petOwnerOnly, async (req, res) => {
   const clientId = req.user.id;
@@ -116,5 +116,28 @@ router.put('/pets/:id', petOwnerOnly, upload.single('poza'), async (req, res) =>
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
+router.get('/:id/pets', clinicOnly, async (req, res) => {
+  const clientId = req.params.id;
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('ID_PET_OWNER', clientId)
+      .query(`
+        SELECT 
+          ID, NUME, TIP, RASA, VARSTA, POZA
+        FROM PETS
+        WHERE ID_PET_OWNER = @ID_PET_OWNER
+      `);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Eroare la GET /client/:id/pets:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
 
 module.exports = router;

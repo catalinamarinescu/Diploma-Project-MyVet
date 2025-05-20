@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import ProfileTab from './tabs/profileTab';
 import PetsTab from './tabs/petsTab';
-
 import './profile.css';
+import FavClinicsTab from "./tabs/favTab";
 
 const ClientProfile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [summary, setSummary] = useState({ pets: 0, favorites: 0 });
   const [activeTab, setActiveTab] = useState("profile");
 
   useEffect(() => {
@@ -27,6 +28,22 @@ const ClientProfile = () => {
     };
 
     fetchProfile();
+
+    const fetchSummary = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/client/summary", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("myvet_token")}`
+          }
+        });
+        const data = await res.json();
+        setSummary(data);
+      } catch (err) {
+        console.error("Eroare la summary:", err);
+      }
+    };
+
+    fetchSummary();
   }, []);
 
   if (!profile) return <p style={{ padding: "2rem" }}>Se încarcă profilul...</p>;
@@ -97,9 +114,9 @@ const ClientProfile = () => {
             <div className="profile-card">
               <div className="profile-summary">
                 <h3>Account Summary</h3>
-                <p><strong>Pets:</strong> 3</p>
+                <p><strong>Pets:</strong> {summary.pets}</p>
                 <p><strong>Future Appointments:</strong> 0</p>
-                <p><strong>Fav Clinics:</strong> 0</p>
+                <p><strong>Fav Clinics:</strong> {summary.favorites}</p>
               </div>
             </div>
           )}
@@ -108,7 +125,7 @@ const ClientProfile = () => {
 
       {activeTab === 'pets' && <PetsTab />}
       {activeTab === 'appointments' && <div style={{ padding: "2rem" }}>Conținut pentru programări</div>}
-      {activeTab === 'clinics' && <div style={{ padding: "2rem" }}>Conținut pentru clinici</div>}
+      {activeTab === 'clinics'&& <FavClinicsTab />}
     </div>
   );
 };

@@ -40,7 +40,7 @@ router.get('/clinics/:id', async (req, res) => {
     const infoRes = await pool.request()
       .input('ID_CLINICA', clinicID)
       .query(`
-        SELECT TOP 1 NAME, DESCRIERE, LATITUDINE, LONGITUDINE, ADRESA
+        SELECT TOP 1 ID_CLINICA, NAME, DESCRIERE, LATITUDINE, LONGITUDINE, ADRESA
         FROM CLINIC_INFO
         WHERE ID_CLINICA = @ID_CLINICA
       `);
@@ -95,6 +95,7 @@ router.get('/clinics/:id', async (req, res) => {
 
     // ✔️ Răspuns complet
     res.json({
+      id: info.ID_CLINICA,
       name: info.NAME,
       descriere: info.DESCRIERE,
       latitudine: info.LATITUDINE,
@@ -110,6 +111,5 @@ router.get('/clinics/:id', async (req, res) => {
     res.status(500).json({ error: 'Eroare server' });
   }
 });
-
 
 module.exports = router;

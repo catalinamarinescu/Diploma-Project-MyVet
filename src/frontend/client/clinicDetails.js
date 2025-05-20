@@ -12,6 +12,7 @@ const ClientClinicDetails = () => {
     const navigate = useNavigate();
     const [showJoinForm, setShowJoinForm] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [joinMessage, setJoinMessage] = useState("");
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/clinics/${id}`)
@@ -180,10 +181,10 @@ const ClientClinicDetails = () => {
             </footer>
             {showJoinForm && (
                 <JoinClinicForm
-                    clinicId={clinic?.id}
+                    clinicId={clinic?.id}  // 👈 acest câmp există în CLINIC_INFO
                     onClose={() => setShowJoinForm(false)}
                 />
-            )}
+                )}
         </div>
     );
 };

@@ -20,7 +20,7 @@ const FEATURE_LAYER_URL = 'https://services3.arcgis.com/vRyDgqz1URmrMkH2/arcgis/
 
 async function addClinicToArcGIS({ lat, lon, name, descriere }) {
 //   const token = await generateToken();
-const token = '3NKHt6i2urmWtqOuugvr9b_j6J8WQGiMulY1NafwUNQ_r4Zo0BKWIVylfBGM1QqHd1JFMBm6RtiFhGx26nhabCotBnfDaLDl354WVOlBBduUzG-sfuHqOWnFEwNcz5w0';
+const token = '3NKHt6i2urmWtqOuugvr9X5XAHENlbn-3EuGL86qznTs4ZRXqUbx3ds1_Y8nFPxsvhHmuwHKCKvM_co4nbJcWtA3OHAnclm92lDJrw3VN7LoSK4TGbkHi19VH78tFH5I-sfuHqOWnFEwNcz5w0';
 
   const feature = {
     geometry: {

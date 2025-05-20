@@ -1,0 +1,105 @@
+.lab-results {
+  margin-top: 20px;
+}
+
+.lab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.lab-add-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.lab-add-form input,
+.lab-add-form select,
+.lab-add-form textarea {
+  padding: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.lab-add-form textarea {
+  min-width: 150px;
+  min-height: 38px;
+}
+
+.lab-add-form button {
+  background-color: #014421;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.lab-card {
+  background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.lab-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lab-header-row h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.lab-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 6px;
+}
+
+.lab-summary {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.badge.normal {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge.abnormal {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  color: #014421;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.download-btn:hover {
+  background-color: #d9e5de;
+}

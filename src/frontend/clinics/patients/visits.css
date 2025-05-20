@@ -1,0 +1,106 @@
+.visit-tab {
+  margin-top: 20px;
+}
+
+.visit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.visit-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #014421;
+}
+
+.add-visit-btn {
+  background-color: #014421;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-visit-btn:hover {
+  background-color: #026838;
+}
+
+.visit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.visit-form input,
+.visit-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Segoe UI', sans-serif;
+  resize: vertical;
+}
+
+.visit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.visit-card {
+    background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.visit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.visit-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.visit-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.edit-icon {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.edit-icon:hover {
+  color: #014421;
+}
+
+.visit-section {
+  margin-top: 12px;
+}
+
+.visit-section strong {
+  display: block;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.visit-section p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}

@@ -5,6 +5,7 @@ import "./clientPage.css";
 const ClientPage = () => {
   const [clinics, setClinics] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('myvet_token');
 
@@ -15,6 +16,28 @@ const ClientPage = () => {
       .then(res => res.json())
       .then(data => setClinics(data))
       .catch(err => console.error("Eroare la preluare clinici:", err));
+      const fetchFavorites = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/client/favorites', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        setFavorites(data.map(f => Number(f.clinicId))); // sau f.id, cum e structurat
+      } catch (err) {
+        console.error("Eroare la fetch favorite:", err);
+      }
+    };
+
+    if (token) {
+      fetch('http://localhost:5000/api/clinics/all', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(res => res.json())
+        .then(data => setClinics(data))
+        .catch(err => console.error("Eroare la preluare clinici:", err));
+
+      fetchFavorites();
+    }
   }, [token]);
 
   const handleLogout = () => {
@@ -27,6 +50,29 @@ const ClientPage = () => {
     c.adresa.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.descriere.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const toggleFavorite = async (clinicId) => {
+  const isFavorite = favorites.includes(clinicId);
+  const endpoint = isFavorite ? 'remove' : 'add';
+
+  try {
+    await fetch(`http://localhost:5000/api/client/favorites/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ clinicId })
+    });
+
+    setFavorites(prev =>
+      isFavorite ? prev.filter(id => id !== clinicId) : [...prev, clinicId]
+    );
+  } catch (err) {
+    console.error("Eroare la toggle favorite:", err);
+  }
+};
+
 
   return (
     <div className="client-page">
@@ -63,6 +109,15 @@ const ClientPage = () => {
         ) : (
           filteredClinics.map((clinic, index) => (
             <div key={index} className="clinic-card" onClick={() => navigate(`/client/clinic/${clinic.id}`)}>
+               <div
+                  className={`favorite-icon ${favorites.includes(clinic.id) ? 'filled' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation(); // previne navigarea
+                    toggleFavorite(clinic.id);
+                  }}
+                >
+               <i className={`fas fa-heart ${favorites.includes(Number(clinic.id)) ? 'filled' : ''}`}></i>
+              </div>
               <div className="clinic-image">
                 <img src={`http://localhost:5000/${clinic.imagine}`} alt="clinic" />
               </div>

@@ -1,6 +1,7 @@
 .client-page {
   display: flex;
   flex-direction: column;
+  background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
   min-height: 100vh;
 }
 
@@ -76,12 +77,13 @@
 
 .clinic-card {
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0.1,0.1,0,0.1);
+  box-shadow: 0 4px 12px rgba(0.1,0.1,0,0.8);
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease;
+  position: relative;
 }
 
 .clinic-card:hover {
@@ -234,4 +236,29 @@ filter: brightness(1.2);
 font-size: 14px;
 color: #ffffff;
 margin-top: 20px;
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  color: #ccc;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s ease;
+}
+
+.favorite-icon.filled {
+  color: red;
+}
+
+.favorite-icon .fa-heart {
+  color: #ccc;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.favorite-icon .fa-heart.filled {
+  color: red;
 }
