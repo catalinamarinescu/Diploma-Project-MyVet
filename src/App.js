@@ -21,6 +21,8 @@ import ClientClinicDetails from './frontend/client/clinicDetails';
 import MyPets from './frontend/client/myPets';
 import ClientProfile from './frontend/client/profile';
 import ClinicPatients from './frontend/clinics/patients/patients';
+import MyClinicPage from './frontend/client/myClinic/myClinic';
+import MyClinicsPage from './frontend/client/myClinics';
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
         <Route path="/client/pets" element={<MyPets/>} />
         <Route path="/client/profile" element={<ClientProfile/>} />
         <Route path="/clinic/patients" element={<ClinicPatients/>} />
+        <Route path="/client/my-clinics/:clinicId" element={<MyClinicPage/>} />
+        <Route path="/client/clinics" element={<MyClinicsPage/>} />
       </Routes>
   );
 }

@@ -79,7 +79,7 @@ const ClientPage = () => {
       <nav className="client-navbar">
         <div className="logo-client">MyVet</div>
         <div className="nav-links">
-          <Link to="/client/clinic" className="nav-btn">My Clinic</Link>
+          <Link to="/client/clinics" className="nav-btn">My Clinics</Link>
           <Link to="/client/appointments" className="nav-btn">My Appointments</Link>
         </div>
         <div className="nav-actions">

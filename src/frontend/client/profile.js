@@ -54,7 +54,7 @@ const ClientProfile = () => {
         <div className="logo-profile">MyVet</div>
         <div className="nav-links-profile">
           <Link to="/client" className="nav-btn-profile">Clinics</Link>
-          <Link to="/client/clinic" className="nav-btn-profile">My Clinic</Link>
+          <Link to="/client/clinics" className="nav-btn-profile">My Clinics</Link>
         </div>
         <div className="nav-actions-profile">
           <Link to="/client/profile" className="profile-btn">My Profile</Link>

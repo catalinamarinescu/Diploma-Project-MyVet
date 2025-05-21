@@ -3,11 +3,13 @@ import './visits.css';
 
 const VisitTab = ({ petId }) => {
   const [visits, setVisits] = useState([]);
+  const [veterinarians, setVeterinarians] = useState([]);
   const [form, setForm] = useState({
     title: '',
     date: '',
     diagnosis: '',
-    treatment: ''
+    treatment: '',
+    veterinarian: ''
   });
   const [editId, setEditId] = useState(null);
 
@@ -29,6 +31,24 @@ const VisitTab = ({ petId }) => {
     }
   };
 
+  useEffect(() => {
+  fetchVisits();
+  fetchVeterinarians();
+}, [petId]);
+
+const fetchVeterinarians = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/clinic/angajati', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    setVeterinarians(data);
+  } catch (err) {
+    console.error('Error fetching vets:', err);
+  }
+};
+
+
   const handleAddOrEditVisit = async () => {
     const method = editId ? 'PUT' : 'POST';
     const url = editId
@@ -47,7 +67,7 @@ const VisitTab = ({ petId }) => {
 
       if (!res.ok) throw new Error('Failed to save visit');
 
-      setForm({ title: '', date: '', diagnosis: '', treatment: '' });
+      setForm({ title: '', date: '', diagnosis: '', treatment: '' , veterinarian: ''});
       setEditId(null);
       fetchVisits();
     } catch (err) {
@@ -60,8 +80,10 @@ const VisitTab = ({ petId }) => {
       title: visit.TITLE,
       date: visit.VISIT_DATE.split('T')[0],
       diagnosis: visit.DIAGNOSIS,
-      treatment: visit.TREATMENT
+      treatment: visit.TREATMENT,
+      veterinarian: visit.VETERINARIAN || ''
     });
+
     setEditId(visit.ID);
   };
 
@@ -96,6 +118,17 @@ const VisitTab = ({ petId }) => {
           value={form.treatment}
           onChange={e => setForm({ ...form, treatment: e.target.value })}
         />
+        <select
+          value={form.veterinarian}
+          onChange={e => setForm({ ...form, veterinarian: e.target.value })}
+        >
+          <option value="">Select Veterinarian</option>
+          {veterinarians.map(vet => (
+            <option key={vet.ID} value={vet.FULL_NAME}>
+              {vet.FULL_NAME}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="visit-list">
@@ -116,6 +149,10 @@ const VisitTab = ({ petId }) => {
               <strong>Treatment</strong>
               <p>{visit.TREATMENT}</p>
             </div>
+            <div className="visit-section">
+            <strong>Veterinarian</strong>
+            <p>{visit.VETERINARIAN}</p>
+          </div>
           </div>
         ))}
       </div>

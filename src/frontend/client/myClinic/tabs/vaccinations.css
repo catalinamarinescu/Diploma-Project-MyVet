@@ -1,0 +1,48 @@
+.vaccination-tab {
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.vaccination-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.vaccination-table th,
+.vaccination-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.vaccination-table th {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.overdue {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-badge.up-to-date {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.vaccination-note {
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}

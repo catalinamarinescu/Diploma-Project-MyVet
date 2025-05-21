@@ -119,6 +119,14 @@
   flex-grow: 1;
 }
 
+.clinic-info h3,
+.clinic-address,
+.clinic-desc {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
 .view-btn {
   margin-top: auto;
   align-self: start;

@@ -153,5 +153,29 @@ router.post('/clinic/angajati', clinicOnly, upload.single('poza'), async (req, r
   }
 });
 
+// GET employees for current clinic
+router.get('/clinic/angajati', clinicOnly, async (req, res) => {
+  const clinicId = req.user.id;
+
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('ID_CLINICA', clinicId)
+      .query(`
+        SELECT 
+          E.ID,
+          E.PRENUME + ' ' + E.NUME AS FULL_NAME
+        FROM ANGAJATI E
+        WHERE E.ID_CLINICA = @ID_CLINICA
+      `);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Eroare la preluare angajați:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
+
 
 module.exports = router;

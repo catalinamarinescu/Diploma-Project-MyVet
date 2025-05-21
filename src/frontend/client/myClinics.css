@@ -1,0 +1,105 @@
+.myclinics-title {
+  margin: 2rem;
+  font-size: 2rem;
+  color: #014421;
+}
+
+.clinics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.clinics-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0.1,0.1,0,0.8);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+  position: relative;;
+}
+
+.clinics-card:hover {
+  transform: translateY(-4px);
+}
+
+.clinics-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.clinics-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.clinics-info h3 {
+  color: #00421f;
+  font-size: 2rem;
+}
+
+.clinics-address {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.clinics-desc {
+    font-size: 0.95rem;
+    color: #666;
+    flex-grow: 1;
+}
+
+.clinics-info h3,
+.clinics-address,
+.clinics-desc {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.myclinics-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #014421;
+  padding: 15px 30px;
+}
+
+.logo-myclinics {
+ font-size: 24px;
+  font-weight: bold;
+  color: rgb(214, 184, 139);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav-links-myclinics,
+.nav-actions-myclinics {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-btn-myclinics,
+.profile-btn-myclinics,
+.logout-btn-myclinics {
+  background: white;
+  color: #014421;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav-btn-myclinics:hover,
+.profile-btn-myclinics:hover,
+.logout-btn-myclinics:hover {
+   background-color: #dadada;
+}

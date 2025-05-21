@@ -1,0 +1,42 @@
+.client-visits-container {
+  padding: 1rem 2rem;
+}
+
+.client-visit-card {
+  background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.client-visit-card h4 {
+  font-size: 1.2rem;
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.visit-subtext {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.visit-section {
+  margin-bottom: 1rem;
+}
+
+.visit-section strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 0.2rem;
+}
+
+.visit-section p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}

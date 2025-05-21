@@ -49,7 +49,7 @@ const ClientClinicDetails = () => {
                 </div>
                 <div className="navbar-buttons-clinicDetails">
                     <Link to="/client" className="nav-button-clinicDetails">Clinics</Link>
-                    <Link to="/client/clinic" className="nav-button-clinicDetails">My Clinic</Link>
+                    <Link to="/client/clinics" className="nav-button-clinicDetails">My Clinics</Link>
                     <Link to="/client/appointments" className="nav-button-clinicDetails">My Appointments</Link>
                 </div>
                 <div className="actions-clinicDetails">
