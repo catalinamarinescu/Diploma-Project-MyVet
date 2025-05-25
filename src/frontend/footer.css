@@ -1,0 +1,91 @@
+.footer-home1 {
+display: flex;
+justify-content: space-around;
+background-color: #014421;
+min-height: 300px;
+border-top: 1px solid #ccc;
+position: relative;
+}
+
+.footer-column-home1 {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+  flex-direction: column;
+  position: relative;
+  justify-content: flex-start;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-column-home1:not(:last-child)::after {
+content: "";
+position: absolute;
+top: 0;
+right: 0;
+width: 1px;
+height: 100%;
+background-color: white; /* sau altă culoare dacă vrei */
+}
+
+.footer-logo-home1 {
+color:rgb(214, 184, 139);
+font-size: 32px;
+font-weight: bold;
+margin-bottom: 20px;
+}
+
+.footer-column-home1 p, .footer-column-home1 a {
+color: #e8e6e6;
+font-size: 16px;
+margin: 8px 0;
+text-decoration: none;
+ display: block;
+}
+
+.quick-links-home1 {
+list-style: none;
+padding: 0;
+justify-content: left;
+margin-left: 0px;
+}
+
+.quick-links-home1 h4 {
+color: #f7f7f7;
+text-decoration: solid;
+}
+
+.quick-links-home1 li {
+margin-bottom: 10px;
+}
+
+.quick-links-home1 a:hover {
+color: #a1a7a4;
+text-decoration: underline;
+}
+
+.social-icons-home1 {
+display: flex;
+justify-content: flex;
+margin-top: 10px;
+gap: 15px;
+margin-left: 0px;
+}
+
+.social-icons-home1 img {
+width: 28px;
+height: 28px;
+transition: transform 0.3s ease, filter 0.3s ease;
+align-self: left;
+}
+
+.social-icons-home1 img:hover {
+transform: scale(1.2);
+filter: brightness(1.2);
+}
+
+.copyright-home1 {
+font-size: 14px;
+color: #b5b4b4;
+margin-top: 100px;
+}

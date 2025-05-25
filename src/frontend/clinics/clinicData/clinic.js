@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import './clinic.css';
 import ServicesTab from './serviceTab';
 import EmployeesTab from './employeesTab';
+import Navbar from '../../navbar';
+import Footer from '../../footer';
 
 const ClinicDashboard = () => {
   const navigate = useNavigate();
@@ -92,8 +94,6 @@ const fetchRequests = async () => {
   }
 };
 
-
-
  const handleImageUpload = async (e) => {
     const files = e.target.files;
     if (!files.length) return;
@@ -166,36 +166,7 @@ const fetchRequests = async () => {
 
   return (
     <div className="dashboard-container">
-      <nav className="clinic-navbar">
-        <div className="logo-clinic">MyVet</div>
-        <div className="navbar-buttons-clinic">
-          <Link to="/clinic/patients" className="nav-button-clinic">My Patients</Link>
-          <Link to="/clinic/calendar" className="nav-button-clinic">Calendar</Link>
-        </div>
-        <div className="actions">
-          <button className="notif-btn" onClick={() => setShowRequestsDropdown(prev => !prev)}>🔔</button>
-          {showRequestsDropdown && (
-            <div className="notif-dropdown">
-              {joinRequests.length === 0 ? (
-                <p className="no-requests">No requests</p>
-              ) : (
-                joinRequests.map((req, idx) => (
-                  <div key={idx} className="notif-item">
-                    <strong>{req.FIRST_NAME} {req.LAST_NAME}</strong>
-                    <p>{req.MESSAGE}</p>
-                    <div className="notif-actions">
-                      <button onClick={() => handleJoinAction(req.ID_REQUEST, true)}>Accept</button>
-                      <button onClick={() => handleJoinAction(req.ID_REQUEST, false)}>Reject</button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-
-          <button className="logout-button-clinic" onClick={handleLogout}>Logout</button>
-        </div>
-      </nav>
+      <Navbar/>
 
       <div className="dashboard-main">
         <h1 className="dashboard-title">Clinic Dashboard</h1>
@@ -283,42 +254,7 @@ const fetchRequests = async () => {
         {activeTab === 'services' && <ServicesTab />}
         {activeTab === 'employees' && <EmployeesTab />}
       </div>
-      <footer className="footer">
-          <div className="footer-column">
-              <h2 className="footer-logo">MyVet</h2>
-              <p>+40 712 345 678</p>
-              <p>support@myvet.com</p>
-              <p>Str. Animăluțelor nr. 5, București</p>
-              <div className="social-icons">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/instagram.png" alt="Instagram" />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/facebook.png" alt="Facebook" />
-              </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/tiktok.png" alt="TikTok" />
-              </a>
-              </div>
-          </div>
-
-          <div className="footer-column">
-              <ul className="quick-links">
-              <h4>Quick Links</h4>    
-              <li><a href="/clinic/patients">MyPatients</a></li>
-              <li><a href="/clinic/calendar">Calendar</a></li>
-              </ul>       
-          </div>
-
-          <div className="footer-column">
-              <ul className="quick-links">
-              <li><a href="/privacypolicy">Privacy Policy</a></li>
-              <li><a href="/accessibility">Accessibility</a></li>
-              <li><a href="/terms">Terms & Conditions</a></li>
-              </ul>
-              <p className="copyright">© 2025 by MyVet</p>
-          </div>
-      </footer>
+      <Footer/>
     </div>
   );
 };

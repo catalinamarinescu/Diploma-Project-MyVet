@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const CLIENT_ID = 'Ru2UeGHQIK3ti6is';
-const CLIENT_SECRET = '3NKHt6i2urmWtqOuugvr9a4h7tNKcihxJDSiHjkOc2GgjloLlXgc-KuGSAry5DIe15pijwoAtwrg7FgDtWJJadEimGlkDXRtQ1RweRonOCjZUnm14_JL-20R5kTJFoOy';
+const CLIENT_SECRET = '3NKHt6i2urmWtqOuugvr9e8Z2WV4qPM-aRluRdV2C9DSkeJ9y5MyhipFyXQ5cU4oU5zIvoepb5ap9MxyCOnko3jig8tjgg_xnejQUi0cA4FrMzgRUyAR-iSLv6nZ_MjK';
 const TOKEN_URL = 'https://www.arcgis.com/sharing/rest/oauth2/token/';
 const FEATURE_LAYER_URL = 'https://services3.arcgis.com/vRyDgqz1URmrMkH2/arcgis/rest/services/locatii_bucuresti/FeatureServer/0/addFeatures';
 
@@ -20,7 +20,7 @@ const FEATURE_LAYER_URL = 'https://services3.arcgis.com/vRyDgqz1URmrMkH2/arcgis/
 
 async function addClinicToArcGIS({ lat, lon, name, descriere }) {
 //   const token = await generateToken();
-const token = '3NKHt6i2urmWtqOuugvr9X5XAHENlbn-3EuGL86qznTs4ZRXqUbx3ds1_Y8nFPxsvhHmuwHKCKvM_co4nbJcWtA3OHAnclm92lDJrw3VN7LoSK4TGbkHi19VH78tFH5I-sfuHqOWnFEwNcz5w0';
+const token = '3NKHt6i2urmWtqOuugvr9dftQJhaOl7mMjwnNDrQSSaA6NiON3DLp26sy9GKQ3lYfA7b0VFcwwy2xDxIH2CNXOgiMDUBNYtvvYK5HBi4Jn2JyLX48B-NeRZrBvqLUqM5';
 
   const feature = {
     geometry: {
@@ -45,12 +45,12 @@ const token = '3NKHt6i2urmWtqOuugvr9X5XAHENlbn-3EuGL86qznTs4ZRXqUbx3ds1_Y8nFPxsv
   try {
     const res = await axios.post(FEATURE_LAYER_URL, payload);
     if (res.data?.addResults?.[0]?.success) {
-      console.log('📍 Clinica adăugată în ArcGIS!');
+      console.log('Clinica adăugată în ArcGIS!');
     } else {
-      console.warn('⚠️ Eșec la adăugare:', res.data);
+      console.warn('Eșec la adăugare:', res.data);
     }
   } catch (err) {
-    console.error('❌ Eroare comunicare ArcGIS:', err.message);
+    console.error(' Eroare comunicare ArcGIS:', err.message);
   }
 }
 

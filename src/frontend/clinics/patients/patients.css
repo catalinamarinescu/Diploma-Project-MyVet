@@ -5,6 +5,7 @@
   background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
+  padding-top: 70px;
 }
 
 /* Container central al paginii */
@@ -152,8 +153,7 @@
 .logo-patients {
   font-size: 24px;
   font-weight: bold;
-  color: rgb(214, 184, 139);
-  font-family: 'Courier New', Courier, monospace;
+  color: rgb(208, 160, 88);
 }
 
 .navbar-buttons-patients {
@@ -162,17 +162,17 @@
 }
 
 .nav-button-patients {
-  background: white;
-  color: #014421;
+  background: #014421;
+  color: #ffffff;
   padding: 8px 14px;
   border-radius: 5px;
   text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .nav-button-patients:hover {
-  background-color: #a1a7a4;
+  color: #cacecc;
 }
 
 /* Logout button */
@@ -182,15 +182,16 @@
 }
 
 .logout-button-patients {
-  background: white;
-  color: #014421;
-  padding: 8px 14px;
+  background: rgb(213, 178, 125);
+  color: rgb(255, 255, 255);
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 13px;
   border-radius: 5px;
   text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
+  border: none;
 }
 
 .logout-button-patients:hover {
-  background-color: #a1a7a4;
+  background-color: rgb(209, 150, 63);
 }

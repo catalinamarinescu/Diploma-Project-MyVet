@@ -6,6 +6,9 @@ const EmployeesTab = () => {
   const [showModal, setShowModal] = useState(false);
   const [allServices, setAllServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   const [currentEmployee, setCurrentEmployee] = useState({
     id: null,
     nume: '',
@@ -16,6 +19,7 @@ const EmployeesTab = () => {
     poza: null,
     pozaPreview: null
   });
+
   const token = localStorage.getItem('myvet_token');
 
   const fetchEmployees = async () => {
@@ -43,6 +47,7 @@ const EmployeesTab = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchEmployees();
+      setCurrentPage(1);
     } catch (err) {
       console.error("Error deleting employee:", err);
     }
@@ -51,8 +56,8 @@ const EmployeesTab = () => {
   const handleModalOpen = (emp = null) => {
     if (emp) {
       const matchedServiceIds = allServices
-        .filter(s => emp.servicii.includes(s.denumire)) // match denumiri
-        .map(s => s.id); // extrage ID-uri
+        .filter(s => emp.servicii.includes(s.denumire))
+        .map(s => s.id);
 
       setCurrentEmployee({
         ...emp,
@@ -76,10 +81,9 @@ const EmployeesTab = () => {
     setShowModal(true);
   };
 
-
   const handleModalClose = () => {
     if (currentEmployee.pozaPreview?.startsWith('blob:')) {
-      URL.revokeObjectURL(currentEmployee.pozaPreview); // curăță bloburile
+      URL.revokeObjectURL(currentEmployee.pozaPreview);
     }
     setShowModal(false);
     setCurrentEmployee({
@@ -92,6 +96,7 @@ const EmployeesTab = () => {
       poza: null,
       pozaPreview: null
     });
+    setCurrentPage(1);
   };
 
   const handleSubmit = async (e) => {
@@ -126,118 +131,136 @@ const EmployeesTab = () => {
     }
   };
 
+  // Paginated slice
+  const totalPages = Math.ceil(employees.length / itemsPerPage);
+  const paginatedEmployees = employees.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="employees-tab">
       <div className="employees-header">
         <h2>Employees</h2>
-        <div className="actions">
-          <button className="add-btn" onClick={() => handleModalOpen()}>Add Employee</button>
-        </div>
+        <button className="add-btn" onClick={() => handleModalOpen()}>Add Employee</button>
       </div>
 
       <div className="employee-list">
-        {employees.map((e) => (
+        {paginatedEmployees.map((e) => (
           <div className="employee-card" key={e.id}>
-            <div className="avatar">
+            <div className="employees-avatar">
               {e.poza ? (
                 <img src={`http://localhost:5000/${e.poza}`} alt="avatar" />
               ) : (
                 <div className="initials">{e.nume[0]}{e.prenume[0]}</div>
               )}
             </div>
-            <div className="details">
-            <h3>{e.nume} {e.prenume}</h3>
-            <span className="badge">{e.tip}</span>
-            <p><strong>Email:</strong> {e.email}</p>
-            <p><strong>Phone:</strong> {e.telefon}</p>
-            {e.servicii && e.servicii.length > 0 && (
-              <span className='badge2'>{e.servicii.join(', ')}</span>
-            )}
-          </div>
-            <div className="card-actions">
+            <div className="employees-details">
+              <h3>{e.nume} {e.prenume}</h3>
+              <span className="employees-badge">{e.tip}</span>
+              <p><strong>Email:</strong> {e.email}</p>
+              <p><strong>Phone:</strong> {e.telefon}</p>
+              {e.servicii && e.servicii.length > 0 && (
+                <span className='badge2'>{e.servicii.join(', ')}</span>
+              )}
+            </div>
+            <div className="employees-card-actions">
               <button onClick={() => handleModalOpen(e)}>Edit</button>
-              <button onClick={() => handleDelete(e.id)} className="delete">Delete</button>
+              <button onClick={() => handleDelete(e.id)} className="employees-delete">Delete</button>
             </div>
           </div>
         ))}
       </div>
 
+      {totalPages > 1 && (
+        <div className="pagination2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={currentPage === i + 1 ? 'active' : ''}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
       {showModal && (
-        <div className="modal-backdrop">
-          <div className="modal">
+        <div className="employees-modal-backdrop">
+          <div className="employees-modal">
             <h3>{currentEmployee?.id ? "Edit Employee" : "Add Employee"}</h3>
             <form onSubmit={handleSubmit}>
               <label>First Name</label>
-              <input value={currentEmployee.nume} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, nume: e.target.value }))} required />
+                <input value={currentEmployee.nume} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, nume: e.target.value }))} required />
 
-              <label>Last Name</label>
-              <input value={currentEmployee.prenume} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, prenume: e.target.value }))} required />
+                <label>Last Name</label>
+                <input value={currentEmployee.prenume} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, prenume: e.target.value }))} required />
 
-              <label>Role</label>
-              <input value={currentEmployee.tip} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, tip: e.target.value }))} required />
+                <label>Role</label>
+                <input value={currentEmployee.tip} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, tip: e.target.value }))} required />
 
-              <label>Email</label>
-              <input type="email" value={currentEmployee.email} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, email: e.target.value }))} required />
+                <label>Email</label>
+                <input type="email" value={currentEmployee.email} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, email: e.target.value }))} required />
 
-              <label>Phone</label>
-              <input value={currentEmployee.telefon} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, telefon: e.target.value }))} required />
-              <label>Services</label>
+                <label>Phone</label>
+                <input value={currentEmployee.telefon} onChange={(e) => setCurrentEmployee(prev => ({ ...prev, telefon: e.target.value }))} required />
+
+                <label>Services</label>
                 <div className="checkbox-group">
                   {allServices.map(service => (
-                  <label key={service.id} style={{ display: 'block', marginBottom: '0.5rem' }}>
-                    <input
-                      type="checkbox"
-                      value={service.id}
-                      checked={selectedServices.includes(service.id)}
-                      onChange={(e) => {
-                        const checked = e.target.checked;
-                        const value = parseInt(e.target.value);
-                        if (checked) {
-                          setSelectedServices(prev => [...prev, value]);
-                        } else {
-                          setSelectedServices(prev => prev.filter(id => id !== value));
-                        }
-                      }}
+                    <label key={service.id} style={{ display: 'block', marginBottom: '0.5rem' }}>
+                      <input
+                        type="checkbox"
+                        value={service.id}
+                        checked={selectedServices.includes(service.id)}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          const value = parseInt(e.target.value);
+                          if (checked) {
+                            setSelectedServices(prev => [...prev, value]);
+                          } else {
+                            setSelectedServices(prev => prev.filter(id => id !== value));
+                          }
+                        }}
+                      />
+                      {service.denumire}
+                    </label>
+                  ))}
+                </div>
+
+                <label htmlFor="file-upload" className="employees-file-upload-label">Upload Image</label>
+                <input
+                  id="file-upload"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      setCurrentEmployee(prev => ({
+                        ...prev,
+                        poza: file,
+                        pozaPreview: URL.createObjectURL(file)
+                      }));
+                    }
+                  }}
+                />
+
+                {currentEmployee.pozaPreview && (
+                  <div style={{ marginTop: '1rem' }}>
+                    <img
+                      src={currentEmployee.pozaPreview}
+                      alt="Preview"
+                      style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '10px' }}
                     />
-                    {service.denumire}
-                  </label>
-                ))}
-                </div>
-              <label htmlFor="file-upload" className="file-upload-label">
-                Upload Image
-              </label>
-              <input
-                id="file-upload"
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    setCurrentEmployee(prev => ({
-                      ...prev,
-                      poza: file,
-                      pozaPreview: URL.createObjectURL(file)
-                    }));
-                  }
-                }}
-              />
+                  </div>
+                )}
 
-              {/* Live Preview Image */}
-              {currentEmployee.pozaPreview && (
-                <div style={{ marginTop: '1rem' }}>
-                  <img
-                    src={currentEmployee.pozaPreview}
-                    alt="Preview"
-                    style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '10px' }}
-                  />
+                <div className="employees-modal-actions">
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={handleModalClose}>Cancel</button>
                 </div>
-              )}
-
-              <div className="modal-actions">
-                <button type="submit">Save</button>
-                <button type="button" onClick={handleModalClose} className="cancel">Cancel</button>
-              </div>
             </form>
           </div>
         </div>

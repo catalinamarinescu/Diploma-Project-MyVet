@@ -1,6 +1,6 @@
 import React, {use, useState} from "react";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
 
 const picture = "/imagini/fundal.jpg";
@@ -37,6 +37,7 @@ const Login = () => {
           const token = res.data.token;
       
           localStorage.setItem("myvet_token", token);
+          localStorage.setItem("userType", accountType);
           alert("Login reușit!");
       
           if (accountType === "clinic") {
@@ -47,12 +48,15 @@ const Login = () => {
             });
       
             if (profilCheck.data.completat) {
-              navigate("/clinic/profile");
+              localStorage.setItem("userType", "clinic");
+              navigate("/");
             } else {
-              navigate("/form");
+              localStorage.setItem("userType", "clinic");
+              navigate("/");
             }
           } else {
-            navigate("/client");
+            localStorage.setItem("userType", "client");
+            navigate("/");
           }
       
         } catch (err) {
@@ -62,29 +66,64 @@ const Login = () => {
       };
 
     return (
-        <div className="login-container">
-            <div className="background-image" style={{
-            backgroundImage: `url(${picture})`,
-            }}/>
-            <div className="overlay"></div> 
-            <h2>Login</h2>
-            <label>Choose account type:</label>
-            <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
-                <option value="clinic">Clinic</option>
-                <option value="petowner">Pet Owner</option>
-            </select>
+        <div className="login-page">
+          <Link to="/" className="back-link">← Back to Home</Link>
+          <div className="login-left">
+            <div className="login-welcome">
+              <span className="welcome-badge">Welcome Back</span>
+              <h1>Sign in to <span className="highlight">MyVet</span></h1>
+              <p>Continue your journey in providing the best care for our furry friends. Access your dashboard and manage your pet care services.</p>
+              <ul className="login-features">
+                <li>
+                  <img src="/imagini/shield.png" alt="Shield" className="icon" />
+                  Secure and encrypted login
+                </li>
+                <li>
+                  <img src="/imagini/heart.png" alt="Heart" className="icon" />
+                  Access to all pet care features
+                </li>
 
-            <form onSubmit={handleLogin}>
-                {accountType === "clinic" && (
-                    <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-                )}
-                {accountType === "petowner" && (
-                    <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-                )}
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-                <button type="submit">Login</button>
-            </form>
+              </ul>
+            </div>
+          </div>
+
+          <div className="login-right">
+            <div className="login-box">
+              <h2>Welcome Back!</h2>
+              <p>Sign in to your account to continue</p>
+
+              <label>Account Type</label>
+              <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
+                <option value="clinic">Veterinary Clinic</option>
+                <option value="petowner">Pet Owner</option>
+              </select>
+
+              {accountType === "clinic" && (
+                <>
+                  <label>Email Address</label>
+                  <input type="email" name="email" placeholder="clinic@example.com" onChange={handleChange} required />
+                </>
+              )}
+
+              {accountType === "petowner" && (
+                <>
+                  <label>Username</label>
+                  <input type="text" name="username" placeholder="Your username" onChange={handleChange} required />
+                </>
+              )}
+
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter your password" onChange={handleChange} required />
+              <button className="login-btn" onClick={handleLogin}>Sign In</button>
+
+              <div className="signup-link">
+                <span>Don't have an account?</span>
+                <Link to="/accountType">Create New Account</Link>
+              </div>
+            </div>
+          </div>
         </div>
+
     );
 };
 

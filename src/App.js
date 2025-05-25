@@ -23,6 +23,7 @@ import ClientProfile from './frontend/client/profile';
 import ClinicPatients from './frontend/clinics/patients/patients';
 import MyClinicPage from './frontend/client/myClinic/myClinic';
 import MyClinicsPage from './frontend/client/myClinics';
+import Navbar from './frontend/navbar';
 
 
 function App() {

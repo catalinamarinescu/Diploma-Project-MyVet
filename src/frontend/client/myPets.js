@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './myPets.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../navbar';
+import Footer from "../footer";
 
 const MyPets = () => {
   const navigate = useNavigate();
@@ -87,18 +89,7 @@ const MyPets = () => {
 
   return (
     <div className="mypets-page">
-      <nav className="navbar-pets">
-        <div className="logo-pets">MyVet</div>
-        <div className="nav-links-pets">
-          <Link to="/client" className="nav-btn-pets">Clinics</Link>
-          <Link to="/client/clinic" className="nav-btn-pets">My Clinic</Link>
-          <Link to="/client/appointments" className="nav-btn-pets">My Appointments</Link>
-        </div>
-        <div className="nav-actions-pets">
-          <Link to="/client/profile" className="profile-btn-pets">My Profile</Link>
-          <button className="logout-btn-pets" onClick={handleLogout}>Logout</button>
-        </div>
-      </nav>
+     <Navbar/>
 
       <h2 className="pets-title">My Pets</h2>
       <p className='pets-paragraf'> Here you can create profiles for each one of your pets.</p>
@@ -205,43 +196,7 @@ const MyPets = () => {
 
       ))}
     </div>
-        <footer className="footer">
-          <div className="footer-column">
-              <h2 className="footer-logo">MyVet</h2>
-              <p>+40 712 345 678</p>
-              <p>support@myvet.com</p>
-              <p>Str. Animăluțelor nr. 5, București</p>
-              <div className="social-icons">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/instagram.png" alt="Instagram" />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/facebook.png" alt="Facebook" />
-              </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                  <img src="/imagini/tiktok.png" alt="TikTok" />
-              </a>
-              </div>
-          </div>
-
-          <div className="footer-column">
-              <ul className="quick-links">
-              <h4>Quick Links</h4>    
-              <li><a href="/client">Clinics</a></li>
-              <li><a href="/client/clinic">MyClinic</a></li>
-              <li><a href="/client/appointments">MyAppointments</a></li>
-              </ul>       
-          </div>
-
-          <div className="footer-column">
-              <ul className="quick-links">
-              <li><a href="/privacypolicy">Privacy Policy</a></li>
-              <li><a href="/accessibility">Accessibility</a></li>
-              <li><a href="/terms">Terms & Conditions</a></li>
-              </ul>
-              <p className="copyright">© 2025 by MyVet</p>
-          </div>
-      </footer>
+       <Footer/>
     </div>
   );
 };

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './patients.css';
 import { Link, useNavigate } from 'react-router-dom';
 import ExpandablePatientCard from './expandOwner';
+import Navbar from '../../navbar';
+import Footer from "../../footer";
 
 const ClinicPatients = () => {
   const [patients, setPatients] = useState([]);
@@ -45,16 +47,7 @@ const ClinicPatients = () => {
 
   return (
     <div className="patients-page">
-      <nav className="patients-navbar">
-        <div className="logo-patients">MyVet</div>
-        <div className="navbar-buttons-patients">
-          <Link to="/clinic/profile" className="nav-button-patients">Dashboard</Link>
-          <Link to="/clinic/calendar" className="nav-button-patients">Calendar</Link>
-        </div>
-        <div className="actions-patients">
-          <button className="logout-button-patients" onClick={handleLogout}>Logout</button>
-        </div>
-      </nav>
+      <Navbar/>
 
       <div className="patients-container">
         <h1 className="patients-title">My Patients</h1>
@@ -81,6 +74,7 @@ const ClinicPatients = () => {
           ))}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

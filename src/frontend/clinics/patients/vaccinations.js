@@ -93,7 +93,7 @@ const VaccinationTab = ({ petId }) => {
                   <option value="Upcoming">Upcoming</option>
                 </select>
               </td>
-              <td>✏️</td>
+              <td>Edit</td>
             </tr>
           ))}
         </tbody>

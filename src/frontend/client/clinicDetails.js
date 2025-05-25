@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 import "./clinicDetails.css";
 import JoinClinicForm from "./joinClinic";
+import Navbar from "../navbar";
+import Footer from "../footer";
 
 const ClientClinicDetails = () => {
     const {id} = useParams();
@@ -43,20 +45,7 @@ const ClientClinicDetails = () => {
 
     return (
         <div className="clinic-details-page">
-            <nav className="clinicDetails-navbar">
-                <div className="logo-clinicDetails">
-                    MyVet
-                </div>
-                <div className="navbar-buttons-clinicDetails">
-                    <Link to="/client" className="nav-button-clinicDetails">Clinics</Link>
-                    <Link to="/client/clinics" className="nav-button-clinicDetails">My Clinics</Link>
-                    <Link to="/client/appointments" className="nav-button-clinicDetails">My Appointments</Link>
-                </div>
-                <div className="actions-clinicDetails">
-                    <Link to="/client/profile" className="profile-btn-clinicDetails">MyProfile</Link>
-                    <button className="logout-btn-clinicDetails" onClick={handleLogout}>Logout</button>
-                </div>
-            </nav>
+            <Navbar/>
             <div className="clinic-header">
                 <div className="clinic-text">
                     <h1>{clinic?.name}</h1>
@@ -142,43 +131,7 @@ const ClientClinicDetails = () => {
                 </div>
                 )}
                 </div>
-            <footer className="footer">
-                <div className="footer-column">
-                    <h2 className="footer-logo">MyVet</h2>
-                    <p>+40 712 345 678</p>
-                    <p>support@myvet.com</p>
-                    <p>Str. Animăluțelor nr. 5, București</p>
-                    <div className="social-icons">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/instagram.png" alt="Instagram" />
-                    </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/facebook.png" alt="Facebook" />
-                    </a>
-                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/tiktok.png" alt="TikTok" />
-                    </a>
-                    </div>
-                </div>
-
-                <div className="footer-column">
-                    <ul className="quick-links">
-                    <h4>Quick Links</h4>    
-                    <li><a href="/client/pets">MyPets</a></li>
-                    <li><a href="/client/clinic">MyClinic</a></li>
-                    <li><a href="/client/appointments">MyAppointments</a></li>
-                    </ul>       
-                </div>
-
-                <div className="footer-column">
-                    <ul className="quick-links">
-                    <li><a href="/privacypolicy">Privacy Policy</a></li>
-                    <li><a href="/accessibility">Accessibility</a></li>
-                    <li><a href="/terms">Terms & Conditions</a></li>
-                    </ul>
-                    <p className="copyright">© 2025 by MyVet</p>
-                </div>
-            </footer>
+            <Footer/>
             {showJoinForm && (
                 <JoinClinicForm
                     clinicId={clinic?.id}  // 👈 acest câmp există în CLINIC_INFO

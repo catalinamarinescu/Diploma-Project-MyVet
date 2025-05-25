@@ -2,9 +2,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f6f8;
+  background: white;
   color: #1f2937;
+  padding-top: 60px;
 }
 
 h1, h3 {
@@ -20,67 +20,6 @@ h1 {
   text-align: center;
   margin-top: 2rem;
   color: #666;
-}
-
-/* ========== Navbar ========== */
-.clinic-navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #014421;
-  padding: 15px 30px;
-}
-
-.logo-clinic {
- font-size: 24px;
-  font-weight: bold;
-  color: rgb(214, 184, 139);
-  font-family: 'Courier New', Courier, monospace
-}
-
-.navbar-buttons-clinic {
-  display: flex;
-  gap: 30px;
-}
-
-.nav-button-clinic{
-  background: white;
-  color: #014421;
-  padding: 8px 14px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.nav-button-clinic:hover {
-  background-color: #a1a7a4;
-}
-
-.actions  {
-  display: flex;
-  gap: 10px;
-}
-
-.notif-btn {
-  background: white;
-  color: #014421;
-  padding: 8px 14px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.logout-button-clinic {
-  background: white;
-  color: #014421;
-  padding: 8px 14px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.logout-button-clinic:hover .notif-btn:hover {
-  background-color: #a1a7a4;
 }
 
 /* ========== Dashboard Content ========== */
@@ -135,7 +74,7 @@ h1 {
 
 .profile-form-card,
 .profile-gallery-card {
-  background-color: white;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 1.5rem;
@@ -171,7 +110,7 @@ h1 {
   margin-top: 1.5rem;
 }
 
-.edit-actions .button-edit {
+.edit-actions {
   padding: 0.5rem 1rem;
   font-weight: bold;
   color:#00421f;
@@ -207,11 +146,8 @@ h1 {
   background-color: #d1d5db;
 }
 
-/* ========== Gallery ========== */
-/* ========== Galerie de imagini ========== */
-
 .profile-gallery-card {
-  background: white;
+ background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -269,162 +205,4 @@ h1 {
   }
 }
 
-.footer {
-display: flex;
-justify-content: space-around;
-align-items: stretch;
-background-color: #014421;
-padding: 0px;
-flex-wrap: nowrap;
-min-height: 300px;
-border-top: 1px solid #ccc;
-position: relative;
-}
 
-.footer-column {
-flex: 1;
-padding: 20px;
-text-align: left;
-flex-direction: column;
-position: relative;
-justify-content: flex-start;
-display: flex;
-}
-
-.footer-column:not(:last-child)::after {
-content: "";
-position: absolute;
-top: 0;
-right: 0;
-width: 1px;
-height: 100%;
-background-color: white; /* sau altă culoare dacă vrei */
-}
-
-.footer-logo {
-color:rgb(214, 184, 139);
-font-size: 32px;
-font-weight: bold;
-margin-bottom: 20px;
-}
-
-.footer-column p, .footer-column a {
-color: #f7f7f7;
-font-size: 16px;
-margin: 8px 0;
-text-decoration: none;
-}
-
-.quick-links {
-list-style: none;
-padding: 0;
-}
-
-.quick-links h4 {
-color: #f7f7f7;
-text-decoration: solid;
-}
-
-.quick-links li {
-margin-bottom: 10px;
-}
-
-.quick-links a:hover {
-color: #a1a7a4;
-text-decoration: underline;
-}
-
-.social-icons {
-display: flex;
-justify-content: flex;
-margin-top: 10px;
-gap: 15px;
-margin-left: 0px;
-}
-
-.social-icons img {
-width: 28px;
-height: 28px;
-transition: transform 0.3s ease, filter 0.3s ease;
-align-self: left;
-}
-
-.social-icons img:hover {
-transform: scale(1.2);
-filter: brightness(1.2);
-}
-
-.copyright {
-font-size: 14px;
-color: #ffffff;
-margin-top: 20px;
-}
-
-.notif-container {
-  position: relative;
-}
-
-.notif-btn {
-  font-size: 1rem;
-  cursor: pointer;
-  position: relative;
-}
-
-.notif-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: red;
-  color: white;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 50%;
-}
-
-.notif-dropdown {
-  position: absolute;
-  top: 2.2rem;
-  right: 0;
-  width: 250px;
-  background: white;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  border-radius: 6px;
-  z-index: 999;
-  padding: 0.5rem;
-}
-
-.notif-item {
-  padding: 0.4rem 0.2rem;
-  border-bottom: 1px solid #eee;
-}
-
-.notif-item:last-child {
-  border-bottom: none;
-}
-
-.notif-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.notif-actions button {
-  flex: 1;
-  padding: 4px 6px;
-  font-size: 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.notif-actions button:first-child {
-  background-color: #d1fae5;
-  color: #065f46;
-}
-
-.notif-actions button:last-child {
-  background-color: #fee2e2;
-  color: #991b1b;
-}

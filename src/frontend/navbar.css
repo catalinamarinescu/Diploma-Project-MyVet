@@ -1,0 +1,167 @@
+.navbar-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background:#f8f8f8;
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo-home {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(208, 160, 88);
+}
+
+.navbar-buttons-home {
+  display: flex;
+  gap: 5px;
+}
+
+.nav-button-home {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color:#ffffff;
+  color: #014421;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 10000;
+  transition: background 0.3s;
+}
+
+.nav-button-home:hover {
+  color:#012010;
+}
+
+.auth-buttons-home {
+  display: flex;
+}
+
+
+.login-button-home {
+  text-decoration: none;
+  background: #ffffff;
+  color: rgb(214, 184, 139);
+  padding: 10px 20px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s; 
+}
+
+.logout-button-home {
+  background: rgb(213, 178, 125);
+  color: rgb(255, 255, 255);
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  height: 30px;
+  margin-right: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.logout-button-home:hover {
+  background-color: rgb(209, 150, 63);
+}
+
+.login-button-home:hover {
+ color: rgb(215, 171, 104);
+}
+
+.sign-up-button-home {
+  text-decoration: none;
+  background: #ffffff;
+  color:  rgb(214, 184, 139);
+  padding: 10px 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s;
+  margin-right: 40px;
+}
+
+.sign-up-button-home:hover {
+  color: rgb(215, 171, 104);
+}
+
+.notif-container {
+  position: relative;
+}
+
+.notif-btn {
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px;
+  border: none;
+  background-color: #ffffff;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: 2.2rem;
+  right: 0;
+  width: 250px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  z-index: 999;
+  padding: 0.5rem;
+}
+
+.notif-item {
+  padding: 0.4rem 0.2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.notif-actions button {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.notif-actions button:first-child {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.notif-actions button:last-child {
+  background-color: #fee2e2;
+  color: #991b1b;
+}

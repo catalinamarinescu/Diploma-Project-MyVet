@@ -139,7 +139,7 @@ const fetchVeterinarians = async () => {
                 <div className="visit-title">{visit.TITLE}</div>
                 <div className="visit-date">{new Date(visit.VISIT_DATE).toLocaleDateString()}</div>
               </div>
-              <button className="edit-icon" onClick={() => handleEdit(visit)}>✏️</button>
+              <button className="edit-icon" onClick={() => handleEdit(visit)}>Edit</button>
             </div>
             <div className="visit-section">
               <strong>Diagnosis</strong>

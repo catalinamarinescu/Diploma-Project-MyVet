@@ -31,19 +31,37 @@ const OwnerSignUp = () => {
     };
 
     return (
-        <div className="background-image" style={{
-            backgroundImage: `url(${picture})`,
-        }}>
-            <div className="overlay"></div>
-            <div className="form-container">
-                <h2>Pet Owner Sign Up</h2>
+        <div className="owner-signup-page">
+            <Link to="/accountType" className="back-btn">← Back to Account Type</Link>
+
+            <div className="owner-left">
+                <h1>Join Our Pet-Loving Community</h1>
+                <p>Connect with trusted veterinarians and give your pet the best care possible.</p>
+                <ul className="features-list">
+                <li><span className="icon green">✔</span> Easy Appointment Booking</li>
+                <li><span className="icon blue">✔</span> Digital Health Records</li>
+                <li><span className="icon red">✔</span> 24/7 Support</li>
+                <li><span className="icon orange">✔</span> Trusted Network</li>
+                </ul>
+            </div>
+
+            <div className="owner-right">
+                <div className="owner-form-box">
+                <h2>Create Your Pet Owner Account</h2>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-                    <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-                    <input type="password" name="password" placeholder="Password" onChange={handleChange} required />     
-                    <button type="submit">Sign Up</button>           
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Your username" onChange={handleChange} required />
+
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="your@email.com" onChange={handleChange} required />
+
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" onChange={handleChange} required />
+
+                    <button type="submit">Sign Up</button>
                 </form>
                 <p className="login-link">Already have an account? <Link to="/login">Login</Link></p>
+                </div>
             </div>
         </div>
     );

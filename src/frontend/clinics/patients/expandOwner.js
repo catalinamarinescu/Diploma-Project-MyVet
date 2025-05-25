@@ -75,11 +75,11 @@ const ExpandablePatientCard = ({ patient }) => {
               <p>Loading...</p>
             ) : ownerProfile ? (
               <>
-                <p>📧 {ownerProfile.EMAIL}</p>
-                <p>📞 {ownerProfile.PHONE}</p>
-                <p>📍 {ownerProfile.ADDRESS}</p>
+                <p><i className="fa fa-envelope"></i> {ownerProfile.EMAIL}</p>
+                <p><i className="fa fa-phone"></i> {ownerProfile.PHONE}</p>
+                <p><i className="fa fa-map-marker"></i> {ownerProfile.ADDRESS}</p>
                 <div className="owner-actions">
-                  <button className="appointment-btn">📅 Schedule Appointment</button>
+                  <button className="appointment-btn">Schedule Appointment</button>
                 </div>
               </>
             ) : (

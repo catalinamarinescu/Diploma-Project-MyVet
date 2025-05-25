@@ -5,47 +5,6 @@ Layout general
   background-color: #f8f9fa;
 }
 
-/* Navbar */
-.profile-navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #014421;
-  padding: 15px 30px;
-}
-
-.logo-profile {
-  font-size: 24px;
-  font-weight: bold;
-  color: rgb(214, 184, 139);
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.nav-links-profile,
-.nav-actions-profile {
-  display: flex;
-  gap: 30px;
-}
-
-.nav-btn-profile,
-.profile-btn,
-.logout-btn-profile {
-  background: white;
-  color: #014421;
-  padding: 8px 14px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-  border: none;
-  cursor: pointer;
-}
-
-.nav-btn-profile:hover,
-.profile-btn:hover,
-.logout-btn-profile:hover {
-  background-color: #a1a7a4;
-}
-
 /* Header profil */
 .profile-header {
   max-width: 1200px;

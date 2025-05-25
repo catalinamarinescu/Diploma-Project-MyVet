@@ -1,8 +1,8 @@
 .services-tab {
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4); /* fundal verzui plăcut */
-  min-height: 100vh;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  min-height: 80vh;
 }
 
 .services-header {
@@ -20,19 +20,18 @@
   font-weight: bold;
 }
 
-.actions button {
-  margin-left: 0.5rem;
+.services1-actions-button {
+  margin-left: 0.5rem ;
   padding: 0.6rem 1.2rem;
-  border-radius: 8px;
   font-weight: 600;
-  border: 2px solid #00421f;
-  background-color: white;
+  border: none;
+  background-color: transparent;
   color: #00421f;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
-.actions button:hover {
+.services1-actions-button:hover {
   background-color: #d1e7dd;
 }
 
@@ -54,19 +53,19 @@
   transform: translateY(-4px);
 }
 
-.card-header {
+.service-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card-header h3 {
+.service-card-header h3 {
   color: #00421f;
-  font-size: 0.2rem;
+    font-size: 1.1rem;
   font-weight: 600;
 }
 
-.badge-service {
+.service-badge-service {
   background-color: #e8f5e9;
   color: #1b5e20;
   padding: 0.3rem 0.7rem;
@@ -75,21 +74,22 @@
   font-weight: 600;
 }
 
-.price {
+.service-price {
   color: #00421f;
   font-weight: bold;
   margin-top: 0.8rem;
   font-size: 1rem;
 }
 
-.card-actions {
+.service-card-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
 }
 
-.card-actions button {
+.service-card-actions button {
   background: none;
+  color: #00421f;
   cursor: pointer;
   border-radius: 6px;
   padding: 0.4rem 0.8rem;
@@ -98,23 +98,23 @@
   transition: background-color 0.2s ease;
 }
 
-.card-actions button:hover {
-  background-color: #f0f0f0;
+.service-card-actions button:hover {
+  background-color: #e6f4ea;
 }
 
-.card-actions .delete {
-  border: 1px solid #00421f;
+.service-card-actions .delete {
+  border: none;
   background-color: white;
   color: #00421f;
 }
 
-.card-actions .delete:hover {
+.service-card-actions .delete:hover {
   background-color: #fbe8e8;
   color: #c62828;
 }
 
 /* === Modal === */
-.modal-backdrop {
+.service-modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -129,56 +129,87 @@
   padding: 1rem;
 }
 
-.modal {
+.service-modal {
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-.modal form {
+.service-modal form {
   display: flex;
   flex-direction: column;
 }
 
-.modal form label {
+.service-modal form label {
   margin-top: 1rem;
   margin-bottom: 0.2rem;
   font-weight: 600;
   color: #333;
 }
 
-.modal form input,
-.modal form textarea {
+.service-modal form input,
+.service-modal form textarea {
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.modal-actions {
+.service-modal-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
   gap: 1rem;
 }
 
-.modal-actions button {
+.service-modal-actions button {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
 }
 
-.modal-actions .cancel {
+.service-modal-actions .cancel {
   background-color: white;
   border: 2px solid #00421f;
   color: #00421f;
 }
 
-.modal-actions button[type="submit"] {
+.service-modal-actions button[type="submit"] {
   background-color: #00421f;
   color: white;
   border: none;
 }
+.pagination1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 8px;
+  background-color: none;
+}
+
+.pagination1 button {
+  background-color: #f0fdf4;
+  border: 1px solid #ccc;
+  color: #065f46;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination1 button:hover {
+  background-color: #faf7d1;
+}
+
+.pagination1 button.active {
+  background-color: rgb(208, 160, 88);
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+

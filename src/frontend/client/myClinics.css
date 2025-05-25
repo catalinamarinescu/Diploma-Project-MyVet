@@ -75,10 +75,9 @@
 }
 
 .logo-myclinics {
- font-size: 24px;
+  font-size: 24px;
   font-weight: bold;
-  color: rgb(214, 184, 139);
-  font-family: 'Courier New', Courier, monospace;
+  color: rgb(208, 160, 88);
 }
 
 .nav-links-myclinics,
@@ -88,18 +87,32 @@
 }
 
 .nav-btn-myclinics,
-.profile-btn-myclinics,
-.logout-btn-myclinics {
-  background: white;
-  color: #014421;
+.profile-btn-myclinics {
+  background: #014421;
+  color: #ffffff;
   padding: 8px 14px;
   border-radius: 5px;
   text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logout-btn-myclinics {
+    background: rgb(213, 178, 125);
+  color: rgb(255, 255, 255);
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
 }
 
 .nav-btn-myclinics:hover,
-.profile-btn-myclinics:hover,
+.profile-btn-myclinics:hover {
+     color: #cacecc;
+}
+
 .logout-btn-myclinics:hover {
-   background-color: #dadada;
+  background-color: rgb(209, 150, 63);
 }

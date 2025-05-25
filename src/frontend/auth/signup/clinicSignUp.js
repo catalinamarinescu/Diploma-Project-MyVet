@@ -1,54 +1,72 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
-import "./clinicSignUp.css"
+import "./clinicSignUp.css";
 
-const picture = "/imagini/fundal.jpg";
 const ClinicSignUp = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        name: '',
-        address: '',
-        email: '',
-        password: ''
-    });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    email: '',
+    password: ''
+  });
 
-    const handleChange = (e) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:5000/api/signupAsClinic', formData);
-            alert('Registered');
-            navigate('/login');
-        } catch (err) {
-            alert('Error: ' + (err.response?.data?.message));
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/api/signupAsClinic', formData);
+      alert('Registered');
+      navigate('/login');
+    } catch (err) {
+      alert('Error: ' + (err.response?.data?.message));
+    }
+  };
 
-    return (
-        <div className="background-image" style={{
-            backgroundImage: `url(${picture})`,
-        }}>
-        <div className="overlay"></div>    
-            <div className="form-container">
-                <h2>Clinic Sign Up</h2>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" placeholder="Clinic Name" onChange={handleChange} required />
-                    <input type="text" name="address" placeholder="Clinic Address" onChange={handleChange} required />
-                    <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-                    <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-                    <button type="submit">Sign Up</button>
-                </form>
-                <p className="login-link">Already have an account? <Link to="/login">Login</Link></p>
-            </div>
+  return (
+    <div className="signup-page">
+      <Link to="/accountType" className="back-btn">← Back to Account Type</Link>
+
+      <div className="signup-left">
+        <span className="badge">📄 Veterinary Clinic</span>
+        <h1>Join MyVet's Professional Network</h1>
+        <p>
+          Connect with pet owners, manage your practice efficiently, and grow your
+          veterinary business with our trusted platform.
+        </p>
+        <ul className="features-list">
+          <li>✔ Connect with thousands of pet owners</li>
+          <li>✔ Manage appointments efficiently</li>
+          <li>✔ Secure and verified profile</li>
+        </ul>
+      </div>
+
+      <div className="signup-right">
+        <div className="signup-form-box">
+          <h2>Create Your Clinic Account</h2>
+          <form onSubmit={handleSubmit}>
+            <label>Clinic Name</label>
+            <input type="text" name="name" placeholder="Your Clinic Name" onChange={handleChange} required />
+            <label>Address</label>
+            <input type="text" name="address" placeholder="Clinic Address" onChange={handleChange} required />
+            <label>Email</label>
+            <input type="email" name="email" placeholder="clinic@example.com" onChange={handleChange} required />
+            <label>Password</label>
+            <input type="password" name="password" placeholder="••••••••" onChange={handleChange} required />
+            <button type="submit">Sign Up</button>
+          </form>
+          <p className="login-link">Already have an account? <Link to="/login">Login</Link></p>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ClinicSignUp;

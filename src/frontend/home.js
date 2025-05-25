@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
+import Navbar from "./navbar";
 import "./home.css";
+import Footer from "./footer";
 
 const images = [
     "/imagini/poza14.jpg",
@@ -25,37 +27,11 @@ const Home = () => {
     return (
         <div className="home-container">
             <div
-                className="background-image"
+                className="background-image-home"
                 style={{ backgroundImage: `url(${images[currImage]})` }}
             ></div>
-            <div className="overlay"></div>
-            <nav className="navbar">
-                <div className="logo">
-                    MyVet
-                </div>
-                <div className="navbar-buttons">
-                    <Link to="/about" className="nav-button">
-                        About Us
-                    </Link>
-                    <Link to="/petinfo" className="nav-button">
-                        Find more about your pet!
-                    </Link>
-                    <Link to="/pharmacy" className="nav-button">
-                        Pharmacy&Accesories
-                    </Link>
-                    <Link to="/map" className="nav-button">
-                        Map
-                    </Link> 
-                </div>
-                <div className="auth-buttons">
-                    <Link to="/login" className="login-button">
-                        Login
-                    </Link>
-                    <Link to="/accountType" className="sign-up-button">
-                        Sign up
-                    </Link>
-                </div>
-            </nav>
+            <div className="overlay-home"></div>
+           <Navbar/>
             <section className="front-page">
                 <h1>Welcome to MyVet!</h1>
                 <p className="p">
@@ -91,6 +67,43 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            <section className="stats-section">
+            <div className="stat-box">
+                <h3 className="stat-number">500+</h3>
+                <p>Partner Clinics</p>
+            </div>
+            <div className="stat-box">
+                <h3 className="stat-number">10K+</h3>
+                <p>Happy Pets</p>
+            </div>
+            <div className="stat-box">
+                <h3 className="stat-number">24/7</h3>
+                <p>Support</p>
+            </div>
+            <div className="stat-box">
+                <h3 className="stat-number">98%</h3>
+                <p>Satisfaction</p>
+            </div>
+            </section>
+
+            <section className="map-preview-section">
+            <div className="map-preview-left">
+                <h2>Discover Pet-Friendly<br />Places Near You</h2>
+                <p>
+                Explore our interactive map to find veterinary clinics, pet-friendly parks, hotels,
+                and other amazing places where you and your furry friend are welcome.
+                </p>
+                <ul className="map-benefits">
+                <li>🏥 Trusted Veterinary Clinics</li>
+                <li>🌳 Pet-Friendly Parks</li>
+                <li>🏨 Pet Hotels & Services</li>
+                </ul>
+                <Link to="/map" className="map-btn">Explore Interactive Map →</Link>
+            </div>
+            <div className="map-preview-right">
+                <img src="/imagini/map-preview.png" alt="Map Preview" />
+            </div>
+            </section>
             <section className="clinic-invite">
                 <h2 className="invite-title">
                     Let’s build a future where every furry friend has access to the care they deserve — with your clinic on board.
@@ -104,50 +117,14 @@ const Home = () => {
                 </div>
             </section>
             <section className="newsletter-section">
-                <h2>Subscribe to our Newsletter</h2>
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter for the latest pet info, clinic updates, and exclusive offers.</p>
                 <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
                     <input type="email" placeholder="Enter your email" required />
                     <button type="submit">Subscribe</button>
                 </form>
             </section>           
-            <footer className="footer">
-                <div className="footer-column">
-                    <h2 className="footer-logo">MyVet</h2>
-                    <p>+40 712 345 678</p>
-                    <p>support@myvet.com</p>
-                    <p>Str. Animăluțelor nr. 5, București</p>
-                    <div className="social-icons">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/instagram.png" alt="Instagram" />
-                    </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/facebook.png" alt="Facebook" />
-                    </a>
-                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/tiktok.png" alt="TikTok" />
-                    </a>
-                    </div>
-                </div>
-
-                <div className="footer-column">
-                   <ul className="quick-links">
-                   <h4>Quick Links</h4>    
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/petinfo">Find more about your pet!</a></li>
-                    <li><a href="/pharmacy">Pharmacy</a></li>
-                    <li><a href="/map">Map</a></li>
-                    </ul>       
-                </div>
-
-                <div className="footer-column">
-                    <ul className="quick-links">
-                    <li><a href="/privacypolicy">Privacy Policy</a></li>
-                    <li><a href="/accessibility">Accessibility</a></li>
-                    <li><a href="/terms">Terms & Conditions</a></li>
-                    </ul>
-                    <p className="copyright">© 2025 by MyVet</p>
-                </div>
-            </footer>
+            <Footer/>
 
         </div>
     );

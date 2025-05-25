@@ -1,213 +1,234 @@
-.aboutUs-container {
-    background-color: #f8f8f8;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Courier New', Courier, monospace;
+/* ---------- HERO SECTION ---------- */
+.about-hero {
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  text-align: center;
+  padding: 80px 20px 60px;
 }
 
-.navbar-about {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f8f8;
-    padding: 15px 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.badge {
+  display: inline-block;
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
 }
 
-.logo-about {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(214, 184, 139);
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
-.navbar-about-buttons {
-    display: flex;
-    gap: 20px;
+.about-hero .highlight {
+  color: rgb(209, 150, 63);
 }
 
-.nav-about-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #014421;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background 0.3s;
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.nav-about-button:hover {
-    background-color: #012010;
+/* ---------- OUR STORY SECTION ---------- */
+.about-story {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 60px 80px;
+  flex-wrap: wrap;
+  background: #fff;
 }
 
-.auth-about-buttons {
-    display: flex;
-    gap: 10px;
+.story-text {
+  flex: 1;
+  min-width: 300px;
 }
 
-.login-about-button, .sign-about-up-button {
-    text-decoration: none;
-    background: #000000;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 7px;
-    font-size: 14px;
-    transition: background 0.3s;
+.story-text h2 {
+  font-size: 2.5rem;
+  color: #014421;
+  margin-bottom: 20px;
 }
 
-.login-about-button:hover, .sign-about-up-button:hover {
-    background-color: #012010;
+.story-text p {
+  color: #444;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-.sign-about-up-button {
-    margin-right: 50px;
+.cta-btn {
+  padding: 12px 24px;
+  background-color: #014421;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.about-box {
-    background-color: #adc6b8;
-    align-items: center;
-    margin-top: 100px;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
-    height: 600px;
-    text-align: center;
+.cta-btn:hover {
+  background-color: #01391c;
 }
 
-.about-box h1 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 50px;
+.story-images {
+  flex: 1;
+  justify-content: right;
+  min-width: 300px;
 }
 
-.about-box h3 {
-    text-align: left;
-    margin-left: 100px;
+.story-images img {
+  width: 100%;
+  background: #e5e5e5;
+  border-radius: 10px;
 }
 
-.about-box p, ul {
-    margin-left: 100px;
-    margin-right: 100px;
-    text-align: left;
+/* ---------- MISSION SECTION ---------- */
+.about-mission {
+  background-color: #014421;
+  color: white;
+  text-align: center;
+  padding: 60px 40px;
 }
 
-.about-box li {
-    margin-left: -22px;
+.about-mission .mission-icon {
+  width: 50px;
+  margin-bottom: 20px;
 }
 
-.instagram-section {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 50px;
-    background-color: #f8f8f8;
+.about-mission h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-.instagram-section h2 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 50px;
+.about-mission p {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-size: 1.1rem;
+  line-height: 1.7;
 }
 
-.gallery {
-    display: flex;
-   justify-content: center;
-   overflow-x: auto;
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
-.gallery img {
-    width: 300px;
-    height: 400px;
-    object-fit: cover;
+.stats div h3 {
+  font-size: 2rem;
+  color: #d1fae5;
+  margin-bottom: 8px;
 }
 
-.footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    background-color: #014421;
-    padding: 0px;
-    flex-wrap: nowrap;
-    min-height: 300px;
-    border-top: 1px solid #ccc;
+.stats div p {
+  color: #cce9da;
 }
 
-.footer-column {
-    flex: 1;
-    padding: 20px;
-    text-align: left;
-    flex-direction: column;
-    display: flex;
+/* ---------- VALUES SECTION ---------- */
+.about-values {
+  padding: 60px 40px;
+  text-align: center;
+  background: #ffffff;
 }
-  
-  .footer-column:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    background-color: white; /* sau altă culoare dacă vrei */
-  }
-  
-  .footer-logo {
-    color:rgb(214, 184, 139);
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .footer-column p, .footer-column a {
-    color: #f7f7f7;
-    font-size: 16px;
-    margin: 8px 0;
-    text-decoration: none;
-  }
-  
-  .quick-links {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .quick-links h4 {
-    color: #f7f7f7;
-    text-decoration: solid;
-  }
-  
-  .quick-links li {
-    margin-bottom: 10px;
-  }
-  
-  .quick-links a:hover {
-    color: #a1a7a4;
-    text-decoration: underline;
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: flex;
-    margin-top: 10px;
-    gap: 15px;
-    margin-left: 0px;
-  }
-  
-  .social-icons img {
-    width: 28px;
-    height: 28px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    align-self: left;
-  }
-  
-  .social-icons img:hover {
-    transform: scale(1.2);
-    filter: brightness(1.2);
-  }
-  
-  .copyright {
-    font-size: 14px;
-    color: #ffffff;
-    margin-top: 20px;
-  }
+
+.about-values h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #014421;
+}
+
+.about-values p {
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.value-card {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 24px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.value-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.value-card h3 {
+  font-size: 1.2rem;
+  color: #014421;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  color: #555;
+}
+
+/* ---------- INSTAGRAM SECTION ---------- */
+.about-instagram {
+  padding: 60px 40px;
+  text-align: center;
+  background: #fff;
+}
+
+.about-instagram img {
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.about-instagram h2 {
+  font-size: 2.2rem;
+  color: #014421;
+  margin-bottom: 10px;
+}
+
+.about-instagram p {
+  font-size: 1rem;
+  color: #444;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.instagram-btn {
+  background: linear-gradient(to right, #ec4899, #8b5cf6);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.insta-gallery {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  justify-content: center;
+}
+
+.insta-gallery img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+

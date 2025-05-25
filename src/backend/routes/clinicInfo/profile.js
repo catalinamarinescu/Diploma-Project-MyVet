@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const { poolPromise } = require('../../db'); // conexiune MSSQL
 const { clinicOnly } = require('../middleware');
+const { addClinicToArcGIS } = require('../../arcgis');
 
 router.get('/clinic/profile', clinicOnly, async (req, res) => {
   const clinicID = req.user.id;
@@ -138,6 +139,14 @@ router.put('/clinic/profile', clinicOnly, async (req, res) => {
             ADRESA = @ADRESA
         WHERE ID_CLINICA = @ID_CLINICA
       `);
+
+      await addClinicToArcGIS({
+        lat: latitudine,
+        lon: longitudine,
+        name,
+        descriere: descriere,
+        adresa: adresa
+      });  
 
     res.status(200).json({ message: 'Profil actualizat cu succes!' });
   } catch (err) {

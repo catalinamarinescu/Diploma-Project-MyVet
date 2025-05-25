@@ -4,6 +4,8 @@ import ProfileTab from './tabs/profileTab';
 import PetsTab from './tabs/petsTab';
 import './profile.css';
 import FavClinicsTab from "./tabs/favTab";
+import Navbar from "../navbar";
+import Footer from "../footer";
 
 const ClientProfile = () => {
   const navigate = useNavigate();
@@ -50,20 +52,7 @@ const ClientProfile = () => {
 
   return (
     <div className="profile-page">
-      <nav className="profile-navbar">
-        <div className="logo-profile">MyVet</div>
-        <div className="nav-links-profile">
-          <Link to="/client" className="nav-btn-profile">Clinics</Link>
-          <Link to="/client/clinics" className="nav-btn-profile">My Clinics</Link>
-        </div>
-        <div className="nav-actions-profile">
-          <Link to="/client/profile" className="profile-btn">My Profile</Link>
-          <button className="logout-btn-profile" onClick={() => {
-            localStorage.removeItem('myvet_token');
-            navigate('/');
-          }}>Logout</button>
-        </div>
-      </nav>
+     <Navbar/>
 
       <div className="profile-header">
         <div className="profile-avatar">
@@ -126,6 +115,7 @@ const ClientProfile = () => {
       {activeTab === 'pets' && <PetsTab />}
       {activeTab === 'appointments' && <div style={{ padding: "2rem" }}>Conținut pentru programări</div>}
       {activeTab === 'clinics'&& <FavClinicsTab />}
+      <Footer/>
     </div>
   );
 };

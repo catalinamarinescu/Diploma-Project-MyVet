@@ -2,8 +2,8 @@
 .employees-tab {
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4); /* fundal verzui */
-  min-height: 100vh;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  min-height: 80vh;
 }
 
 .employees-header {
@@ -21,18 +21,18 @@
   color: #00421f;
 }
 
-.actions .add-btn {
+.employees-actions .employees-add-btn {
+  margin-left: 0.5rem ;
   padding: 0.6rem 1.2rem;
-  background-color: white;
-  color: #00421f;
-  border: 2px solid #00421f;
-  border-radius: 8px;
   font-weight: 600;
+  border: none;
+  background-color: transparent;
+  color: #00421f;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background 0.2s ease;
 }
 
-.actions .add-btn:hover {
+.employees-actions .employees-add-btn:hover {
   background-color: #d1e7dd;
 }
 
@@ -45,7 +45,7 @@
 .employee-card {
   background-color: white;
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(0, 66, 31, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 66, 31, 0.5);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@
   transform: translateY(-4px);
 }
 
-.avatar {
+.employees-avatar {
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -72,32 +72,32 @@
   overflow: hidden;
 }
 
-.avatar img {
+.employees-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.details h3 {
+.employees-details h3 {
   font-size: 1.2rem;
   font-weight: bold;
   color: #00421f;
   margin: 0 0 0.4rem 0; /* mai mult spațiu jos */
 }
 
-.details .badge {
+.employees-details .badge {
   margin-bottom: 0.6rem; /* spațiu între badge și email */
 }
 
-.details p {
+.employees-details p {
   margin: 0.4rem 0;
   font-size: 0.95rem;
   color: #333;
   line-height: 1.5; /* crește spațierea între linii */
 }
 
-.badge {
+.employees-badge {
   background-color: #cdedd7;
   color: #00421f;
   padding: 0.3rem 0.8rem;
@@ -117,29 +117,29 @@
   margin-top: 10px;
 }
 
-.card-actions {
+.employees-card-actions {
   display: flex;
   gap: 1rem;
   margin-top: 0.5rem;
 }
 
-.card-actions button {
+.employees-card-actions button {
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
-  border: 1.5px solid #00421f;
+  border: none;
   background-color: white;
   color: #00421f;
   transition: background-color 0.2s ease;
 }
 
-.card-actions button:hover {
+.employees-card-actions button:hover {
   background-color: #e6f4ea;
 }
 
 /* === Modal === */
-.modal-backdrop {
+.employees-modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -154,48 +154,48 @@
   overflow-y: auto;
 }
 
-.modal {
+.employees-modal {
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
   width: 100%;
   max-width: 500px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  max-height: 90vh;
+  max-height: 70vh;
   overflow-y: auto;
 }
 
-.modal h3 {
+.employees-modal h3 {
   margin-bottom: 1rem;
   color: #00421f;
   font-size: 1.4rem;
 }
 
-.modal form {
+.employees-modal form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.modal form label {
+.employees-modal form label {
   font-weight: 600;
   color: #333;
 }
 
-.modal form input,
-.modal form textarea {
+.employees-modal form input,
+.employees-modal form textarea {
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
 
-.modal-actions {
+.employees-modal-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
 }
 
-.modal-actions button {
+.employees-modal-actions button {
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-weight: 600;
@@ -206,11 +206,11 @@
   transition: background-color 0.2s ease;
 }
 
-.modal-actions button:hover {
+.employees-modal-actions button:hover {
   background-color: #e8f5ee;
 }
 
-.services-list {
+.employees-services-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -223,4 +223,52 @@
   padding: 0.25rem 0.6rem;
   border-radius: 12px;
   font-size: 0.75rem;
+}
+
+.pagination2 {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 8px;
+  background-color: none;
+}
+
+.pagination2 button {
+  background-color: #f0fdf4;
+  border: 1px solid #ccc;
+  color: #065f46;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination2 button:hover {
+  background-color:#faf7d1;
+}
+
+.pagination2 button.active {
+  background-color: rgb(208, 160, 88);
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+.employees-file-upload-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color: #00421f;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+  width: fit-content;
+  border: #00421f;
+}
+
+.employees-file-upload-label:hover {
+  color: #009f4a;
 }

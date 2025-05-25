@@ -1,228 +1,64 @@
 .map-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  margin-top: 70px;
-  font-family: 'Courier New', Courier, monospace;
+  height: 135vh;
+  overflow: hidden;
 }
 
-.content-map {
-    flex: 1;
-    display: flex;
+.map-container-with-footer {
+  flex: 1;
+  position: relative;
+  display: flex;
+  height: 100%;
+
 }
 
-.navbar-map {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background:#f8f8f8;
-    padding: 15px 30px;
-    position: fixed;
-    z-index: 1000;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.map-content {
+  flex: 1;
+  height: 100%;
 }
 
-.logo-map {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(214, 184, 139);
+
+/* Filter box peste hartă */
+.filter-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  max-width: 260px;
 }
 
-.navbar-map-buttons {
-    display: flex;
-    gap: 20px;
+.filter-box h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #014421;
 }
 
-.nav-map-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color:#014421;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background 0.3s;
+.filter-box p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 12px;
 }
 
-.nav-map-button:hover {
-    background-color:#012010;
+.filter-box button {
+  background-color: #ffffff;
+  color: #014421;
+  border-color: #014421;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 100%;
+  cursor: pointer;
 }
 
-.auth-map-buttons {
-    display: flex;
-    gap: 10px;
+.filter-box select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
-
-.login-map-button {
-    text-decoration: none;
-    background: #000000;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 7px;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  
-.login-map-button:hover {
-   background-color: #012010;
-}
-  
-.sign-up-map-button {
-    text-decoration: none;
-    background: #000000;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 7px;
-    font-size: 14px;
-    transition: background 0.3s;
-    margin-right: 50px;
-}
-  
-.sign-up-map-button:hover {
-    background: #012010;
-}
-
-.left-content {
-    flex: 1;
-    background-color: #adc6b8;
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.left-content h1 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 50px;
-}
-
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-    gap: 10px;
-}
-
-.filter-buttons select {
-    display: block;
-    padding: 10px 20px;
-    border: 1px solid #014421;
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 5px;
-    text-decoration: #014421;
-  }
-
-.filter-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #014421;
-    color: white;
-    border: none;
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.filter-buttons button:hover {
-    background-color: #012010;
-}
-
-.right-map {
-    flex: 2;
-    height: calc(100vh - 90px);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    background-color: #014421;
-    padding: 0px;
-    flex-wrap: nowrap;
-    min-height: 300px;
-    border-top: 1px solid #ccc;
-}
-
-.footer-column {
-    flex: 1;
-    padding: 20px;
-    text-align: left;
-    flex-direction: column;
-    display: flex;
-}
-  
-  .footer-column:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    background-color: white; /* sau altă culoare dacă vrei */
-  }
-  
-  .footer-logo {
-    color:rgb(214, 184, 139);
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .footer-column p, .footer-column a {
-    color: #f7f7f7;
-    font-size: 16px;
-    margin: 8px 0;
-    text-decoration: none;
-  }
-  
-  .quick-links {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .quick-links h4 {
-    color: #f7f7f7;
-    text-decoration: solid;
-  }
-  
-  .quick-links li {
-    margin-bottom: 10px;
-  }
-  
-  .quick-links a:hover {
-    color: #a1a7a4;
-    text-decoration: underline;
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: flex;
-    margin-top: 10px;
-    gap: 15px;
-    margin-left: 0px;
-  }
-  
-  .social-icons img {
-    width: 28px;
-    height: 28px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    align-self: left;
-  }
-  
-  .social-icons img:hover {
-    transform: scale(1.2);
-    filter: brightness(1.2);
-  }
-  
-  .copyright {
-    font-size: 14px;
-    color: #ffffff;
-    margin-top: 20px;
-  }
-  

@@ -1,122 +1,142 @@
 [
   {
-      "name": "Flea & Tick Collar",
-      "description": "Protect your pet from fleas and ticks for up to 8 months.",
-      "image": "/imagini/collar.png",
-      "type": "accessory"
+    "name": "Flea & Tick Collar",
+    "description": "Protect your pet from fleas and ticks for up to 8 months.",
+    "image": "/imagini/collar.png",
+    "type": "accessory",
+    "price": "69.99 lei"
   },
   {
-      "name": "Dog Vitamin Supplement",
-      "description": "Daily multivitamin with essential nutrients.",
-      "image": "/imagini/vitamins.png",
-      "type": "pharmacy"
+    "name": "Dog Vitamin Supplement",
+    "description": "Daily multivitamin with essential nutrients.",
+    "image": "/imagini/vitamins.png",
+    "type": "pharmacy",
+    "price": "85.00 lei"
   },
   {
-      "name": "Cat Scratching Post",
-      "description": "Durable sisal post perfect for nail health and play.",
-      "image": "/imagini/scratching.png",
-      "type": "accessory"
+    "name": "Cat Scratching Post",
+    "description": "Durable sisal post perfect for nail health and play.",
+    "image": "/imagini/scratching.png",
+    "type": "accessory",
+    "price": "99.00 lei"
   },
   {
-      "name": "Rabbit Hay Feeder",
-      "description": "Keeps hay clean and easy to access for small pets.",
-      "image": "/imagini/hayfeeder.png",
-      "type": "accessory"
+    "name": "Rabbit Hay Feeder",
+    "description": "Keeps hay clean and easy to access for small pets.",
+    "image": "/imagini/hayfeeder.png",
+    "type": "accessory",
+    "price": "49.50 lei"
   },
   {
-      "name": "Pet Travel Carrier",
-      "description": "Safe and comfortable carrier for small pets and cats.",
-      "image": "/imagini/carrier.png",
-      "type": "accessory"
+    "name": "Pet Travel Carrier",
+    "description": "Safe and comfortable carrier for small pets and cats.",
+    "image": "/imagini/carrier.png",
+    "type": "accessory",
+    "price": "179.00 lei"
   },
   {
-      "name": "Chew Toy for Dogs",
-      "description": "Helps with dental health and boredom relief.",
-      "image": "/imagini/chewtoy.png",
-      "type": "accessory"
+    "name": "Chew Toy for Dogs",
+    "description": "Helps with dental health and boredom relief.",
+    "image": "/imagini/chewtoy.png",
+    "type": "accessory",
+    "price": "39.90 lei"
   },
   {
-      "name": "Guinea Pig Vitamin Drops",
-      "description": "Essential vitamins for guinea pig immune support.",
-      "image": "/imagini/vitamindrops.png",
-      "type": "pharmacy"
+    "name": "Guinea Pig Vitamin Drops",
+    "description": "Essential vitamins for guinea pig immune support.",
+    "image": "/imagini/vitamindrops.png",
+    "type": "pharmacy",
+    "price": "28.99 lei"
   },
   {
-      "name": "Parrot Mineral Block",
-      "description": "Supports beak health and provides essential minerals.",
-      "image": "/imagini/mineralblock.png",
-      "type": "pharmacy"
+    "name": "Parrot Mineral Block",
+    "description": "Supports beak health and provides essential minerals.",
+    "image": "/imagini/mineralblock.png",
+    "type": "pharmacy",
+    "price": "22.50 lei"
   },
   {
-      "name": "Catnip Mouse Toy",
-      "description": "Fun toy filled with organic catnip for playtime.",
-      "image": "/imagini/catnipmouse.png",
-      "type": "accessory"
+    "name": "Catnip Mouse Toy",
+    "description": "Fun toy filled with organic catnip for playtime.",
+    "image": "/imagini/catnipmouse.png",
+    "type": "accessory",
+    "price": "16.00 lei"
   },
   {
-      "name": "Dog Joint Supplement",
-      "description": "Promotes mobility and joint health in dogs.",
-      "image": "/imagini/jointsupplement.png",
-      "type": "pharmacy"
+    "name": "Dog Joint Supplement",
+    "description": "Promotes mobility and joint health in dogs.",
+    "image": "/imagini/jointsupplement.png",
+    "type": "pharmacy",
+    "price": "110.00 lei"
   },
   {
-      "name": "Small Pet Water Bottle",
-      "description": "Leak-proof water dispenser for hamsters and guinea pigs.",
-      "image": "/imagini/waterbottle.png",
-      "type": "accessory"
+    "name": "Small Pet Water Bottle",
+    "description": "Leak-proof water dispenser for hamsters and guinea pigs.",
+    "image": "/imagini/waterbottle.png",
+    "type": "accessory",
+    "price": "34.90 lei"
   },
   {
-      "name": "Hamster Running Wheel",
-      "description": "Quiet and safe wheel for small pet exercise.",
-      "image": "/imagini/runningwheel.png",
-      "type": "accessory"
+    "name": "Hamster Running Wheel",
+    "description": "Quiet and safe wheel for small pet exercise.",
+    "image": "/imagini/runningwheel.png",
+    "type": "accessory",
+    "price": "59.00 lei"
   },
   {
-      "name": "Dog Dental Sticks",
-      "description": "Cleans teeth and freshens breath with every chew.",
-      "image": "/imagini/dentalsticks.png",
-      "type": "pharmacy"
+    "name": "Dog Dental Sticks",
+    "description": "Cleans teeth and freshens breath with every chew.",
+    "image": "/imagini/dentalsticks.png",
+    "type": "pharmacy",
+    "price": "49.00 lei"
   },
   {
-      "name": "Cat Tunnel Toy",
-      "description": "Collapsible play tunnel for cats to run and hide.",
-      "image": "/imagini/cattunnel.png",
-      "type": "accessory"
+    "name": "Cat Tunnel Toy",
+    "description": "Collapsible play tunnel for cats to run and hide.",
+    "image": "/imagini/cattunnel.png",
+    "type": "accessory",
+    "price": "79.50 lei"
   },
   {
-      "name": "Ferret Shampoo",
-      "description": "Gentle formula designed for ferrets' sensitive skin.",
-      "image": "/imagini/ferretshampoo.png",
-      "type": "pharmacy"
+    "name": "Ferret Shampoo",
+    "description": "Gentle formula designed for ferrets' sensitive skin.",
+    "image": "/imagini/ferretshampoo.png",
+    "type": "pharmacy",
+    "price": "39.90 lei"
   },
   {
-      "name": "Pet Nail Clippers",
-      "description": "Safe and easy nail trimming tool for pets.",
-      "image": "/imagini/nailclippers.png",
-      "type": "accessory"
+    "name": "Pet Nail Clippers",
+    "description": "Safe and easy nail trimming tool for pets.",
+    "image": "/imagini/nailclippers.png",
+    "type": "accessory",
+    "price": "29.99 lei"
   },
   {
-      "name": "Cat Ear Cleaner",
-      "description": "Removes wax and debris from cats' ears gently.",
-      "image": "/imagini/earcleaner.png",
-      "type": "pharmacy"
+    "name": "Cat Ear Cleaner",
+    "description": "Removes wax and debris from cats' ears gently.",
+    "image": "/imagini/earcleaner.png",
+    "type": "pharmacy",
+    "price": "27.50 lei"
   },
   {
-      "name": "Bird Perch Toy",
-      "description": "Colorful perch toy to keep birds active and engaged.",
-      "image": "/imagini/perchtoy.png",
-      "type": "accessory"
+    "name": "Bird Perch Toy",
+    "description": "Colorful perch toy to keep birds active and engaged.",
+    "image": "/imagini/perchtoy.png",
+    "type": "accessory",
+    "price": "32.00 lei"
   },
   {
-      "name": "Dog Paw Balm",
-      "description": "Soothes and protects dry, cracked paws.",
-      "image": "/imagini/pawbalm.png",
-      "type": "pharmacy"
+    "name": "Dog Paw Balm",
+    "description": "Soothes and protects dry, cracked paws.",
+    "image": "/imagini/pawbalm.png",
+    "type": "pharmacy",
+    "price": "33.50 lei"
   },
   {
-      "name": "Cat Litter Mat",
-      "description": "Traps litter from paws and keeps floors clean.",
-      "image": "/imagini/littermat.png",
-      "type": "accessory"
+    "name": "Cat Litter Mat",
+    "description": "Traps litter from paws and keeps floors clean.",
+    "image": "/imagini/littermat.png",
+    "type": "accessory",
+    "price": "58.00 lei"
   }
 ]

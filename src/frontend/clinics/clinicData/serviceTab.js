@@ -3,7 +3,6 @@ import './serviceTab.css';
 
 const ServicesTab = () => {
   const [services, setServices] = useState([]);
-  const [editMode, setEditMode] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentService, setCurrentService] = useState({
     tip: '',
@@ -11,7 +10,11 @@ const ServicesTab = () => {
     descriere: '',
     pret: ''
   });
+
   const token = localStorage.getItem('myvet_token');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const fetchServices = async () => {
     try {
@@ -37,6 +40,7 @@ const ServicesTab = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchServices();
+      setCurrentPage(1);
     } catch (err) {
       console.error("Error deleting service:", err);
     }
@@ -48,8 +52,9 @@ const ServicesTab = () => {
   };
 
   const handleModalClose = () => {
-    setCurrentService(null);
     setShowModal(false);
+    setCurrentService(null);
+    setCurrentPage(1);
   };
 
   const handleSubmit = async (e) => {
@@ -79,24 +84,32 @@ const ServicesTab = () => {
     setCurrentService((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Pagination
+  const totalPages = Math.ceil(services.length / itemsPerPage);
+  const paginatedServices = services.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="services-tab">
       <div className="services-header">
         <h2>Services</h2>
-        <div className="actions">
-          <button className="add-btn-service" onClick={() => handleModalOpen()}>+Add Service</button>
-        </div>
+        <button className="services1-actions-button" onClick={() => handleModalOpen()}>
+          + Add Service
+        </button>
       </div>
+
       <div className="service-list">
-        {services.map((s) => (
+        {paginatedServices.map((s) => (
           <div className="service-card" key={s.id}>
-            <div className="card-header">
+            <div className="service-card-header">
               <h3>{s.denumire}</h3>
-              <span className="badge-service">{s.tip}</span>
+              <span className="service-badge-service">{s.tip}</span>
             </div>
             <p>{s.descriere}</p>
-            <p className="price">{s.pret} RON</p>
-            <div className="card-actions">
+            <p className="service-price">{s.pret} RON</p>
+            <div className="service-card-actions">
               <button onClick={() => handleModalOpen(s)}>Edit</button>
               <button onClick={() => handleDelete(s.id)} className="delete">Delete</button>
             </div>
@@ -104,9 +117,23 @@ const ServicesTab = () => {
         ))}
       </div>
 
+      {totalPages > 1 && (
+        <div className="pagination1">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={currentPage === i + 1 ? 'active' : ''}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
       {showModal && (
-        <div className="modal-backdrop">
-          <div className="modal">
+        <div className="service-modal-backdrop">
+          <div className="service-modal">
             <h3>{currentService?.id ? "Edit Service" : "Add Service"}</h3>
             <form onSubmit={handleSubmit}>
               <label>Type</label>
@@ -137,7 +164,7 @@ const ServicesTab = () => {
                 required
               />
 
-              <div className="modal-actions">
+              <div className="service-modal-actions">
                 <button type="submit">Save</button>
                 <button type="button" onClick={handleModalClose} className="cancel">Cancel</button>
               </div>
