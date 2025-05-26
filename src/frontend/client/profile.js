@@ -84,9 +84,6 @@ const ClientProfile = () => {
 
       <div className="profile-tabs">
         <div className={`tab ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')}>Profile</div>
-        <div className={`tab ${activeTab === 'pets' ? 'active' : ''}`} onClick={() => setActiveTab('pets')}>Pets</div>
-        <div className={`tab ${activeTab === 'appointments' ? 'active' : ''}`} onClick={() => setActiveTab('appointments')}>Appointments</div>
-        <div className={`tab ${activeTab === 'clinics' ? 'active' : ''}`} onClick={() => setActiveTab('clinics')}>Fav Clinics</div>
       </div>
 
       {activeTab === 'profile' && (
@@ -111,10 +108,6 @@ const ClientProfile = () => {
           )}
         </div>
       )}
-
-      {activeTab === 'pets' && <PetsTab />}
-      {activeTab === 'appointments' && <div style={{ padding: "2rem" }}>Conținut pentru programări</div>}
-      {activeTab === 'clinics'&& <FavClinicsTab />}
       <Footer/>
     </div>
   );

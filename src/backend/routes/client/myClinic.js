@@ -26,7 +26,9 @@ const clinicId = parseInt(rawClinicId);
         LEFT JOIN CLINIC_INFO CI ON CI.ID_CLINICA = C.ID_CLINICA
         LEFT JOIN PETS P ON P.ID_PET_OWNER = PO.ID_PET_OWNER
         LEFT JOIN MEDICAL_RECORD MR ON MR.ID_PET = P.ID AND MR.ID_CLINICA = PO.ID_CLINICA
-        WHERE PO.ID_PET_OWNER = @OWNER_ID AND PO.ID_CLINICA = @CLINIC_ID
+        WHERE PO.ID_PET_OWNER = @OWNER_ID
+        AND PO.ID_CLINICA = @CLINIC_ID
+        AND MR.ID_PET IS NOT NULL
       `);
 
     const clinic = result.recordset[0];
@@ -206,5 +208,79 @@ router.get('/my-clinics', petOwnerOnly, async (req, res) => {
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
+router.post('/register-pet-to-clinic', petOwnerOnly, async (req, res) => {
+  const { petId, clinicId } = req.body;
+  const ownerId = req.user.id;
+
+  try {
+    const pool = await poolPromise;
+
+    // Verifică dacă animalul aparține ownerului și nu este deja înregistrat în clinică
+    const check = await pool.request()
+      .input('ID_PET', petId)
+      .input('ID_OWNER', ownerId)
+      .input('ID_CLINICA', clinicId)
+      .query(`
+        SELECT 1 FROM PETS
+        WHERE ID = @ID_PET AND ID_PET_OWNER = @ID_OWNER
+          AND NOT EXISTS (
+            SELECT 1 FROM MEDICAL_RECORD WHERE ID_PET = @ID_PET AND ID_CLINICA = @ID_CLINICA
+          )
+      `);
+
+    if (check.recordset.length === 0) {
+      return res.status(400).json({ error: 'Animal invalid sau deja înregistrat' });
+    }
+
+    // Creează fișa medicală
+    await pool.request()
+      .input('ID_PET', petId)
+      .input('ID_CLINICA', clinicId)
+      .query(`
+        INSERT INTO MEDICAL_RECORD (ID_PET, ID_CLINICA)
+        VALUES (@ID_PET, @ID_CLINICA)
+      `);
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Eroare înscriere animal:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
+// GET /api/client/unregistered-pets?clinicId=123
+router.get('/unregistered-pets', petOwnerOnly, async (req, res) => {
+  const ownerId = req.user.id;
+  const rawClinicId = req.query.clinicId;
+  const clinicId = parseInt(rawClinicId);
+
+  if (!clinicId) {
+    return res.status(400).json({ error: 'clinicId lipsă' });
+  }
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('OWNER_ID', ownerId)
+      .input('CLINIC_ID', clinicId)
+      .query(`
+        SELECT P.ID, P.NUME, P.RASA, P.TIP, P.VARSTA, P.POZA
+        FROM PETS P
+        WHERE P.ID_PET_OWNER = @OWNER_ID
+          AND NOT EXISTS (
+            SELECT 1 FROM MEDICAL_RECORD MR
+            WHERE MR.ID_PET = P.ID AND MR.ID_CLINICA = @CLINIC_ID
+          )
+      `);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Eroare la GET /unregistered-pets:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
 
 module.exports = router;

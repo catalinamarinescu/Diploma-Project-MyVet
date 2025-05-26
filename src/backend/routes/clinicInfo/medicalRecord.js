@@ -24,6 +24,7 @@ router.get('/pet/:id/medical-record', clinicOnly, async (req, res) => {
           MR.ALLERGIES,
           MR.NOTES,
           MR.UPDATED_AT,
+          MR.STATUS,
           P.NUME AS PET_NAME,
           P.RASA,
           P.TIP,
@@ -51,7 +52,7 @@ router.get('/pet/:id/medical-record', clinicOnly, async (req, res) => {
 
 router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
   const petId = req.params.id;
-  const { LAST_CHECKUP_DATE, WEIGHT_KG, SEX, ALLERGIES, NOTES } = req.body;
+  const { LAST_CHECKUP_DATE, WEIGHT_KG, SEX, ALLERGIES, NOTES, STATUS } = req.body;
   const clinicId = req.user.id; // 🔑 clinica care face update-ul
 
   try {
@@ -71,9 +72,10 @@ router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
         .input('ALLERGIES', ALLERGIES)
         .input('NOTES', NOTES)
         .input('ID_CLINICA', clinicId)
+        .input('STATUS', STATUS)
         .query(`
-          INSERT INTO MEDICAL_RECORD (ID_PET, LAST_CHECKUP_DATE, WEIGHT_KG, SEX, ALLERGIES, NOTES, ID_CLINICA)
-          VALUES (@ID_PET, @LAST_CHECKUP_DATE, @WEIGHT_KG, @SEX, @ALLERGIES, @NOTES, @ID_CLINICA)
+          INSERT INTO MEDICAL_RECORD (ID_PET, LAST_CHECKUP_DATE, WEIGHT_KG, SEX, ALLERGIES, NOTES, ID_CLINICA, STATUS)
+          VALUES (@ID_PET, @LAST_CHECKUP_DATE, @WEIGHT_KG, @SEX, @ALLERGIES, @NOTES, @ID_CLINICA, @STATUS)
         `);
 
       return res.status(201).json({ message: 'Medical record created' });
@@ -88,6 +90,7 @@ router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
       .input('ALLERGIES', ALLERGIES)
       .input('NOTES', NOTES)
       .input('ID_CLINICA', clinicId)
+      .input('STATUS', STATUS)
       .query(`
         UPDATE MEDICAL_RECORD
         SET 
@@ -96,7 +99,8 @@ router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
           SEX = @SEX,
           ALLERGIES = @ALLERGIES,
           NOTES = @NOTES,
-          ID_CLINICA = @ID_CLINICA
+          ID_CLINICA = @ID_CLINICA,
+          STATUS = @STATUS
         WHERE ID_PET = @ID_PET
       `);
 

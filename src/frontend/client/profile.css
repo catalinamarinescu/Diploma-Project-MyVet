@@ -54,8 +54,8 @@ Layout general
 }
 
 .edit-profile-btn {
-  background: #065f46;
-  color: white;
+  background: transparent;
+  color: #00421f;
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 8px;
@@ -64,7 +64,7 @@ Layout general
 }
 
 .edit-profile-btn:hover {
-  background: #047857;
+  background: #dafde3;
 }
 
 /* Tabs */
@@ -180,7 +180,7 @@ Layout general
 }
 
 .profile-card {
-  background: rgb(215, 244, 215);
+  background: linear-gradient(to bottom, #e0f6ff, #e0f6ff);;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   padding: 2rem;

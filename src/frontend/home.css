@@ -148,7 +148,7 @@ transform: scale(1.05);
 }
 
 .newsletter-section {
-background-color: #cddcd4;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
 color: white;
 text-align: center;
 padding: 40px 20px;

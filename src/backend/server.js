@@ -41,6 +41,7 @@ app.use('/api/client', summaryRoute);
 app.use('/api/client', joinRoute);
 app.use('/api/clinic', notifRoute);
 app.use('/api/clinic', patientsRoute);
+app.use('/api/client', patientsRoute);
 app.use('/api/clinic', medrecRoute);
 app.use('/api/client', myClinicRoute);    
 

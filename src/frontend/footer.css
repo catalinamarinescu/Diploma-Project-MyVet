@@ -1,7 +1,7 @@
 .footer-home1 {
 display: flex;
 justify-content: space-around;
-background-color: #014421;
+background-color: rgb(214, 184, 139);
 min-height: 300px;
 border-top: 1px solid #ccc;
 position: relative;
@@ -29,14 +29,14 @@ background-color: white; /* sau altă culoare dacă vrei */
 }
 
 .footer-logo-home1 {
-color:rgb(214, 184, 139);
+color: #014421 ;
 font-size: 32px;
 font-weight: bold;
 margin-bottom: 20px;
 }
 
 .footer-column-home1 p, .footer-column-home1 a {
-color: #e8e6e6;
+color: #000000;
 font-size: 16px;
 margin: 8px 0;
 text-decoration: none;
@@ -51,7 +51,7 @@ margin-left: 0px;
 }
 
 .quick-links-home1 h4 {
-color: #f7f7f7;
+color: #000000;
 text-decoration: solid;
 }
 
@@ -86,6 +86,6 @@ filter: brightness(1.2);
 
 .copyright-home1 {
 font-size: 14px;
-color: #b5b4b4;
+color: #696868;
 margin-top: 100px;
 }

@@ -30,8 +30,8 @@
 }
 
 .lab-add-form button {
-  background-color: #014421;
-  color: white;
+  background: transparent;
+  color: #014421;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;

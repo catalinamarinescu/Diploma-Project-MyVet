@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './clinic.css';
 import ServicesTab from './serviceTab';
 import EmployeesTab from './employeesTab';
@@ -11,10 +11,6 @@ const ClinicDashboard = () => {
   const [clinicData, setClinicData] = useState(null);
   const [activeTab, setActiveTab] = useState('profile');
   const [editMode, setEditMode] = useState(false);
-  const [joinRequests, setJoinRequests] = useState([]);
-  const [showRequestsDropdown, setShowRequestsDropdown] = useState(false);
-
-
   const [formValues, setFormValues] = useState({
     name: '',
     descriere: '',
@@ -46,7 +42,6 @@ const ClinicDashboard = () => {
     };
 
     fetchData();
-    fetchRequests();
   }, [token]);
 
   const handleLogout = () => {
@@ -77,24 +72,7 @@ const ClinicDashboard = () => {
     }
   };
 
-const fetchRequests = async () => {
-  try {
-    const res = await fetch('http://localhost:5000/api/clinic/join-requests', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await res.json();
-
-    // 🔍 doar pending
-    const pending = data.filter(r => r.STATUS === 'pending');
-    setJoinRequests(pending);
-
-    console.log('Join requests:', pending);
-  } catch (err) {
-    console.error('Eroare la fetch cereri:', err);
-  }
-};
-
- const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e) => {
     const files = e.target.files;
     if (!files.length) return;
 
@@ -106,13 +84,10 @@ const fetchRequests = async () => {
     try {
       await fetch('http://localhost:5000/api/clinic/images', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData
       });
 
-      // 🔄 Refetch images
       const res = await fetch('http://localhost:5000/api/clinic/images', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -127,62 +102,27 @@ const fetchRequests = async () => {
     }
   };
 
-  const handleJoinAction = async (requestId, accept) => {
-  try {
-    const res = await fetch(
-      `http://localhost:5000/api/clinic/join-requests/${requestId}/${accept ? 'accept' : 'reject'}`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    if (res.ok) {
-      alert(`Request ${accept ? 'accepted' : 'rejected'}`);
-
-      // 🔄 Refetch cereri rămase (doar cele pending)
-      await fetchRequests();
-
-      // 🔔 Notifică alte componente (ex: ClinicPatients) să se actualizeze
-      if (accept) {
-        window.dispatchEvent(new Event('patientUpdated'));
-      }
-
-    } else {
-      const err = await res.json();
-      alert(err.error || 'Error processing request');
-    }
-  } catch (err) {
-    console.error('Join request action failed:', err);
-    alert('Server error');
-  }
-};
-
-
-
   if (!clinicData) return <p className="loading-message">Se încarcă...</p>;
 
   return (
-    <div className="dashboard-container">
-      <Navbar/>
+    <div className="clinic-dashboard-container">
+      <Navbar />
 
-      <div className="dashboard-main">
-        <h1 className="dashboard-title">Clinic Dashboard</h1>
+      <div className="clinic-dashboard-main">
+        <h1 className="clinic-dashboard-title">Clinic Dashboard</h1>
 
-        <div className="tab-buttons">
-          <button className={activeTab === 'profile' ? 'active-tab' : ''} onClick={() => setActiveTab('profile')}>Profile</button>
-          <button className={activeTab === 'services' ? 'active-tab' : ''} onClick={() => setActiveTab('services')}>Services</button>
-          <button className={activeTab === 'employees' ? 'active-tab' : ''} onClick={() => setActiveTab('employees')}>Employees</button>
+        <div className="clinic-tab-buttons">
+          <button className={`clinic-tab-button ${activeTab === 'profile' ? 'clinic-active-tab' : ''}`} onClick={() => setActiveTab('profile')}>Profile</button>
+          <button className={`clinic-tab-button ${activeTab === 'services' ? 'clinic-active-tab' : ''}`} onClick={() => setActiveTab('services')}>Services</button>
+          <button className={`clinic-tab-button ${activeTab === 'employees' ? 'clinic-active-tab' : ''}`} onClick={() => setActiveTab('employees')}>Employees</button>
         </div>
 
         {activeTab === 'profile' && (
-          <div className="profile-section-grid">
-            <div className="profile-form-card">
+          <div className="clinic-profile-section-grid">
+            <div className="clinic-profile-form-card">
               <div className="header-with-edit">
                 <h3>Clinic Information</h3>
-                <button className="edit-button" onClick={() => setEditMode(true)}>Edit</button>
+                <button className="clinic-edit-button" onClick={() => setEditMode(true)}>Edit</button>
               </div>
 
               <label>Clinic Name:</label>
@@ -221,40 +161,41 @@ const fetchRequests = async () => {
               </div>
 
               {editMode && (
-                <div className="edit-actions">
-                  <button className="button-edit" onClick={handleSaveProfile}>Save</button>
-                  <button className="button-edit cancel" onClick={() => setEditMode(false)}>Cancel</button>
+                <div className="clinic-edit-actions">
+                  <button className="clinic-button-edit" onClick={handleSaveProfile}>Save</button>
+                  <button className="clinic-button-edit cancel" onClick={() => setEditMode(false)}>Cancel</button>
                 </div>
               )}
             </div>
 
-       <div className="profile-gallery-card">
-        <h3>Clinic Gallery</h3>
-        <div className="gallery">
-          {clinicData.imagini.map((img, i) => (
-            <img key={i} src={`http://localhost:5000/${img}`} alt="clinic" />
-          ))}
-        </div>
+            <div className="clinic-profile-gallery-card">
+              <h3>Clinic Gallery</h3>
+              <div className="gallery">
+                {clinicData.imagini && clinicData.imagini.map((img, i) => (
+                  <img key={i} src={`http://localhost:5000/${img}`} alt="clinic" />
+                ))}
+              </div>
 
-        <label htmlFor="imageUpload" className="edit-button upload-label">
-          + Add Images
-        </label>
-        <input
-          id="imageUpload"
-          type="file"
-          multiple
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleImageUpload}
-        />
-      </div>
-
+              <label htmlFor="imageUpload" className="upload-label">
+                + Add Images
+              </label>
+              <input
+                id="imageUpload"
+                type="file"
+                multiple
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleImageUpload}
+              />
+            </div>
           </div>
         )}
+
         {activeTab === 'services' && <ServicesTab />}
         {activeTab === 'employees' && <EmployeesTab />}
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };

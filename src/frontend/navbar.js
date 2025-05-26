@@ -84,6 +84,12 @@ const fetchRequests = async () => {
   }
 };
 
+useEffect(() => {
+  if (isAuthenticatedAsClinic) {
+    fetchRequests();
+  }
+}, [isAuthenticatedAsClinic]);
+
   return (
     <nav className="navbar-home">
       <div className="logo-home">MyVet</div>
@@ -99,6 +105,7 @@ const fetchRequests = async () => {
           <>
             <Link to="/client" className="nav-button-home">Clinics</Link>
             <Link to="/client/pets" className="nav-button-home">Pets</Link>
+            <Link to="/client/medical-records" className="nav-button-home">Medical Records</Link>
             <Link to="/client/appointments" className="nav-button-home">Appointments</Link>
             <Link to="/client/profile" className="nav-button-home">My Profile</Link>
           </>

@@ -142,7 +142,7 @@ const EmployeesTab = () => {
     <div className="employees-tab">
       <div className="employees-header">
         <h2>Employees</h2>
-        <button className="add-btn" onClick={() => handleModalOpen()}>Add Employee</button>
+        <button className="employees-add-btn" onClick={() => handleModalOpen()}>+ Add Employee</button>
       </div>
 
       <div className="employee-list">

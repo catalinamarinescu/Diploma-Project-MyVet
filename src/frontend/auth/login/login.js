@@ -41,6 +41,8 @@ const Login = () => {
           alert("Login reușit!");
       
           if (accountType === "clinic") {
+            const decoded = JSON.parse(atob(token.split('.')[1]));
+            localStorage.setItem("clinicId", decoded.id);
             const profilCheck = await axios.get('http://localhost:5000/api/profil-completat', {
               headers: {
                 Authorization: `Bearer ${token}`

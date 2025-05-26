@@ -1,19 +1,27 @@
-/* ========== Layout și Reset ========== */
+/* ===== Clinic Dashboard Styles ===== */
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', sans-serif;
   background: white;
   color: #1f2937;
   padding-top: 60px;
 }
 
-h1, h3 {
-  margin: 0 0 1rem 0;
+.clinic-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 55px;
-  color: #00421f;
+.clinic-dashboard-main {
+  padding: 2rem 4rem;
+}
+
+.clinic-dashboard-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: #014421;
 }
 
 .loading-message {
@@ -22,58 +30,51 @@ h1 {
   color: #666;
 }
 
-/* ========== Dashboard Content ========== */
-.dashboard-container {
+/* ===== Tab Buttons ===== */
+.clinic-tab-buttons {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.dashboard-main {
-  padding: 2rem 4rem;
-}
-
-.dashboard-title {
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
-  color: #00421f;
-}
-
-/* ========== Tabs ========== */
-.tab-buttons {
-  display: flex;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.tab-buttons button {
+.clinic-tab-button {
   background-color: #e5e7eb;
   border: none;
-  margin-right: 1rem;
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   font-size: 1rem;
   border-radius: 6px;
   cursor: pointer;
+  color: #014421;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.tab-buttons .active-tab {
-  background-color:#00421f;
+.clinic-active-tab {
+  background-color: #014421;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+.clinic-tab-button:not(.clinic-active-tab):hover {
+  background-color: #d1d5db;
+}
+
+.clinic-active-tab {
+  background-color: #00421f;
   color: white;
   font-weight: bold;
 }
 
-.tab-buttons button:hover:not(.active-tab) {
-  background-color: #d1d5db;
-}
-
-/* ========== Profile Layout ========== */
-.profile-section-grid {
+/* ===== Profile Section ===== */
+.clinic-profile-section-grid {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
 }
 
-.profile-form-card,
-.profile-gallery-card {
+.clinic-profile-form-card,
+.clinic-profile-gallery-card {
   background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -82,15 +83,16 @@ h1 {
   min-width: 350px;
 }
 
-.profile-form-card label {
+.clinic-profile-form-card label,
+.clinic-profile-gallery-card label {
   display: block;
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 0.2rem;
 }
 
-.profile-form-card input,
-.profile-form-card textarea {
+.clinic-profile-form-card input,
+.clinic-profile-form-card textarea {
   width: 100%;
   padding: 0.5rem;
   font-size: 0.95rem;
@@ -99,89 +101,78 @@ h1 {
   background-color: #f3f4f6;
 }
 
-.profile-form-card textarea {
+.clinic-profile-form-card textarea {
   resize: vertical;
   min-height: 80px;
 }
 
-.edit-actions {
+.latlong-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.clinic-edit-button {
+  padding: 0.5rem 1rem;
+  font-weight: 100px;
+  background: transparent;
+  color: #014421;
+  border: none;
+  cursor: pointer;
+}
+
+.clinic-edit-button:hover {
+  background-color: #d1d5db;
+}
+
+.clinic-edit-actions {
   display: flex;
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
-.edit-actions {
+.clinic-button-edit {
   padding: 0.5rem 1rem;
   font-weight: bold;
-  color:#00421f;
-  border-color: #00421f;
-  background-color: #ffffff;
-  border-radius: 6px;
+  color: #014421;
+  background: transparent;
+  border: none;
   cursor: pointer;
 }
 
-.edit-button {
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  background-color: #ffffff;
-  color:#00421f;
-  border-color: #00421f;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.edit-button:hover {
+.clinic-button-edit.cancel:hover {
   background-color: #d1d5db;
 }
 
-.edit-actions .button-edit:hover {
-  background-color:#d1d5db;
-}
-
-.edit-actions .button-edit.cancel {
-  background-color: #ffffff;
-}
-
-.edit-actions .button-edit.cancel:hover {
+.clinic-button-edit:hover {
   background-color: #d1d5db;
 }
 
-.profile-gallery-card {
- background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  flex: 1;
-  min-width: 300px;
-}
-
-.gallery {
+/* ===== Gallery ===== */
+.clinic-profile-gallery-card .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
 
-.gallery img {
-  width: 300px;
-  height: 200px;
+.clinic-profile-gallery-card .gallery img {
+  width: 100%;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #d1d5db;
 }
 
-/* ========== Upload Button stilizat ========== */
 .upload-label {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background-color: #ffffff;
-  color:#00421f;
-  border-color: #00421f;
-  border-radius: 6px;
+  background: transparent;
+  color: #014421;
+  border: none;
   font-weight: 500;
   cursor: pointer;
-  text-align: center;
   transition: background-color 0.2s ease;
 }
 
@@ -189,18 +180,18 @@ h1 {
   background-color: #d1d5db;
 }
 
-/* ========== Media Queries ========== */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .dashboard-main {
+  .clinic-dashboard-main {
     padding: 1.5rem;
   }
 
-  .tab-buttons {
+  .clinic-tab-buttons {
     flex-direction: column;
     gap: 0.5rem;
   }
 
-  .profile-section-grid {
+  .clinic-profile-section-grid {
     flex-direction: column;
   }
 }

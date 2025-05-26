@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './expandOwner.css';
-import MedicalRecord from './medicalRecord';
+import MedicalRecord from './medicalRecord'; // ✅ asigură-te că e importat corect
 
-const ExpandablePatientCard = ({ patient }) => {
+const ExpandablePatientCard = ({ patient, clinicId }) => {
   const [expanded, setExpanded] = useState(false);
   const [ownerProfile, setOwnerProfile] = useState(null);
-  const [pets, setPets] = useState([]);
+  const [registeredPets, setRegisteredPets] = useState([]);
+  const [selectedPetId, setSelectedPetId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [selectedPet, setSelectedPet] = useState(null);
   const token = localStorage.getItem('myvet_token');
 
   const toggleExpand = () => {
@@ -15,36 +15,35 @@ const ExpandablePatientCard = ({ patient }) => {
   };
 
   useEffect(() => {
-  const fetchOwnerData = async () => {
-    if (!expanded) return; // fetch only when expanded is true
+    const fetchOwnerData = async () => {
+      if (!expanded || !clinicId) return;
 
-    setLoading(true);
-    try {
-      const [profileRes, petsRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/client/${patient.ID_PET_OWNER}/profile`, {
+      setLoading(true);
+      try {
+        const profileRes = await fetch(`http://localhost:5000/api/client/${patient.ID_PET_OWNER}/profile`, {
           headers: { Authorization: `Bearer ${token}` }
-        }),
-        fetch(`http://localhost:5000/api/client/${patient.ID_PET_OWNER}/pets`, {
+        });
+
+        const petsRes = await fetch(`http://localhost:5000/api/client/${patient.ID_PET_OWNER}/registered-pets?clinicId=${clinicId}`, {
           headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
+        });
 
-      if (!profileRes.ok || !petsRes.ok) throw new Error('Fetch error');
+        if (!profileRes.ok || !petsRes.ok) throw new Error('Eroare la fetch');
 
-      const profileData = await profileRes.json();
-      const petsData = await petsRes.json();
+        const profileData = await profileRes.json();
+        const petsData = await petsRes.json();
 
-      setOwnerProfile(profileData);
-      setPets(Array.isArray(petsData) ? petsData : []);
-    } catch (err) {
-      console.error('Eroare la fetch profile/pets:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setOwnerProfile(profileData);
+        setRegisteredPets(Array.isArray(petsData) ? petsData : []);
+      } catch (err) {
+        console.error('Eroare la profil/pets:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchOwnerData();
-}, [expanded, patient.ID_PET_OWNER, token]);
+    fetchOwnerData();
+  }, [expanded, patient.ID_PET_OWNER, clinicId, token]);
 
   return (
     <div className="expandable-card">
@@ -62,9 +61,6 @@ const ExpandablePatientCard = ({ patient }) => {
           <h3>{patient.LAST_NAME}, {patient.FIRST_NAME}</h3>
           <p className="last-visit">Last visit: unknown</p>
         </div>
-        <div className="status">
-          <span className="badge active">Active</span>
-        </div>
       </div>
 
       {expanded && (
@@ -72,7 +68,7 @@ const ExpandablePatientCard = ({ patient }) => {
           <div className="details-left">
             <h4>Owner Details</h4>
             {loading ? (
-              <p>Loading...</p>
+              <p>Se încarcă...</p>
             ) : ownerProfile ? (
               <>
                 <p><i className="fa fa-envelope"></i> {ownerProfile.EMAIL}</p>
@@ -83,46 +79,47 @@ const ExpandablePatientCard = ({ patient }) => {
                 </div>
               </>
             ) : (
-              <p>Could not load owner details.</p>
+              <p>Nu s-au putut încărca detaliile.</p>
             )}
           </div>
 
           <div className="details-right">
-            <h4>Pets</h4>
-            <div className="pet-list">
-              {pets.length === 0 ? (
-                <p>No pets found.</p>
-              ) : (
-                pets.map(pet => (
+            <h4>Animale înregistrate în această clinică</h4>
+            {registeredPets.length === 0 ? (
+              <p>Nu există animale înregistrate.</p>
+            ) : (
+              <div className="pet-list">
+                {registeredPets.map(pet => (
                   <div
-                    className="pet-box"
                     key={pet.ID}
-                    onClick={() => setSelectedPet(pet)}
+                    className="pet-box"
+                    onClick={() => setSelectedPetId(pet.ID)}
                     style={{ cursor: 'pointer' }}
                   >
-                    <div className="pet-avatar">
-                      {pet.POZA ? (
-                        <img src={`http://localhost:5000/${pet.POZA}`} alt={pet.NUME} />
-                      ) : (
-                        <div className="placeholder-avatar">🐾</div>
-                      )}
-                    </div>
-                    <div className="pet-info">
+                    {pet.POZA ? (
+                      <img src={`http://localhost:5000/${pet.POZA}`} alt={pet.NUME} className="pet-avatar-mini" />
+                    ) : (
+                      <div className="pet-avatar-mini placeholder">🐾</div>
+                    )}
+                    <div className="pet-info-box">
                       <strong>{pet.NUME}</strong>
-                      <p>{pet.TIP} • {pet.RASA} • {pet.VARSTA} years old</p>
+                      <p>{pet.TIP} • {pet.RASA} • {pet.VARSTA} ani</p>
+                      <span className={`health-badge ${pet.STATUS === 'Healthy' ? 'healthy' : 'unhealthy'}`}>
+                        {pet.STATUS || 'Unknown'}
+                      </span>
                     </div>
-                    <span className="badge active">{pet.STATUS || 'Healthy'}</span>
                   </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
-      {selectedPet && (
+
+      {selectedPetId && (
         <MedicalRecord
-          petId={selectedPet.ID}
-          onClose={() => setSelectedPet(null)}
+          petId={selectedPetId}
+          onClose={() => setSelectedPetId(null)}
         />
       )}
     </div>

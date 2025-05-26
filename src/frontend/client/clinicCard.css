@@ -1,0 +1,102 @@
+.clinic-card-custom {
+  width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  margin-left: 60px;
+}
+
+.clinic-card-custom:hover {
+  transform: scale(1.02);
+}
+
+.clinic-image-container {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.clinic-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  color: #ccc;
+  background: #fff;
+  border-radius: 70%;
+  padding: 1px 4px 1px 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.favorite-icon.filled {
+  color: red;
+}
+
+.joined-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #34d399;
+  color: white;
+  padding: 4px 12px;
+  font-size: 14px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.clinic-info {
+  padding: 16px;
+}
+
+.clinic-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.clinic-address {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 4px 0;
+}
+
+.clinic-description {
+  font-size: 14px;
+  color: #374151;
+  margin: 8px 0;
+}
+
+.clinic-services {
+  margin: 10px 0;
+}
+
+.service-tag {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin-right: 6px;
+}
+
+.clinic-contact {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #374151;
+}
+
+.phone-icon {
+  margin-right: 6px;
+}

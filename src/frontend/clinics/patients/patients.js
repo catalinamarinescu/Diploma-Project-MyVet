@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './patients.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ExpandablePatientCard from './expandOwner';
 import Navbar from '../../navbar';
 import Footer from "../../footer";
@@ -10,6 +10,7 @@ const ClinicPatients = () => {
   const [search, setSearch] = useState('');
   const token = localStorage.getItem('myvet_token');
   const navigate = useNavigate();
+  const clinicId = localStorage.getItem('clinicId');
 
   const fetchPatients = async () => {
     try {
@@ -17,7 +18,6 @@ const ClinicPatients = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
-      console.log('Pacienți primiți:', data);
       setPatients(data);
     } catch (err) {
       console.error('Eroare la fetch pacienți:', err);
@@ -27,7 +27,6 @@ const ClinicPatients = () => {
   useEffect(() => {
     if (token) fetchPatients();
 
-    // Ascultă evenimentul global pentru reîncărcare pacienți
     const refresh = () => fetchPatients();
     window.addEventListener('patientUpdated', refresh);
 
@@ -47,16 +46,16 @@ const ClinicPatients = () => {
 
   return (
     <div className="patients-page">
-      <Navbar/>
+      <Navbar />
 
       <div className="patients-container">
         <h1 className="patients-title">My Patients</h1>
-        <p className="patients-subtitle">Manage and view all your patient records</p>
+        <p className="patients-subtitle">Manage and view client records</p>
 
         <div className="filters">
           <input
             type="text"
-            placeholder="Search by name, email, phone, or pet name..."
+            placeholder="Search by owner name or phone..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -70,11 +69,11 @@ const ClinicPatients = () => {
 
         <div className="patients-list">
           {filtered.map(p => (
-            <ExpandablePatientCard key={p.ID_PET_OWNER} patient={p} />
+            <ExpandablePatientCard key={p.ID_PET_OWNER} patient={p} clinicId={clinicId} />
           ))}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
