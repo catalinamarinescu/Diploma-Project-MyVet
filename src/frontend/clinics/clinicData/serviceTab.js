@@ -8,7 +8,8 @@ const ServicesTab = () => {
     tip: '',
     denumire: '',
     descriere: '',
-    pret: ''
+    pret: '',
+    durata: '' // <-- Adăugat
   });
 
   const token = localStorage.getItem('myvet_token');
@@ -46,10 +47,26 @@ const ServicesTab = () => {
     }
   };
 
-  const handleModalOpen = (service = { tip: '', denumire: '', descriere: '', pret: '' }) => {
-    setCurrentService(service);
+  const handleModalOpen = (service = {
+    id: null,
+    tip: '',
+    denumire: '',
+    descriere: '',
+    pret: '',
+    durata: ''
+  }) => {
+    setCurrentService({
+      id: service.id ?? null, // ✅ important
+      tip: service.tip || '',
+      denumire: service.denumire || '',
+      descriere: service.descriere || '',
+      pret: service.pret || '',
+      durata: service.durata !== null && service.durata !== undefined ? service.durata.toString() : ''
+    });
     setShowModal(true);
   };
+
+
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -57,28 +74,30 @@ const ServicesTab = () => {
     setCurrentPage(1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const method = currentService?.id ? 'PUT' : 'POST';
-    const url = currentService?.id
-      ? `http://localhost:5000/api/clinic/servicii/${currentService.id}`
-      : `http://localhost:5000/api/clinic/servicii`;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(currentService),
-      });
-      fetchServices();
-      handleModalClose();
-    } catch (err) {
-      console.error("Error saving service:", err);
-    }
-  };
+  const method = currentService?.id ? 'PUT' : 'POST';
+  const url = currentService?.id
+    ? `http://localhost:5000/api/clinic/servicii/${currentService.id}` // cu id
+    : `http://localhost:5000/api/clinic/servicii`;
+
+  try {
+    await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(currentService),
+    });
+    fetchServices();
+    handleModalClose();
+  } catch (err) {
+    console.error("Error saving service:", err);
+  }
+};
+
 
   const handleChange = (field, value) => {
     setCurrentService((prev) => ({ ...prev, [field]: value }));
@@ -102,13 +121,14 @@ const ServicesTab = () => {
 
       <div className="service-list">
         {paginatedServices.map((s) => (
-          <div className="service-card" key={s.id}>
-            <div className="service-card-header">
+          <div className="service1-card" key={s.id}>
+            <div className="service-card1-header">
               <h3>{s.denumire}</h3>
-              <span className="service-badge-service">{s.tip}</span>
+              <span className="service1-badge-service">{s.tip}</span>
             </div>
             <p>{s.descriere}</p>
-            <p className="service-price">{s.pret} RON</p>
+            <p className="service1-price">{s.pret} RON</p>
+            <p className="service1-duration">{s.durata} min</p> {/* Nou */}
             <div className="service-card-actions">
               <button onClick={() => handleModalOpen(s)}>Edit</button>
               <button onClick={() => handleDelete(s.id)} className="delete">Delete</button>
@@ -161,6 +181,14 @@ const ServicesTab = () => {
                 type="number"
                 value={currentService.pret}
                 onChange={(e) => handleChange('pret', e.target.value)}
+                required
+              />
+
+              <label>Duration (minutes)</label>
+              <input
+                type="number"
+                value={currentService.durata}
+                onChange={(e) => handleChange('durata', e.target.value)}
                 required
               />
 

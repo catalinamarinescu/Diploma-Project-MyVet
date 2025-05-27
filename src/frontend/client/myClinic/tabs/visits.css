@@ -1,42 +1,41 @@
 .client-visits-container {
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
+}
+
+.client-visits-container h3 {
+  font-size: 1.4rem;
+  color: #014421;
+  margin-bottom: 1.5rem;
+  margin-top: 0px;
 }
 
 .client-visit-card {
-  background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4);
-  border-radius: 8px;
+  background: #f9fdfb;
+  border-left: 4px solid #28a745;
+  border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .client-visit-card h4 {
-  font-size: 1.2rem;
-  color: #111827;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .visit-subtext {
-  color: #6b7280;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
 .visit-section {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .visit-section strong {
-  display: block;
-  font-size: 0.9rem;
-  color: #374151;
-  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
 }
 
 .visit-section p {
-  margin: 0;
-  color: #4b5563;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }

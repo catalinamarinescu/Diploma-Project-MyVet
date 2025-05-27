@@ -1,13 +1,24 @@
 .lab-tab {
-  padding: 2rem;
-  background-color: #fff;
+  padding: 1.5rem 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.lab-tab h3 {
+  font-size: 1.4rem;
+  color: #014421;
+  margin-bottom: 1.5rem;
 }
 
 .lab-card {
-    background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  background: #f8fcf9;
+  border-left: 4px solid #28a745;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.2s ease;
 }
 
 .lab-card-header {
@@ -17,22 +28,24 @@
 }
 
 .lab-card-header h4 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #014421;
+  margin: 0;
 }
 
 .lab-card-header p {
-  color: #6b7280;
   font-size: 0.9rem;
-  margin: 0;
+  color: #6b7280;
+  margin-top: 0.25rem;
 }
 
 .lab-status {
   padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .lab-status.normal {
@@ -51,6 +64,13 @@
 
 .lab-notes strong {
   display: block;
+  color: #374151;
   margin-bottom: 0.3rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+}
+
+.lab-notes p {
+  margin: 0;
+  color: #444;
+  font-size: 0.9rem;
 }

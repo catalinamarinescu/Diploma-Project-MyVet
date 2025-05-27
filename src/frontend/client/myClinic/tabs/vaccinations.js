@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './vaccinations.css';
 
-const ClientVaccinationTab = ({ petId }) => {
-   const {clinicId} = useParams();
+const ClientVaccinationTab = ({ petId, clinicId }) => {
   const [vaccines, setVaccines] = useState([]);
   const token = localStorage.getItem('myvet_token');
 

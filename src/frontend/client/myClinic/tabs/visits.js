@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './visits.css';
 import { useParams } from 'react-router-dom';
 
-const ClientVisitTab = ({ petId }) => {
-  const {clinicId} = useParams();
+const ClientVisitTab = ({ petId, clinicId })=> {
   const [visits, setVisits] = useState([]);
   const token = localStorage.getItem('myvet_token');
 

@@ -1,0 +1,92 @@
+.step-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.step-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.step-section p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card.selected {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #111827;
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.clinic-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 2px 8px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: #374151;
+}
+
+.appointment-buttons {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.appointment-buttons button {
+  background-color: #10b981;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.appointment-buttons button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.appointment-buttons button:hover:not(:disabled) {
+  background-color: #059669;
+}

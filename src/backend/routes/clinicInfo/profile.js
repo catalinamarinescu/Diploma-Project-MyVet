@@ -32,7 +32,7 @@ router.get('/clinic/profile', clinicOnly, async (req, res) => {
     const servRes = await pool.request()
       .input('ID_CLINICA', clinicID)
       .query(`
-        SELECT ID, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE
+        SELECT ID, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE, DURATA
         FROM SERVICII
         WHERE ID_CLINICA = @ID_CLINICA
       `);
@@ -41,7 +41,8 @@ router.get('/clinic/profile', clinicOnly, async (req, res) => {
       tip: s.TIP_SERVICIU,
       denumire: s.DENUMIRE_SERVICIU,
       pret: s.PRET,
-      descriere: s.DESCRIERE
+      descriere: s.DESCRIERE,
+      durata: s.DURATA
     }));
 
     // 4. Angajați + servicii oferite

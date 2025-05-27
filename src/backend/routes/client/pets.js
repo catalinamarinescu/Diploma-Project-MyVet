@@ -139,5 +139,29 @@ router.get('/:id/pets', clinicOnly, async (req, res) => {
   }
 });
 
+router.get('/pets/:id/clinics', petOwnerOnly, async (req, res) => {
+  const petId = parseInt(req.params.id);
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('PET_ID', petId)
+      .query(`
+        SELECT CI.ID_CLINICA AS ID, C.NAME AS NUME, C.ADRESA, CI.EMAIL
+        FROM PETS_CLINICI PC
+        JOIN CLINICS CI ON CI.ID_CLINICA = PC.ID_CLINICA
+        JOIN CLINIC_INFO C ON C.ID_CLINICA = CI.ID_CLINICA
+        WHERE PC.ID_PET = @PET_ID
+      `);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Eroare la GET /pets/:id/clinics:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
+
+
 
 module.exports = router;

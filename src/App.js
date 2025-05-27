@@ -24,6 +24,8 @@ import ClinicPatients from './frontend/clinics/patients/patients';
 import MyClinicPage from './frontend/client/myClinic/myClinic';
 import MyClinicsPage from './frontend/client/myClinics';
 import Navbar from './frontend/navbar';
+import MedicalRecordsPage from './frontend/client/myClinic/medicalRecordsPage';
+import AppointmentForm from './frontend/client/appointments/appointments';
 
 
 function App() {
@@ -53,6 +55,8 @@ function App() {
         <Route path="/clinic/patients" element={<ClinicPatients/>} />
         <Route path="/client/my-clinics/:clinicId" element={<MyClinicPage/>} />
         <Route path="/client/clinics" element={<MyClinicsPage/>} />
+        <Route path="/client/medical-records" element={<MedicalRecordsPage/>} />
+         <Route path="/client/appointments" element={<AppointmentForm/>} />
       </Routes>
   );
 }

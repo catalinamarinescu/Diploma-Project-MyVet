@@ -5,62 +5,39 @@ const path = require('path');
 const { poolPromise } = require('../../db'); // conexiune MSSQL
 const { clinicOnly } = require('../middleware');
 
-router.put('/clinic/servicii', clinicOnly, async (req, res) => {
+router.put('/clinic/servicii/:id', clinicOnly, async (req, res) => {
   const clinicID = req.user.id;
-  const servicii = req.body.servicii;
-
-  if (!Array.isArray(servicii)) {
-    return res.status(400).json({ error: 'Format invalid: așteptam un array de servicii.' });
-  }
+  const serviciuID = parseInt(req.params.id);
+  const { tip, denumire, pret, descriere, durata } = req.body;
 
   try {
     const pool = await poolPromise;
+    await pool.request()
+      .input('ID', serviciuID)
+      .input('TIP_SERVICIU', tip)
+      .input('DENUMIRE_SERVICIU', denumire)
+      .input('PRET', pret)
+      .input('DESCRIERE', descriere)
+      .input('DURATA', durata)
+      .input('ID_CLINICA', clinicID)
+      .query(`
+        UPDATE SERVICII
+        SET TIP_SERVICIU = @TIP_SERVICIU,
+            DENUMIRE_SERVICIU = @DENUMIRE_SERVICIU,
+            PRET = @PRET,
+            DESCRIERE = @DESCRIERE,
+            DURATA = @DURATA
+        WHERE ID = @ID AND ID_CLINICA = @ID_CLINICA
+      `);
 
-    for (const s of servicii) {
-      const checkExist = await pool.request()
-        .input('DENUMIRE_SERVICIU', s.denumire)
-        .input('ID_CLINICA', clinicID)
-        .query(`
-          SELECT ID FROM SERVICII
-          WHERE DENUMIRE_SERVICIU = @DENUMIRE_SERVICIU AND ID_CLINICA = @ID_CLINICA
-        `);
-
-      if (checkExist.recordset.length > 0) {
-        const existingID = checkExist.recordset[0].ID;
-        await pool.request()
-          .input('ID', existingID)
-          .input('TIP_SERVICIU', s.tip)
-          .input('DENUMIRE_SERVICIU', s.denumire)
-          .input('PRET', s.pret)
-          .input('DESCRIERE', s.descriere)
-          .query(`
-            UPDATE SERVICII
-              SET TIP_SERVICIU = @TIP_SERVICIU,
-              DENUMIRE_SERVICIU = @DENUMIRE_SERVICIU,
-              PRET = @PRET,
-              DESCRIERE = @DESCRIERE
-              WHERE ID = @ID
-          `);
-      } else {
-        await pool.request()
-          .input('TIP_SERVICIU', s.tip)
-          .input('DENUMIRE_SERVICIU', s.denumire)
-          .input('PRET', s.pret)
-          .input('DESCRIERE', s.descriere)
-          .input('ID_CLINICA', clinicID)
-          .query(`
-              INSERT INTO SERVICII (ID_CLINICA, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE)
-              VALUES (@ID_CLINICA, @TIP_SERVICIU, @DENUMIRE_SERVICIU, @PRET, @DESCRIERE)
-          `)
-      }
-    }
-
-    res.status(200).json({ message: 'Servicii actualizate cu succes!' });
+    res.status(200).json({ message: 'Serviciu actualizat cu succes!' });
   } catch (err) {
-    console.error('Eroare la actualizare servicii:', err);
+    console.error('Eroare la update serviciu:', err);
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
+
 
 router.delete('/clinic/servicii/:id', clinicOnly, async(req, res) => {
   const clinicID = req.user.id;
@@ -88,5 +65,33 @@ router.delete('/clinic/servicii/:id', clinicOnly, async(req, res) => {
     res.status(500).json({ error: "Eroare server la ștergere." });
   }
 });
+
+// POST: Adăugare serviciu individual (pentru frontend)
+router.post('/clinic/servicii', clinicOnly, async (req, res) => {
+  const clinicID = req.user.id;
+  const { tip, denumire, pret, descriere, durata } = req.body;
+
+  try {
+    const pool = await poolPromise;
+
+    await pool.request()
+      .input('ID_CLINICA', clinicID)
+      .input('TIP_SERVICIU', tip)
+      .input('DENUMIRE_SERVICIU', denumire)
+      .input('PRET', pret)
+      .input('DESCRIERE', descriere)
+      .input('DURATA', durata)
+      .query(`
+        INSERT INTO SERVICII (ID_CLINICA, TIP_SERVICIU, DENUMIRE_SERVICIU, PRET, DESCRIERE, DURATA)
+        VALUES (@ID_CLINICA, @TIP_SERVICIU, @DENUMIRE_SERVICIU, @PRET, @DESCRIERE, @DURATA)
+      `);
+
+    res.status(201).json({ message: 'Serviciu adăugat cu succes.' });
+  } catch (err) {
+    console.error('Eroare la POST /clinic/servicii:', err);
+    res.status(500).json({ error: 'Eroare server.' });
+  }
+});
+
 
 module.exports = router;

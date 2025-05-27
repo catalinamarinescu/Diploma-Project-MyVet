@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './lab.css';
 
-const ClientLabTab = ({ petId }) => {
-     const {clinicId} = useParams();
+const ClientLabTab = ({ petId, clinicId }) => {
   const [results, setResults] = useState([]);
   const token = localStorage.getItem('myvet_token');
 

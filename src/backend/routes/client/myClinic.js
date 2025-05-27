@@ -77,7 +77,7 @@ const clinicId = parseInt(rawClinicId);
       .input('OWNER_ID', ownerId)
       .input('CLINIC_ID', sql.Int, clinicId)
       .query(`
-        SELECT MR.ID_PET, MR.LAST_CHECKUP_DATE, MR.WEIGHT_KG, MR.SEX, MR.ALLERGIES, MR.NOTES,
+        SELECT MR.ID_PET, MR.LAST_CHECKUP_DATE, MR.WEIGHT_KG, MR.SEX, MR.ALLERGIES, MR.NOTES, MR.STATUS,
                P.NUME AS PET_NAME, P.TIP, P.RASA, P.VARSTA, P.POZA
         FROM MEDICAL_RECORD MR
         JOIN PETS P ON P.ID = MR.ID_PET
@@ -216,24 +216,42 @@ router.post('/register-pet-to-clinic', petOwnerOnly, async (req, res) => {
   try {
     const pool = await poolPromise;
 
-    // Verifică dacă animalul aparține ownerului și nu este deja înregistrat în clinică
-    const check = await pool.request()
+    // Verifică dacă animalul aparține ownerului
+    const checkPet = await pool.request()
       .input('ID_PET', petId)
       .input('ID_OWNER', ownerId)
-      .input('ID_CLINICA', clinicId)
       .query(`
         SELECT 1 FROM PETS
         WHERE ID = @ID_PET AND ID_PET_OWNER = @ID_OWNER
-          AND NOT EXISTS (
-            SELECT 1 FROM MEDICAL_RECORD WHERE ID_PET = @ID_PET AND ID_CLINICA = @ID_CLINICA
-          )
       `);
 
-    if (check.recordset.length === 0) {
-      return res.status(400).json({ error: 'Animal invalid sau deja înregistrat' });
+    if (checkPet.recordset.length === 0) {
+      return res.status(400).json({ error: 'Animal invalid sau nu aparține utilizatorului' });
     }
 
-    // Creează fișa medicală
+    // Verifică dacă pet-ul e deja înregistrat în clinică în PETS_CLINICI
+    const checkAssociation = await pool.request()
+      .input('ID_PET', petId)
+      .input('ID_CLINICA', clinicId)
+      .query(`
+        SELECT 1 FROM PETS_CLINICI
+        WHERE ID_PET = @ID_PET AND ID_CLINICA = @ID_CLINICA
+      `);
+
+    if (checkAssociation.recordset.length > 0) {
+      return res.status(400).json({ error: 'Animalul este deja înregistrat în această clinică' });
+    }
+
+    // Creează înregistrarea în PETS_CLINICI
+    await pool.request()
+      .input('ID_PET', petId)
+      .input('ID_CLINICA', clinicId)
+      .query(`
+        INSERT INTO PETS_CLINICI (ID_PET, ID_CLINICA)
+        VALUES (@ID_PET, @ID_CLINICA)
+      `);
+
+    // Dacă vrei să creezi și fișa medicală automat, poți adăuga și asta:
     await pool.request()
       .input('ID_PET', petId)
       .input('ID_CLINICA', clinicId)
@@ -242,12 +260,13 @@ router.post('/register-pet-to-clinic', petOwnerOnly, async (req, res) => {
         VALUES (@ID_PET, @ID_CLINICA)
       `);
 
-    res.json({ success: true });
+    res.json({ success: true, message: 'Animal înregistrat în clinică cu succes' });
   } catch (err) {
     console.error('Eroare înscriere animal:', err);
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
 
 // GET /api/client/unregistered-pets?clinicId=123
 router.get('/unregistered-pets', petOwnerOnly, async (req, res) => {
@@ -282,5 +301,68 @@ router.get('/unregistered-pets', petOwnerOnly, async (req, res) => {
   }
 });
 
+router.get('/pet/:petId/records-per-clinic', petOwnerOnly, async (req, res) => {
+  const petId = parseInt(req.params.petId);
+  const ownerId = req.user.id;
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('PET_ID', petId)
+      .input('OWNER_ID', ownerId)
+      .query(`
+        SELECT 
+          MR.ID_CLINICA,
+          C.NAME,
+          C.ADRESA,
+          CI.EMAIL,
+          V.ID AS VISIT_ID,
+          V.TITLE,
+          V.VISIT_DATE,
+          V.DIAGNOSIS,
+          V.TREATMENT,
+          V.VETERINARIAN
+        FROM MEDICAL_RECORD MR
+        JOIN CLINIC_INFO C ON C.ID_CLINICA = MR.ID_CLINICA
+        JOIN CLINICS CI ON CI.ID_CLINICA = C.ID_CLINICA
+        LEFT JOIN VISITS V ON V.ID_PET = MR.ID_PET AND V.ID_CLINICA = MR.ID_CLINICA
+        WHERE MR.ID_PET = @PET_ID
+      `);
+
+    // Grupare pe clinică
+    const clinics = {};
+    for (const row of result.recordset) {
+      const id = row.ID_CLINICA;
+      if (!clinics[id]) {
+        clinics[id] = {
+          ID_CLINICA: id,
+          NAME: row.NAME,
+          ADRESA: row.ADRESA,
+          EMAIL: row.EMAIL,
+          PHONE: row.PHONE,
+          VISITS: []
+        };
+      }
+
+      if (row.VISIT_ID) {
+        clinics[id].VISITS.push({
+          ID: row.VISIT_ID,
+          TITLE: row.TITLE,
+          VISIT_DATE: row.VISIT_DATE,
+          DIAGNOSIS: row.DIAGNOSIS,
+          TREATMENT: row.TREATMENT,
+          TYPE: row.TYPE,
+          VETERINARIAN: row.VETERINARIAN
+        });
+      }
+    }
+
+    res.json(Object.values(clinics));
+  } catch (err) {
+    console.error('Eroare la records-per-clinic:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
 
 module.exports = router;

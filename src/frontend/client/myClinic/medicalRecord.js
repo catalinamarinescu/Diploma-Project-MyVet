@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import SummaryTab from './tabs/summary';
-import './medicalRecord.css';
 import ClientVisitTab from './tabs/visits';
 import ClientVaccinationTab from './tabs/vaccinations';
-import ClientLabTab from './tabs/lab';
+import ClientLabResultsTab from './tabs/lab';
+import './medicalRecord.css';
 
-const MedicalRecordModal = ({ pet, medicalData, clinicId, onClose }) => {
-  const [tab, setTab] = useState('summary');
+const MedicalRecordTabs = ({ petId, clinicId }) => {
+  const [activeTab, setActiveTab] = useState('summary');
+  const [medicalData, setMedicalData] = useState(null);
+  const token = localStorage.getItem('myvet_token');
+
+  useEffect(() => {
+    const fetchMedicalRecord = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/client/pet/${petId}/medical-record?clinicId=${clinicId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        setMedicalData(data);
+      } catch (err) {
+        console.error('Failed to load medical record:', err);
+      }
+    };
+    fetchMedicalRecord();
+  }, [petId, clinicId, token]);
+
+  if (!medicalData) return <p style={{ padding: '1rem' }}>Loading medical record...</p>;
+
   return (
-    <div className="modal-overlay">
-        <div className="modal-content">
-            <button className="modal-close" onClick={onClose}>×</button>
-            
-            <div className="pet-header">
-            <div>
-                <h2>{pet.NUME} <span className="badge">{medicalData.STATUS || 'Healthy'}</span></h2>
-                <div className="pet-info">
-                <p>{pet.TIP} • {pet.RASA} • {pet.VARSTA} years old • {medicalData.SEX || '-'}</p>
-                <p>Weight: {medicalData.WEIGHT_KG || '-'} kg</p>
-                <p>Last checkup: {medicalData.LAST_CHECKUP_DATE || 'N/A'}</p>
-                </div>
-            </div>
-            <div className="header-actions">
-                <button className="nav-btn-myclinic">Schedule Visit</button>
-            </div>
-            </div>
+    <div className="record-inline-container">
+      <div className="tabs-md">
+        {['summary', 'visits', 'vaccinations', 'lab'].map(tab => (
+          <button
+            key={tab}
+            className={activeTab === tab ? 'tab-md active' : 'tab-md'}
+            onClick={() => setActiveTab(tab)}
+          >
+            <img
+              src={`/imagini/${tab}.png`}
+              alt={tab}
+              className="tab-icon"
+            />
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
+      </div>
 
-            <div className="tab-menu">
-            <button className={tab === 'summary' ? 'active' : ''} onClick={() => setTab('summary')}>Summary</button>
-            <button className={tab === 'visits' ? 'active' : ''} onClick={() => setTab('visits')}>Visits</button>
-            <button className={tab === 'vaccines' ? 'active' : ''} onClick={() => setTab('vaccines')}>Vaccinations</button>
-            <button className={tab === 'lab' ? 'active' : ''} onClick={() => setTab('lab')}>Lab</button>
-            </div>
-
-            <div className="tab-content">
-                {tab === 'summary' && <SummaryTab petId={pet.ID} clinicId={clinicId}/>}
-                {tab === 'visits' && <ClientVisitTab petId={pet.ID} clinicId={clinicId}/>}
-                {tab === 'vaccines' && <ClientVaccinationTab petId={pet.ID} clinicId={clinicId}/>}
-                {tab === 'lab' && <ClientLabTab petId={pet.ID} clinicId={clinicId}/>}
-            </div>
-        </div>
-        </div>
-
+      <div className="tab-content-md">
+        {activeTab === 'summary' && <SummaryTab petId={petId} clinicId={clinicId} />}
+        {activeTab === 'visits' && <ClientVisitTab petId={petId} clinicId={clinicId} />}
+        {activeTab === 'vaccinations' && <ClientVaccinationTab petId={petId} clinicId={clinicId} />}
+        {activeTab === 'lab' && <ClientLabResultsTab petId={petId} clinicId={clinicId} />}
+      </div>
+    </div>
   );
 };
 
-export default MedicalRecordModal;
+export default MedicalRecordTabs;

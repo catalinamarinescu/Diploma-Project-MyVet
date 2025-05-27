@@ -21,18 +21,17 @@
 }
 
 .services1-actions-button {
-  margin-left: 0.5rem ;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   font-weight: 600;
+  border-radius: 8px;
+  background-color: #014421;
+  color: white;
   border: none;
-  background-color: transparent;
-  color: #014421;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .services1-actions-button:hover {
-  background-color: #d1e7dd;
+  background-color: #026c35;
 }
 
 .service-list {
@@ -41,31 +40,32 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.service-card {
-  background-color: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 6px 16px rgba(0, 66, 31, 0.08);
-  transition: transform 0.2s ease;
+.service1-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.8rem;
+  box-shadow: 0 8px 20px rgba(0, 66, 31, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.service-card:hover {
-  transform: translateY(-4px);
+.service1-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 66, 31, 0.12);
 }
 
-.service-card-header {
+.service1-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.service-card-header h3 {
+.service1-card-header h3 {
   color: #014421;
-    font-size: 1.1rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
-.service-badge-service {
+.service1-badge-service {
   background-color: #e8f5e9;
   color: #1b5e20;
   padding: 0.3rem 0.7rem;
@@ -74,11 +74,22 @@
   font-weight: 600;
 }
 
-.service-price {
+.service1-price {
   color: #014421;
   font-weight: bold;
   margin-top: 0.8rem;
   font-size: 1rem;
+}
+
+.service1-duration {
+  display: inline-block;
+  background-color: #e0f7fa;
+  color: #006064;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 8px;
 }
 
 .service-card-actions {
@@ -88,29 +99,27 @@
 }
 
 .service-card-actions button {
-  background: none;
-  color: #014421;
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-weight: 500;
-  border: 1px solid transparent;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
   transition: background-color 0.2s ease;
 }
 
 .service-card-actions button:hover {
-  background-color: #e6f4ea;
+  background-color: #c8e6c9;
 }
 
 .service-card-actions .delete {
-  border: none;
-  background-color: white;
-  color: #014421;
+  background-color: #ffebee;
+  color: #c62828;
 }
 
 .service-card-actions .delete:hover {
-  background-color: #fbe8e8;
-  color: #c62828;
+  background-color: #ffcdd2;
+  color: #b71c1c;
 }
 
 /* === Modal === */
@@ -158,6 +167,13 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.service-modal form input:focus,
+.service-modal form textarea:focus {
+  outline: none;
+  border-color: #26a69a;
+  box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
+}
+
 .service-modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -177,16 +193,22 @@
 }
 
 .service-modal-actions button[type="submit"] {
-  background-color: #ffffff;
-  color: #014421;
-  border: none;;
+  background-color: #014421;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
+
+.service-modal-actions button[type="submit"]:hover {
+  background-color: #026c35;
+}
+
 .pagination1 {
   display: flex;
   justify-content: center;
   margin-top: 30px;
   gap: 8px;
-  background-color: none;
 }
 
 .pagination1 button {
@@ -210,4 +232,3 @@
   font-weight: bold;
   border: none;
 }
-
