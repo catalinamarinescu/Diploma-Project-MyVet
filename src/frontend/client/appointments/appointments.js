@@ -4,7 +4,7 @@ import Footer from '../../footer';
 
 import StepSelectPetClinic from './selectPet';
 import StepSelectClinic from './selectClinic';
-// import StepSelectService from './StepSelectService';
+import StepSelectExtras from './selectExtras';
 // import StepSelectExtras from './StepSelectExtras';
 // import StepSelectMedic from './StepSelectMedic';
 // import StepSelectDateTime from './StepSelectDateTime';
@@ -47,12 +47,12 @@ const AppointmentForm = () => {
       onNext={nextStep}
       onBack={prevStep}
     />,
-    // <StepSelectExtras
-    //   formData={formData}
-    //   setFormData={setFormData}
-    //   onNext={nextStep}
-    //   onBack={prevStep}
-    // />,
+    <StepSelectExtras
+      formData={formData}
+      setFormData={setFormData}
+      onNext={nextStep}
+      onBack={prevStep}
+    />,
     // <StepSelectMedic
     //   formData={formData}
     //   setFormData={setFormData}

@@ -22,6 +22,7 @@ const patientsRoute = require('./routes/clinicInfo/patients');
 const medrecRoute = require('./routes/clinicInfo/medicalRecord');
 const myClinicRoute = require('./routes/client/myClinic');
 const appointmentsRoute = require('./routes/client/appointments');
+const workingHoursRoute = require('./routes/clinicInfo/workingHours');
 // Middleware
 app.use(cors()); // permite cereri de pe alte porturi (ex: React)
 app.use(express.json()); // permite parsarea JSON-ului din request body
@@ -45,7 +46,8 @@ app.use('/api/clinic', patientsRoute);
 app.use('/api/client', patientsRoute);
 app.use('/api/clinic', medrecRoute);
 app.use('/api/client', myClinicRoute);
-app.use('/api/client', appointmentsRoute);    
+app.use('/api/client', appointmentsRoute);
+app.use('/api/clinic', workingHoursRoute);    
 
 
 const PORT = 5000;

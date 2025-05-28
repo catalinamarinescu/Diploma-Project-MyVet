@@ -1,0 +1,184 @@
+/* schedule.css */
+
+.schedule-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.schedule-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.schedule-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+}
+.schedule-header p {
+  margin: 0.25rem 0 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+.btn-add-doc {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+/* Body layout */
+.schedule-body {
+  display: flex;
+  flex: 1;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Staff list (aside) */
+.staff-list {
+  flex: 0 0 280px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.staff-list h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+}
+.staff-card {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+  background: #fafafa;
+  transition: background 0.2s ease;
+}
+.staff-card:hover {
+  background: #f0f0f0;
+}
+.staff-card.selected {
+  background: #f0fdf4;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #ddd;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+}
+.info {
+  flex: 1;
+}
+.info strong {
+  display: block;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+.info .specialty {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.25rem;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
+/* Calendar section */
+.calendar-section {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+}
+.calendar-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.calendar-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1a1a1a;
+}
+.calendar-header span {
+  margin-left: 1rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* FullCalendar overrides */
+.fc .fc-toolbar {
+  display: none;
+}
+.fc .fc-daygrid-day-frame {
+  border: 1px solid #ececec;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #f3f4f6;
+}
+
+/* No selection message */
+.no-selection {
+  padding: 2rem;
+  color: #777;
+  font-size: 1rem;
+}
+
+/* Footer spacing */
+.schedule-page > footer {
+  margin-top: auto;
+}
+
+.fc-day-fully-booked {
+  background-color: #f87171 !important;
+}
+
+.modal-backdrop {
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items:center; justify-content:center;
+}
+.modal {
+  background: #fff; padding: 1.5rem; border-radius:8px; width:320px;
+}
+.slot-list {
+  list-style:none; padding:0; max-height:200px; overflow-y:auto;
+}
+.slot-list li {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0.4rem 0; border-bottom:1px solid #eee;
+}
+.slot-list li.free button {
+  margin-left:0.5rem; padding:2px 6px; font-size:0.8rem;
+}
+.slot-list li.booked {
+  color:#999;
+}
+.modal-actions {
+  margin-top:1rem; text-align:right;
+}
+.modal-actions button {
+  margin-left:0.5rem; padding:0.5rem 1rem;
+}

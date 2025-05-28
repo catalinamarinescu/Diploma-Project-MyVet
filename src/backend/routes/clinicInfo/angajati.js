@@ -164,7 +164,8 @@ router.get('/clinic/angajati', clinicOnly, async (req, res) => {
       .query(`
         SELECT 
           E.ID,
-          E.PRENUME + ' ' + E.NUME AS FULL_NAME
+          E.PRENUME + ' ' + E.NUME AS FULL_NAME,
+          E.TIP_ANGAJAT
         FROM ANGAJATI E
         WHERE E.ID_CLINICA = @ID_CLINICA
       `);
