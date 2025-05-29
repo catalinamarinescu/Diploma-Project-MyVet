@@ -5,24 +5,23 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Navbar from '../../navbar';
 import Footer from '../../footer';
+import WorkHoursForm from './workHoursForm';
+import ExceptionForm from './exceptionForm';
 import './schedule.css';
 
 const TYPE_COLORS = {
   'Medic veterinar': '#014421',
   'Asistent medical': '#3b82f6',
-  'Receptioner':      '#f59e0b',
-  'default':          '#9ca3af'
+  'Receptioner': '#f59e0b',
+  'default': '#9ca3af'
 };
 
-// Normalizează diverse formate TIME în "HH:mm"
 function toHM(val) {
   if (!val) return '';
   const s = val.toString();
-  // Dacă e ISO datetime
   if (s.includes('T')) {
     return s.substr(s.indexOf('T') + 1, 5);
   }
-  // Dacă e "HH:mm:ss" sau "H:mm:ss"
   const parts = s.split(':');
   if (parts.length >= 2) {
     const hh = parts[0].padStart(2, '0');
@@ -39,8 +38,12 @@ const ScheduleManagement = () => {
   const [appointments, setAppointments] = useState([]);
   const [exceptions, setExceptions] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
+  const [modalDate, setModalDate] = useState(null);
+  const [freeSlots, setFreeSlots] = useState([]);
+  const [showWorkForm, setShowWorkForm] = useState(false);
+  const [showExceptionForm, setShowExceptionForm] = useState(false);
+  const [showExceptions, setShowExceptions] = useState(false);
 
-  // Fetch employees
   useEffect(() => {
     fetch('http://localhost:5000/api/clinic/angajati', {
       headers: { Authorization: `Bearer ${token}` }
@@ -48,16 +51,15 @@ const ScheduleManagement = () => {
       .then(res => res.json())
       .then(data => setEmployees(
         data.map(emp => ({
-          id:    emp.ID,
-          name:  emp.FULL_NAME,
-          type:  emp.TIP_ANGAJAT,
+          id: emp.ID,
+          name: emp.FULL_NAME,
+          type: emp.TIP_ANGAJAT,
           color: TYPE_COLORS[emp.TIP_ANGAJAT] || TYPE_COLORS.default
         }))
       ))
       .catch(err => console.error('Error loading employees:', err));
   }, [token]);
 
-  // Fetch schedule data
   useEffect(() => {
     if (!selected) return;
 
@@ -74,40 +76,122 @@ const ScheduleManagement = () => {
         headers: { Authorization: `Bearer ${token}` }
       }).then(r => r.ok ? r.json() : [])
     ])
-    .then(([wh, ex, appt]) => {
-      // Normalizează working hours
-      const bh = wh.map(w => ({
-        daysOfWeek: [w.Weekday % 7],     // 1=Mon...7=Sun→0
-        startTime:  toHM(w.StartTime),
-        endTime:    toHM(w.EndTime),
-        display:    'background',
-        color:      '#e0f7fa'
-      }));
-      console.log('🔨 businessHours:', bh);
-      setWorkingHours(bh);
+      .then(([wh, ex, appt]) => {
+        const bh = wh.map(w => ({
+          daysOfWeek: [(w.Weekday === 7 ? 0 : w.Weekday - 1)],
+          startTime: toHM(w.StartTime),
+          endTime: toHM(w.EndTime),
+          display: 'background',
+          color: '#e0f7fa'
+        }));
+        setWorkingHours(bh);
 
-      // map appointments
-      setAppointments(appt.map(a => ({
-        start: a.StartDateTime,
-        end:   a.EndDateTime,
-        title: a.PetName,
-        color: '#e76f51'
-      })));
+        setAppointments(appt.map(a => ({
+          start: a.StartDateTime,
+          end: a.EndDateTime,
+          title: a.PetName,
+          color: '#e76f51'
+        })));
 
-      // map exceptions
-      setExceptions(ex.map(e => ({
-        start:   e.StartDateTime,
-        end:     e.EndDateTime,
-        display: 'background',
-        color:   '#cccccc'
-      })));
-    })
-    .catch(err => console.error('Error loading schedule data:', err));
+        setExceptions(ex.map(e => ({
+          start: e.StartDateTime,
+          end: e.EndDateTime,
+          title: e.REASON || 'Blocare',
+          color: '#cccccc'
+        })));
+      })
+      .catch(err => console.error('Error loading schedule data:', err));
   }, [selected, token]);
 
-  const handleDateClick = info => {
-    console.log('Date clicked:', info.dateStr);
+  const handleDateClick = async info => {
+    if (!selected) return;
+    setModalDate(info.dateStr);
+    const res = await fetch(
+      `http://localhost:5000/api/clinic/angajati/${selected.id}/timeslots?date=${info.dateStr}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setFreeSlots(await res.json());
   };
+
+  const handleWorkHoursSave = async (hours) => {
+    if (!selected) return;
+    await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/working-hours`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(hours)
+    });
+    setShowWorkForm(false);
+  };
+
+  const handleExceptionSave = async (exception) => {
+  if (!selected) return;
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(exception)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      alert(err.error || 'Eroare la salvare.');
+      return;
+    }
+
+    const exRes = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const exData = await exRes.json();
+    setExceptions(exData.map(e => ({
+      start: e.StartDateTime,
+      end: e.EndDateTime,
+      title: e.Reason || 'Blocare',
+      color: '#cccccc'
+    })));
+    setShowExceptionForm(false);
+  } catch (err) {
+    console.error('Eroare excepție:', err);
+    alert('A apărut o eroare la salvarea excepției.');
+  }
+};
+
+const handleDeleteException = async (exceptionId) => {
+  if (!window.confirm('Ești sigur că vrei să ștergi această excepție?')) return;
+
+  const res = await fetch(`http://localhost:5000/api/clinic/exceptions/${exceptionId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (res.ok) {
+    // Reîncarcă excepțiile
+    const exRes = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const exData = await exRes.json();
+      setExceptions(exData.map(e => ({
+      start: e.START_DATE_TIME || e.StartDateTime,
+      end: e.END_DATE_TIME || e.EndDateTime,
+      title: e.REASON || e.Reason || 'Blocare',
+      id: e.ID,
+      color: '#cccccc'
+    })));
+
+    console.log(exData);
+  } else {
+    alert('Nu s-a putut șterge excepția.');
+  }
+};
+
 
   return (
     <div className="schedule-page">
@@ -118,7 +202,14 @@ const ScheduleManagement = () => {
           <h2>Schedule Management</h2>
           <p>Manage doctor availability and view appointments</p>
         </div>
-        <button className="btn-add-doc">+ Add Doctor</button>
+        <div className="action-buttons">
+          
+        <button onClick={() => setShowExceptions(true)} className="btn-secondary">
+          Afișează excepții
+        </button>
+          <button onClick={() => setShowWorkForm(true)} className="btn-secondary">Configurează program</button>
+          <button onClick={() => setShowExceptionForm(true)} className="btn-secondary">Adaugă excepție</button>
+        </div>
       </div>
 
       <div className="schedule-body">
@@ -133,7 +224,7 @@ const ScheduleManagement = () => {
             >
               <div className="avatar" />
               <div className="info">
-                <strong>{emp.name}</strong>
+                <strong>{emp.name} <br /></strong>
                 <span className="specialty">{emp.type}</span>
               </div>
               <div className="status-dot" style={{ backgroundColor: emp.color }} />
@@ -166,12 +257,100 @@ const ScheduleManagement = () => {
                 <div className="legend-item booked"><span /> Booked appointment</div>
                 <div className="legend-item blocked"><span /> Working exception</div>
               </div>
+
+              {modalDate && (
+                <div className="modal-backdrop" onClick={() => setModalDate(null)}>
+                  <div className="modal" onClick={e => e.stopPropagation()}>
+                    <h3>Disponibilitate pentru {modalDate}</h3>
+                    <ul className="slot-list">
+                      {freeSlots.map(s => (
+                        <li key={s.time} className={`slot-row ${s.type}`}>
+                          <span className="slot-time">{s.time}</span>
+                          <span className="slot-label">
+                            {s.type === 'booked' ? s.reason :
+                             s.type === 'exception' ? s.reason : 'Liber'}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button className="close-btn" onClick={() => setModalDate(null)}>Închide</button>
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <p className="no-selection">Please select a doctor on the left.</p>
           )}
         </section>
       </div>
+
+      {showWorkForm && (
+        <div className="modal-backdrop" onClick={() => setShowWorkForm(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h3>Configurează programul de lucru</h3>
+            <WorkHoursForm
+              onCancel={() => setShowWorkForm(false)}
+              onSave={handleWorkHoursSave}
+            />
+            <button className="close-btn" onClick={() => setShowWorkForm(false)}>Închide</button>
+          </div>
+        </div>
+      )}
+
+      {showExceptionForm && (
+        <div className="modal-backdrop" onClick={() => setShowExceptionForm(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h3>Adaugă excepție pentru {modalDate || '...'}:</h3>
+            <ExceptionForm
+              date={modalDate || new Date().toISOString().split('T')[0]}
+              onSave={handleExceptionSave}
+              onCancel={() => setShowExceptionForm(false)}
+            />
+            <button className="close-btn" onClick={() => setShowExceptionForm(false)}>Închide</button>
+          </div>
+        </div>
+      )}
+     {showExceptions && (
+  <div className="modal-backdrop" onClick={() => setShowExceptions(false)}>
+    <div className="modal" onClick={e => e.stopPropagation()}>
+      <h3>Excepții existente:</h3>
+      <ul className="slot-list">
+        {exceptions.map((exc, index) => {
+          const rawStart = exc.START_DATE_TIME || exc.StartDateTime || exc.start;
+          const rawEnd = exc.END_DATE_TIME || exc.EndDateTime || exc.end;
+          const reason = exc.REASON || exc.Reason || exc.title || 'Blocare';
+
+          const parseLocalDate = (str) => {
+            if (!str || typeof str !== 'string' || !str.includes('T') && !str.includes(' ')) return null;
+            const [d, t] = str.split(/[T ]/);
+            const [y, m, day] = d.split('-').map(Number);
+            const [h, min] = t.split(':').map(Number);
+            return new Date(y, m - 1, day, h, min);
+          };
+
+          const start = parseLocalDate(rawStart);
+          const end = parseLocalDate(rawEnd);
+
+          const validStart = start instanceof Date && !isNaN(start);
+          const validEnd = end instanceof Date && !isNaN(end);
+
+          return (
+            <li key={index} className="slot-row exception">
+              <span className="slot-time">
+                {validStart && validEnd
+                  ? `${start.toLocaleDateString()} ${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} – ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                  : 'Dată invalidă'}
+              </span>
+              <span className="slot-label">{reason}</span>
+              <button onClick={() => handleDeleteException(exc.id)} className="btn-delete">Șterge</button>
+            </li>
+          );
+        })}
+      </ul>
+      <button className="close-btn" onClick={() => setShowExceptions(false)}>Închide</button>
+    </div>
+  </div>
+)}
 
       <Footer />
     </div>
