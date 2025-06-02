@@ -37,9 +37,19 @@ const StepSelectClinic = ({ formData, setFormData, onNext, onBack }) => {
         ))}
       </div>
 
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Prev</button>
-        <button onClick={onNext} disabled={!formData.clinicId}>Next</button>
+     <div className="nav-buttons-split">
+        <div>
+          <button className="btn-outline" onClick={onBack}>← Previous</button>
+        </div>
+        <div>
+          <button
+            className="btn-secondary"
+            onClick={onNext}
+            disabled={!formData.petId}
+          >
+            Next →
+          </button>
+        </div>
       </div>
     </div>
   );

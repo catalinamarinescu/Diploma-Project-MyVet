@@ -1,26 +1,32 @@
 .step-section {
   margin-bottom: 2rem;
   padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: left; 
 }
 
 .step-section h3 {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 600;
   color: #111827;
   margin-bottom: 0.5rem;
+  margin-top: 0px;
+  margin-left: 480px;
 }
 
 .step-section p {
   font-size: 0.95rem;
   color: #6b7280;
   margin-bottom: 1rem;
+  margin-left: 530px;
 }
 
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  display: flex;
   gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
@@ -39,7 +45,7 @@
 }
 
 .card.selected {
-  border-color: #10b981;
+  border-color: #000000;
   background-color: #ecfdf5;
 }
 
@@ -84,4 +90,117 @@
 
 .appointment-buttons button:hover:not(:disabled) {
   background-color: #059669;
+}
+
+.pet-card {
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pet-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.pet-card.selected {
+  border: 2px solid rgb(209, 150, 63);;
+  background-color: #ecfdf5;
+}
+
+.pet-avatar-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 2px solid #e5e7eb;
+  background-color: #f3f4f6;
+}
+
+.pet-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0.5rem 0 0;
+}
+
+.pet-breed {
+  font-size: 0.95rem;
+  color: #374151;
+  margin: 0.25rem 0;
+}
+
+.pet-age {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.clinic-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background-color: #f3f4f6;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: #374151;
+}
+
+.nav-buttons-split {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.btn1-secondary {
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn1-secondary:hover:not(:disabled) {
+  background-color: #ece0b6;
+}
+
+.btn1-secondary:disabled {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background-color: white;
+  color: #1f2937;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
 }

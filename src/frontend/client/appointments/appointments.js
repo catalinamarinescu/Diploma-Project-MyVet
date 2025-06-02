@@ -5,10 +5,9 @@ import Footer from '../../footer';
 import StepSelectPetClinic from './selectPet';
 import StepSelectClinic from './selectClinic';
 import StepSelectExtras from './selectExtras';
-// import StepSelectExtras from './StepSelectExtras';
-// import StepSelectMedic from './StepSelectMedic';
-// import StepSelectDateTime from './StepSelectDateTime';
-// import StepConfirm from './StepConfirm';
+import StepSelectMedic from './selectVet';
+import StepSelectDateTime from './selectDateTime';
+import StepConfirm from './confirm';
 import './appointments.css';
 import StepSelectService from './selectAppType';
 
@@ -26,7 +25,7 @@ const AppointmentForm = () => {
     note: ''
   });
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, 7));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const steps = [
@@ -53,45 +52,53 @@ const AppointmentForm = () => {
       onNext={nextStep}
       onBack={prevStep}
     />,
-    // <StepSelectMedic
-    //   formData={formData}
-    //   setFormData={setFormData}
-    //   onNext={nextStep}
-    //   onBack={prevStep}
-    // />,
-    // <StepSelectDateTime
-    //   formData={formData}
-    //   setFormData={setFormData}
-    //   onNext={nextStep}
-    //   onBack={prevStep}
-    // />,
-    // <StepConfirm
-    //   formData={formData}
-    //   onBack={prevStep}
-    // />,
+    <StepSelectMedic
+      formData={formData}
+      setFormData={setFormData}
+      onNext={nextStep}
+      onBack={prevStep}
+    />,
+    <StepSelectDateTime
+      formData={formData}
+      setFormData={setFormData}
+      onNext={nextStep}
+      onBack={prevStep}
+    />,
+    <StepConfirm
+      formData={formData}
+      onBack={prevStep}
+    />,
   ];
 
   return (
     <>
-      <Navbar/>
-      <div className="appointment-content">
-      <h2 className="appointment-title">Book Appointment</h2>
-      <p className="appointment-subtitle">Step {step} of 6</p>
+       <Navbar />
+        <div className="appointment-wrapper">
+          <div className="appointment-page">
+            <div className="appointment-topbar">
+              <h1 className="appointment-title">Book Appointment</h1>
+              <button className="back-button">Back to Home</button>
+            </div>
 
-      <div className="step-progress">
-        {[1, 2, 3, 4, 5, 6].map((num) => (
-          <div
-            key={num}
-            className={`step-circle ${step === num ? 'active' : ''}`}
-          >
-            {num}
+            <p className="appointment-subtitle">Schedule a visit for your pet</p>
+
+            <div className="step-progress">
+              {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                <div
+                  key={num}
+                  className={`step-circle ${step === num ? 'active' : ''}`}
+                >
+                  {num}
+                </div>
+              ))}
+            </div>
+
+            <div className="appointment-card">
+              {steps[step - 1]}
+            </div>
           </div>
-        ))}
-      </div>
-
-      {steps[step - 1]}
-    </div>
-    <Footer/>
+        </div>
+  <Footer />
   </>
   );
 };

@@ -1,4 +1,3 @@
-// ScheduleManagement.jsx
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -31,6 +30,21 @@ function toHM(val) {
   return s;
 }
 
+const parseLocalDate = (str) => {
+  try {
+    if (!str || typeof str !== 'string') return null;
+    const [datePart, timePart] = str.split(' ');
+    if (!datePart || !timePart) return null;
+    const [y, m, d] = datePart.split('-').map(Number);
+    const [h, min] = timePart.split(':').map(Number);
+    if (isNaN(y) || isNaN(m) || isNaN(d) || isNaN(h) || isNaN(min)) return null;
+    return new Date(y, m - 1, d, h, min);
+  } catch (error) {
+    console.error('Error parsing date:', str, error);
+    return null;
+  }
+};
+
 const ScheduleManagement = () => {
   const token = localStorage.getItem('myvet_token');
   const [employees, setEmployees] = useState([]);
@@ -39,7 +53,7 @@ const ScheduleManagement = () => {
   const [exceptions, setExceptions] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [modalDate, setModalDate] = useState(null);
-  const [freeSlots, setFreeSlots] = useState([]);
+  const [modalData, setModalData] = useState({ programari: [], exceptii: [], libere: [] });
   const [showWorkForm, setShowWorkForm] = useState(false);
   const [showExceptionForm, setShowExceptionForm] = useState(false);
   const [showExceptions, setShowExceptions] = useState(false);
@@ -70,13 +84,9 @@ const ScheduleManagement = () => {
 
       fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
         headers: { Authorization: `Bearer ${token}` }
-      }).then(r => r.ok ? r.json() : []),
-
-      fetch(`http://localhost:5000/api/clinic/programari?angajatId=${selected.id}`, {
-        headers: { Authorization: `Bearer ${token}` }
       }).then(r => r.ok ? r.json() : [])
     ])
-      .then(([wh, ex, appt]) => {
+      .then(([wh, ex]) => {
         const bh = wh.map(w => ({
           daysOfWeek: [(w.Weekday === 7 ? 0 : w.Weekday - 1)],
           startTime: toHM(w.StartTime),
@@ -86,49 +96,115 @@ const ScheduleManagement = () => {
         }));
         setWorkingHours(bh);
 
-        setAppointments(appt.map(a => ({
-          start: a.StartDateTime,
-          end: a.EndDateTime,
-          title: a.PetName,
-          color: '#e76f51'
-        })));
+        setExceptions(Array.isArray(ex) ? ex.map(e => {
+          const start = parseLocalDate(e.StartDateTime);
+          const end = parseLocalDate(e.EndDateTime);
 
-        setExceptions(ex.map(e => ({
-          start: e.StartDateTime,
-          end: e.EndDateTime,
-          title: e.REASON || 'Blocare',
-          color: '#cccccc'
-        })));
+          let startText = '??';
+          let endText = '??';
+
+          if (start instanceof Date && !isNaN(start)) {
+            startText = start.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false });
+          }
+          if (end instanceof Date && !isNaN(end)) {
+            endText = end.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false });
+          }
+
+          return {
+            start,
+            end,
+            title: e.REASON || e.Reason || 'Blocare',
+            color: '#cccccc',
+            id: e.ID,
+            startText,
+            endText
+          };
+        }) : []);
       })
       .catch(err => console.error('Error loading schedule data:', err));
   }, [selected, token]);
 
-  const handleDateClick = async info => {
-    if (!selected) return;
-    setModalDate(info.dateStr);
+  const handleDateClick = async (info) => {
+  if (!selected) return;
+
+  setModalDate(info.dateStr);
+  setModalData({ programari: [], exceptii: [], libere: [] }); // curăță înainte
+
+  try {
     const res = await fetch(
       `http://localhost:5000/api/clinic/angajati/${selected.id}/timeslots?date=${info.dateStr}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    setFreeSlots(await res.json());
-  };
+
+    const data = await res.json();
+    console.log("DATA TIMESLOTS:", data);
+
+    const programari = data
+      .filter(s => s.type === 'booked')
+      .map(s => s.details);
+
+    const exceptiiMap = new Map();
+
+data
+  .filter(s => s.type === 'exception')
+  .forEach(s => {
+    if (!s.id || exceptiiMap.has(s.id)) return;
+
+    const startStr = s.start?.split('T')[0] + ' ' + s.start?.split('T')[1]?.substring(0, 5);
+    const endStr = s.end?.split('T')[0] + ' ' + s.end?.split('T')[1]?.substring(0, 5);
+
+    const start = parseAsLocal(startStr);
+    const end = parseAsLocal(endStr);
+
+    if (!start || !end || isNaN(start) || isNaN(end)) return;
+
+    exceptiiMap.set(s.id, {
+      StartDateTime: start,
+      EndDateTime: end,
+      REASON: s.reason || 'Blocare',
+      ID: s.id
+    });
+  });
+
+const exceptii = Array.from(exceptiiMap.values());
+
+
+    const libere = data.filter(s => s.type === 'free');
+
+    setModalData({ programari, exceptii, libere });
+  } catch (error) {
+    console.error("Eroare la fetch sloturi/modal:", error);
+  }
+};
+
 
   const handleWorkHoursSave = async (hours) => {
     if (!selected) return;
-    await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/working-hours`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(hours)
-    });
-    setShowWorkForm(false);
+    try {
+      const res = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/working-hours`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(hours)
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        alert(err.error || 'Eroare la salvarea programului.');
+        return;
+      }
+
+      setShowWorkForm(false);
+    } catch (error) {
+      console.error('Eroare la salvare program:', error);
+      alert('A apărut o eroare la salvare.');
+    }
   };
 
   const handleExceptionSave = async (exception) => {
   if (!selected) return;
-
   try {
     const res = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
       method: 'POST',
@@ -145,68 +221,78 @@ const ScheduleManagement = () => {
       return;
     }
 
-    const exRes = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const exData = await exRes.json();
-    setExceptions(exData.map(e => ({
-      start: e.StartDateTime,
-      end: e.EndDateTime,
-      title: e.Reason || 'Blocare',
-      color: '#cccccc'
-    })));
+    // Reîncarcă datele de excepții și sloturi după POST
+    if (modalDate) {
+      const slotRes = await fetch(
+        `http://localhost:5000/api/clinic/angajati/${selected.id}/timeslots?date=${modalDate}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = await slotRes.json();
+
+      const programari = data.filter(s => s.type === 'booked').map(s => s.details);
+
+      const exceptii = data
+        .filter(s => s.type === 'exception')
+        .map(s => {
+          const start = new Date(s.start);
+          const end = new Date(s.end);
+          return {
+            StartDateTime: start,
+            EndDateTime: end,
+            REASON: s.reason,
+            ID: s.id
+          };
+        });
+
+      const libere = data.filter(s => s.type === 'free');
+
+      setModalData({ programari, exceptii, libere });
+    }
+
     setShowExceptionForm(false);
-  } catch (err) {
-    console.error('Eroare excepție:', err);
+  } catch (error) {
+    console.error('Eroare la salvare excepție:', error);
     alert('A apărut o eroare la salvarea excepției.');
   }
 };
 
-const handleDeleteException = async (exceptionId) => {
-  if (!window.confirm('Ești sigur că vrei să ștergi această excepție?')) return;
 
-  const res = await fetch(`http://localhost:5000/api/clinic/exceptions/${exceptionId}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  const handleDeleteException = async (id) => {
+    if (!selected) return;
+    await fetch(`http://localhost:5000/api/clinic/exceptions/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-  if (res.ok) {
-    // Reîncarcă excepțiile
     const exRes = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const exData = await exRes.json();
-      setExceptions(exData.map(e => ({
-      start: e.START_DATE_TIME || e.StartDateTime,
-      end: e.END_DATE_TIME || e.EndDateTime,
-      title: e.REASON || e.Reason || 'Blocare',
-      id: e.ID,
-      color: '#cccccc'
-    })));
+    setExceptions(Array.isArray(exData) ? exData : []);
 
-    console.log(exData);
-  } else {
-    alert('Nu s-a putut șterge excepția.');
-  }
-};
+    if (modalDate) {
+      const filtered = Array.isArray(exData)
+        ? exData.filter(e => e.StartDateTime && e.StartDateTime.startsWith(modalDate))
+        : [];
+      setModalData(prev => ({ ...prev, exceptii: filtered }));
+    }
+  };
+
+function parseAsLocal(input) {
+  if (!input) return null;
+  if (input instanceof Date) return input;
+  const parsed = new Date(input);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
 
 
   return (
     <div className="schedule-page">
       <Navbar />
-
       <div className="schedule-header">
-        <div>
-          <h2>Schedule Management</h2>
-          <p>Manage doctor availability and view appointments</p>
-        </div>
+        <h2>Schedule Management</h2>
         <div className="action-buttons">
-          
-        <button onClick={() => setShowExceptions(true)} className="btn-secondary">
-          Afișează excepții
-        </button>
+          <button onClick={() => setShowExceptions(true)} className="btn-secondary">Afișează excepții</button>
           <button onClick={() => setShowWorkForm(true)} className="btn-secondary">Configurează program</button>
           <button onClick={() => setShowExceptionForm(true)} className="btn-secondary">Adaugă excepție</button>
         </div>
@@ -224,7 +310,7 @@ const handleDeleteException = async (exceptionId) => {
             >
               <div className="avatar" />
               <div className="info">
-                <strong>{emp.name} <br /></strong>
+                <strong>{emp.name}</strong>
                 <span className="specialty">{emp.type}</span>
               </div>
               <div className="status-dot" style={{ backgroundColor: emp.color }} />
@@ -233,16 +319,8 @@ const handleDeleteException = async (exceptionId) => {
         </aside>
 
         <section className="calendar-section">
-          {selected ? (
+          {selected && (
             <>
-              <div className="calendar-header">
-                <h3>
-                  <i className="fa fa-calendar" />{' '}
-                  {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
-                </h3>
-                <span>Schedule for {selected.name} – {selected.type}</span>
-              </div>
-
               <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
@@ -252,34 +330,49 @@ const handleDeleteException = async (exceptionId) => {
                 height="auto"
               />
 
-              <div className="legend">
-                <div className="legend-item free"><span /> Free slot</div>
-                <div className="legend-item booked"><span /> Booked appointment</div>
-                <div className="legend-item blocked"><span /> Working exception</div>
-              </div>
-
               {modalDate && (
                 <div className="modal-backdrop" onClick={() => setModalDate(null)}>
                   <div className="modal" onClick={e => e.stopPropagation()}>
                     <h3>Disponibilitate pentru {modalDate}</h3>
-                    <ul className="slot-list">
-                      {freeSlots.map(s => (
-                        <li key={s.time} className={`slot-row ${s.type}`}>
-                          <span className="slot-time">{s.time}</span>
-                          <span className="slot-label">
-                            {s.type === 'booked' ? s.reason :
-                             s.type === 'exception' ? s.reason : 'Liber'}
+
+                    <h4>Programări</h4>
+                    {modalData.programari.map((p, i) => (
+                      <div key={i} className="slot-row booked">
+                        <strong>{p.time}</strong><br />
+                        Stăpân: {p.ownerName}<br />
+                        Tel: {p.phone}<br />
+                        Animal: {p.petName}<br />
+                        Tip: {p.status || 'Nespecificat'}<br />
+                        {p.notes && <>Notițe: {p.notes}<br /></>}
+                      </div>
+                    ))}
+
+                     <h3>Excepții pentru {modalDate}</h3>
+                      <ul className="slot-list">
+                      {Array.isArray(modalData.exceptii) && modalData.exceptii.map((exc, index) => (
+                        <li key={index} className="slot-row exception">
+                          <span className="slot-time">
+                            {parseAsLocal(exc.StartDateTime)?.toLocaleTimeString('ro-RO', {
+                              hour: '2-digit', minute: '2-digit', hour12: false
+                            }) || '??'} – {parseAsLocal(exc.EndDateTime)?.toLocaleTimeString('ro-RO', {
+                              hour: '2-digit', minute: '2-digit', hour12: false
+                            }) || '??'}
                           </span>
+                          <span className="slot-label">{exc.REASON || 'Blocare'}</span>
+                          <button onClick={() => handleDeleteException(exc.ID)} className="btn-delete">Șterge</button>
                         </li>
                       ))}
                     </ul>
+                    <h4>Sloturi libere</h4>
+                    {modalData.libere.map((s, i) => (
+                      <div key={i} className="slot-row free">{s.time}</div>
+                    ))}
+
                     <button className="close-btn" onClick={() => setModalDate(null)}>Închide</button>
                   </div>
                 </div>
               )}
             </>
-          ) : (
-            <p className="no-selection">Please select a doctor on the left.</p>
           )}
         </section>
       </div>
@@ -289,6 +382,7 @@ const handleDeleteException = async (exceptionId) => {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <h3>Configurează programul de lucru</h3>
             <WorkHoursForm
+              initialHours={[]}
               onCancel={() => setShowWorkForm(false)}
               onSave={handleWorkHoursSave}
             />
@@ -300,7 +394,7 @@ const handleDeleteException = async (exceptionId) => {
       {showExceptionForm && (
         <div className="modal-backdrop" onClick={() => setShowExceptionForm(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <h3>Adaugă excepție pentru {modalDate || '...'}:</h3>
+            <h3>Adaugă excepție pentru {modalDate || new Date().toISOString().split('T')[0]}</h3>
             <ExceptionForm
               date={modalDate || new Date().toISOString().split('T')[0]}
               onSave={handleExceptionSave}
@@ -310,47 +404,6 @@ const handleDeleteException = async (exceptionId) => {
           </div>
         </div>
       )}
-     {showExceptions && (
-  <div className="modal-backdrop" onClick={() => setShowExceptions(false)}>
-    <div className="modal" onClick={e => e.stopPropagation()}>
-      <h3>Excepții existente:</h3>
-      <ul className="slot-list">
-        {exceptions.map((exc, index) => {
-          const rawStart = exc.START_DATE_TIME || exc.StartDateTime || exc.start;
-          const rawEnd = exc.END_DATE_TIME || exc.EndDateTime || exc.end;
-          const reason = exc.REASON || exc.Reason || exc.title || 'Blocare';
-
-          const parseLocalDate = (str) => {
-            if (!str || typeof str !== 'string' || !str.includes('T') && !str.includes(' ')) return null;
-            const [d, t] = str.split(/[T ]/);
-            const [y, m, day] = d.split('-').map(Number);
-            const [h, min] = t.split(':').map(Number);
-            return new Date(y, m - 1, day, h, min);
-          };
-
-          const start = parseLocalDate(rawStart);
-          const end = parseLocalDate(rawEnd);
-
-          const validStart = start instanceof Date && !isNaN(start);
-          const validEnd = end instanceof Date && !isNaN(end);
-
-          return (
-            <li key={index} className="slot-row exception">
-              <span className="slot-time">
-                {validStart && validEnd
-                  ? `${start.toLocaleDateString()} ${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} – ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-                  : 'Dată invalidă'}
-              </span>
-              <span className="slot-label">{reason}</span>
-              <button onClick={() => handleDeleteException(exc.id)} className="btn-delete">Șterge</button>
-            </li>
-          );
-        })}
-      </ul>
-      <button className="close-btn" onClick={() => setShowExceptions(false)}>Închide</button>
-    </div>
-  </div>
-)}
 
       <Footer />
     </div>

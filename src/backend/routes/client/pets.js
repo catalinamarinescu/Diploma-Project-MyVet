@@ -162,6 +162,32 @@ router.get('/pets/:id/clinics', petOwnerOnly, async (req, res) => {
   }
 });
 
+router.get('/pets/:id', petOwnerOnly, async (req, res) => {
+  const petId = parseInt(req.params.id);
+  const clientId = req.user.id;
+
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+      .input('ID', petId)
+      .input('ID_PET_OWNER', clientId)
+      .query(`
+        SELECT ID, NUME, TIP, RASA, VARSTA, POZA
+        FROM PETS
+        WHERE ID = @ID AND ID_PET_OWNER = @ID_PET_OWNER
+      `);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: 'Animalul nu a fost găsit.' });
+    }
+
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error('Eroare la GET /pets/:id:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
 
 
 module.exports = router;

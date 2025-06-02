@@ -1,61 +1,97 @@
-.appointment-form-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9fafb;
+.appointment-page {
+  width: 100%;
+  max-width: 1200px;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  padding: 2rem;
+  border-radius: 16px;
 }
 
-.appointment-content {
-  flex: 1;
-  max-width: 960px;
-  margin: 0 auto;
+
+.appointment-wrapper {
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  min-height: calc(100vh - 120px); /* ajustabil dacă Navbar + Footer au altă înălțime */
   padding: 2rem 1rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.appointment-header {
+  text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .appointment-title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #1a202c;
-  margin-bottom: 0.5rem;
-  text-align: center;
+  margin-bottom: 0.25rem;
+  color: #1f2937;
 }
 
 .appointment-subtitle {
   font-size: 1rem;
   color: #6b7280;
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
-/* Step Navigation Circles (optional) */
 .step-progress {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 3rem;
+  margin: 1.5rem 0;
 }
 
+
 .step-circle {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid #cbd5e1;
+  border: 2px solid #d1d5db;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
   color: #6b7280;
   background-color: white;
+  font-weight: 600;
 }
 
 .step-circle.active {
-  background-color: #1e40af;
-  color: white;
-  border-color: #1e40af;
+  background-color: rgb(209, 150, 63);;
+  color: rgb(0, 0, 0);
+  border-color: rgb(209, 150, 63);;
+}
+
+.appointment-card {
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.appointment-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.appointment-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #000000;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #e0e7ff;
 }

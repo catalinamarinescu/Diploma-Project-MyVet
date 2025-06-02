@@ -10,9 +10,17 @@ const ExceptionForm = ({ date, onSave, onCancel }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!start || !end || !day) return;
-    const startTime = `${day} ${start}`;
-    const endTime = `${day} ${end}`;
+
+    const startTime = formatAsLocal(day, start);
+    const endTime = formatAsLocal(day, end);
+
     onSave({ StartDateTime: startTime, EndDateTime: endTime, Reason: reason });
+  };
+
+  const formatAsLocal = (date, time) => {
+    const [y, m, d] = date.split('-');
+    const [h, min] = time.split(':');
+    return `${y}-${m}-${d} ${h}:${min}`;
   };
 
   return (
