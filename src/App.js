@@ -26,6 +26,7 @@ import MyClinicsPage from './frontend/client/myClinics';
 import MedicalRecordsPage from './frontend/client/myClinic/medicalRecordsPage';
 import AppointmentForm from './frontend/client/appointments/appointments';
 import ScheduleManagement from './frontend/clinics/schedule/schedule';
+import MyAppointments from './frontend/client/appointments/myAppointments';
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path="/client/medical-records" element={<MedicalRecordsPage/>} />
          <Route path="/client/appointments" element={<AppointmentForm/>} />
          <Route path="/clinic/calendar" element={<ScheduleManagement/>} />
+        <Route path="/client/myappointments" element={<MyAppointments/>} /> 
       </Routes>
   );
 }

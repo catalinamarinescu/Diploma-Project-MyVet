@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './selectPet.css';
+import './selectAppType.css';
 
 const StepSelectService = ({ formData, setFormData, onNext, onBack }) => {
   const token = localStorage.getItem('myvet_token');
@@ -12,7 +12,6 @@ const StepSelectService = ({ formData, setFormData, onNext, onBack }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // Filter only appointment-type services (e.g., TIP_SERVICIU === 'appointment')
         const filtered = data.filter(s => s.tip.toLowerCase() === 'appointment type');
         setServices(filtered);
       });
@@ -25,24 +24,32 @@ const StepSelectService = ({ formData, setFormData, onNext, onBack }) => {
   if (!formData.clinicId) return null;
 
   return (
-    <div className="step-section">
-      <h3>Select Appointment Type</h3>
-      <p>Step 3 of 6</p>
-      <div className="card-container">
+    <div className="step-section-appType">
+      <h3 className="section-title-appType">Appointment Type</h3>
+      <p className="section-subtitle-appType">Step 3 of 7</p>
+
+      <div className="service-grid-appType">
         {services.map((s) => (
           <div
             key={s.ID}
-            className={`card service-card ${formData.selectedService === s.ID ? 'selected' : ''}`}
+            className={`service-card-appType ${formData.selectedService === s.ID ? 'selected' : ''}`}
             onClick={() => handleServiceSelect(s.ID)}
           >
-            <h4>{s.denumire}</h4>
-            <p>{s.pret} RON • {s.durata} min</p>
+            <div className="service-header-appType">
+              <h4 className="service-title-appType">{s.denumire}</h4>
+              <span className="service-price-appType">{s.pret} RON</span>
+            </div>
+            <p className="service-desc-appType">{s.descriere}</p>
+            <p className="service-duration-appType">Duration: {s.durata} minutes</p>
           </div>
         ))}
       </div>
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Prev</button>
-        <button onClick={onNext} disabled={!formData.selectedService}>Next</button>
+
+      <div className="nav-buttons-split-appType">
+        <button className="btn-outline-appType" onClick={onBack}>← Previous</button>
+        <button className="btn-next-appType" onClick={onNext} disabled={!formData.selectedService}>
+          Next →
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./selectPet.css";
+import "./confirm.css";
 
 const StepConfirm = ({ formData, onBack }) => {
   const [loading, setLoading] = useState(false);
@@ -76,7 +76,7 @@ const StepConfirm = ({ formData, onBack }) => {
 
     if (res.ok) {
       alert('Programare confirmată!');
-      window.location.href = '/client/programari';
+      window.location.href = '/';
     } else {
       alert('A apărut o eroare la salvarea programării.');
     }
@@ -85,38 +85,71 @@ const StepConfirm = ({ formData, onBack }) => {
   };
 
   return (
-    <div className="step-section">
-      <h3>Confirm Appointment</h3>
-      <p>Step 6 of 6</p>
+    <div className="step-section-confirm">
+      <h3 className="section-title-confirm">Confirm Appointment</h3>
+      <p className="section-subtitle-doctor">Step 7 of 7</p>
 
-      <div className="summary-card">
-        <h4>📌 Pet Information</h4>
-        <p><strong>{pet.NUME}</strong></p>
-        <p>{pet.RASA} • {pet.TIP}</p>
+      <div className="confirm-summary">
+        <div className="confirm-header">
+          <div className="confirm-title">✓ Appointment Summary</div>
+        </div>
 
-        <h4>🏥 Clinic</h4>
-        <p><strong>{clinic.name || clinic.NUME}</strong></p>
-        <p>{clinic.adresa || clinic.ADRESA}</p>
+        <div className="confirm-content">
+          <div className="confirm-column">
+            <h4>Pet Information</h4>
+            <div className="pet-info-confirm">
+              <img src={pet.POZA ? `http://localhost:5000/${pet.POZA}` : '/default-pet.png'} alt={pet.NUME} className="pet-confirm-avatar" />
+              <div>
+                <p className="pet-name-confirm">{pet.NUME}</p>
+                <p className="pet-breed-confirm">{pet.RASA}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h4>👨‍⚕️ Doctor</h4>
-        <p>{medic.PRENUME} {medic.NUME} ({medic.TIP_ANGAJAT})</p>
+        <div className="appointment-details-confirm">
+          <h4>Appointment Details</h4>
 
-        <h4>🛠️ Services</h4>
-        {serviceDetails.map(s => (
-          <p key={s.ID}>🩺 {s.denumire} – {s.pret} RON</p>
-        ))}
+          <p>
+            <img src="/imagini/building.png" alt="clinic" className="icon-inline" />
+            <strong>{clinic.name || clinic.NUME}</strong>, {clinic.adresa || clinic.ADRESA}
+          </p>
 
-        <h4>📅 Appointment Time</h4>
-        <p>{new Date(formData.date).toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-        <p>🕒 {formData.time} – {formData.timeEnd}</p>
+          <p>
+            <img src="/imagini/stethoscope.png" alt="doctor" className="icon-inline" />
+            {medic.PRENUME} {medic.NUME}
+          </p>
+
+          {serviceDetails.map(s => (
+            <p key={s.ID}>
+              <img src="/imagini/stethoscope-solid.svg" alt="service" className="icon-inline" />
+              <strong>{s.denumire}</strong>
+              <span className="price-tag-confirm">{s.pret} RON</span>
+            </p>
+          ))}
+
+          <p>
+            <img src="/imagini/calendar.png" alt="calendar" className="icon-inline" />
+            {new Date(formData.date).toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+
+          <p>
+            <img src="/imagini/clock.png" alt="time" className="icon-inline" />
+            {formData.time}
+          </p>
+        </div>
       </div>
-
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Previous</button>
-        <button onClick={handleConfirm} disabled={loading}>
-          {loading ? 'Saving...' : 'Confirm Appointment'}
-        </button>
-      </div>
+      <div className="appointment-buttons-confirm">
+          <button onClick={onBack}>← Previous</button>
+          <button onClick={handleConfirm} disabled={loading}>
+            {loading ? 'Saving...' : 'Confirm Appointment'}
+          </button>
+        </div>
     </div>
   );
 };

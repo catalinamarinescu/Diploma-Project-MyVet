@@ -148,7 +148,12 @@ router.get('/pets/:id/clinics', petOwnerOnly, async (req, res) => {
     const result = await pool.request()
       .input('PET_ID', petId)
       .query(`
-        SELECT CI.ID_CLINICA AS ID, C.NAME AS NUME, C.ADRESA, CI.EMAIL
+        SELECT CI.ID_CLINICA AS ID, C.NAME AS NUME, C.ADRESA, CI.EMAIL,
+        (
+          SELECT TOP 1 CALE_IMAGINE 
+          FROM IMAGINI_CLINICA 
+          WHERE ID_CLINICA = CI.ID_CLINICA
+        ) AS imagine
         FROM PETS_CLINICI PC
         JOIN CLINICS CI ON CI.ID_CLINICA = PC.ID_CLINICA
         JOIN CLINIC_INFO C ON C.ID_CLINICA = CI.ID_CLINICA

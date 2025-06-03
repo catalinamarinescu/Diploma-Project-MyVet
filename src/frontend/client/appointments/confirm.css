@@ -1,0 +1,151 @@
+.step-section-confirm {
+  padding: 2rem;
+  background-color: #fff2e1;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-title-confirm {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.section-subtitle-doctor {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.confirm-summary {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0 auto 2rem auto;
+  max-width: 700px;
+}
+
+.confirm-header {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  background-color: #ecfdf5;
+  border: 1px solid #d1fae5;
+  border-radius: 8px;
+  color: #065f46;
+  font-weight: 600;
+  text-align: center;
+}
+
+.confirm-title {
+  font-size: 1rem;
+}
+
+.confirm-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.confirm-column h4 {
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pet-info-confirm {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.pet-confirm-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  object-fit: cover;
+  background-color: #e5e7eb;
+}
+
+.pet-name-confirm {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.pet-breed-confirm {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.appointment-details-confirm {
+  border-top: 2px solid #9ca3af;
+  padding-top: 1rem;
+  text-align: left;
+}
+
+.appointment-details-confirm h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.appointment-details-confirm p {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.price-tag-confirm {
+  background-color: #f3f4f6;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  margin-left: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.appointment-buttons-confirm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.appointment-buttons-confirm button {
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.appointment-buttons-confirm button:first-child {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.appointment-buttons-confirm button:last-child {
+  background-color: rgb(238, 222, 198);
+  color: rgb(0, 0, 0);
+}
+
+.appointment-buttons-confirm button:last-child:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.icon-inline {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}

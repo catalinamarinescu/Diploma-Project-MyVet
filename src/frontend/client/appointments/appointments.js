@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../../navbar';
 import Footer from '../../footer';
 
@@ -8,8 +9,9 @@ import StepSelectExtras from './selectExtras';
 import StepSelectMedic from './selectVet';
 import StepSelectDateTime from './selectDateTime';
 import StepConfirm from './confirm';
-import './appointments.css';
 import StepSelectService from './selectAppType';
+
+import './appointments.css';
 
 const AppointmentForm = () => {
   const [step, setStep] = useState(1);
@@ -67,39 +69,43 @@ const AppointmentForm = () => {
     <StepConfirm
       formData={formData}
       onBack={prevStep}
-    />,
+    />
   ];
 
   return (
     <>
-       <Navbar />
-        <div className="appointment-wrapper">
-          <div className="appointment-page">
-            <div className="appointment-topbar">
+      <Navbar />
+      <div className="appointment-wrapper">
+        <div className="appointment-container">
+          <div className="appointment-topbar">
+            <div>
+              <Link to="/client/myappointments" className="view-my-appointments-btn">
+                View My Appointments
+              </Link>
               <h1 className="appointment-title">Book Appointment</h1>
-              <button className="back-button">Back to Home</button>
+              <p className="appointment-subtitle">Schedule a visit for your pet</p>
             </div>
+            <Link to="/" className="back-button">← Back to Dashboard</Link>
+          </div>
 
-            <p className="appointment-subtitle">Schedule a visit for your pet</p>
-
-            <div className="step-progress">
-              {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                <div
-                  key={num}
-                  className={`step-circle ${step === num ? 'active' : ''}`}
-                >
+          <div className="step-progress-bar">
+            {[1, 2, 3, 4, 5, 6, 7].map((num, index) => (
+              <React.Fragment key={num}>
+                <div className={`step-circle ${step === num ? 'active' : ''}`}>
                   {num}
                 </div>
-              ))}
-            </div>
+                {index !== 6 && <div className="step-line"></div>}
+              </React.Fragment>
+            ))}
+          </div>
 
-            <div className="appointment-card">
-              {steps[step - 1]}
-            </div>
+          <div className="appointment-card">
+            {steps[step - 1]}
           </div>
         </div>
-  <Footer />
-  </>
+      </div>
+      <Footer />
+    </>
   );
 };
 

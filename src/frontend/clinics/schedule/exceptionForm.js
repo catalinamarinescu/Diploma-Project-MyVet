@@ -24,33 +24,50 @@ const ExceptionForm = ({ date, onSave, onCancel }) => {
   };
 
   return (
-    <form className="work-form" onSubmit={handleSubmit}>
-      <label>Data:</label>
+    <form className="exception-form" onSubmit={handleSubmit}>
+  <div className="form-group">
+    <label htmlFor="day">Date</label>
+    <input
+      id="day"
+      type="date"
+      value={day}
+      onChange={e => setDay(e.target.value)}
+    />
+  </div>
+
+  <div className="form-group">
+    <label>Time Interval</label>
+    <div className="time-range">
       <input
-        type="date"
-        value={day}
-        onChange={e => setDay(e.target.value)}
-        style={{ marginBottom: '0.5rem' }}
+        type="time"
+        value={start}
+        onChange={e => setStart(e.target.value)}
       />
-
-      <label>Interval orar:</label>
-      <div className="work-form-row">
-        <input type="time" value={start} onChange={e => setStart(e.target.value)} />
-        -
-        <input type="time" value={end} onChange={e => setEnd(e.target.value)} />
-      </div>
-
-      <label>Motiv:</label>
+      <span>to</span>
       <input
-        type="text"
-        value={reason}
-        onChange={e => setReason(e.target.value)}
-        placeholder="ex: concediu, ședință..."
-        style={{ width: '100%', marginTop: '0.5rem' }}
+        type="time"
+        value={end}
+        onChange={e => setEnd(e.target.value)}
       />
+    </div>
+  </div>
 
-      <button className="save-btn" type="submit">Salvează</button>
-    </form>
+  <div className="form-group">
+    <label htmlFor="reason">Reason</label>
+    <input
+      id="reason"
+      type="text"
+      value={reason}
+      onChange={e => setReason(e.target.value)}
+      placeholder="ex: vacation, meeting..."
+    />
+  </div>
+
+  <div className="work-form-actions">
+    <button type="button" className="close-btn-calendar" onClick={onCancel}>Close</button>
+    <button type="submit" className="save-btn-calendar">Save</button>
+  </div>
+</form>
   );
 };
 

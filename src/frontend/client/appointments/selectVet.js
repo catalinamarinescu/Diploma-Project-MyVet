@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './selectPet.css';
+import './selectVet.css';
 
 const StepSelectMedic = ({ formData, setFormData, onNext, onBack }) => {
   const [medici, setMedici] = useState([]);
@@ -21,26 +21,37 @@ const StepSelectMedic = ({ formData, setFormData, onNext, onBack }) => {
   };
 
   return (
-    <div className="step-section">
-      <h3>Select Doctor</h3>
-      <p>Step 5 of 6</p>
+    <div className="step-section-doctor">
+      <h3 className="section-title-doctor">Select Doctor</h3>
+      <p className="section-subtitle-doctor">Step 5 of 7</p>
 
-      <div className="card-container">
+      <div className="doctor-grid">
         {medici.map(medic => (
           <div
             key={medic.ID}
-            className={`card medic-card ${formData.medicId === medic.ID ? 'selected' : ''}`}
+            className={`doctor-card ${formData.medicId === medic.ID ? 'selected' : ''}`}
             onClick={() => handleMedicSelect(medic.ID)}
           >
-            <h4>{medic.FULL_NAME}</h4>
-            <p>{medic.TIP_ANGAJAT}</p>
+            <div className="doctor-avatar-wrapper">
+              <img
+                src={medic.POZA ? `http://localhost:5000/${medic.POZA}` : '/default-doctor.png'}
+                alt={medic.FULL_NAME}
+                className="doctor-avatar"
+              />
+            </div>
+            <div className="doctor-info">
+              <h4 className="doctor-name">{medic.FULL_NAME}</h4>
+              <p className="doctor-role">{medic.TIP_ANGAJAT}</p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Prev</button>
-        <button onClick={onNext} disabled={!formData.medicId}>Next</button>
+      <div className="nav-buttons-split-doctor">
+        <button className="btn-outline-doctor" onClick={onBack}>← Previous</button>
+        <button className="btn-next-doctor" onClick={onNext} disabled={!formData.medicId}>
+          Next →
+        </button>
       </div>
     </div>
   );

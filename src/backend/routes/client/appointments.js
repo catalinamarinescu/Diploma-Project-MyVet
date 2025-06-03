@@ -55,43 +55,91 @@ router.post('/appointments', petOwnerOnly, async (req, res) => {
 
 router.get('/appointments', petOwnerOnly, async (req, res) => {
   const clientId = req.user.id;
-  const status = req.query.status; // ex: ?status=programata
 
   try {
     const pool = await poolPromise;
-    const request = pool.request()
-      .input('ID_PET_OWNER', clientId);
 
-    let query = `
-      SELECT 
+    const result = await pool.request()
+      .input('CLIENT_ID', clientId)
+      .query(`
+              SELECT 
         P.ID,
         P.DATA_ORA_INCEPUT,
         P.DATA_ORA_SFARSIT,
         P.STATUS,
-        P.NOTITE,
-        PETS.NUME AS NUME_ANIMAL,
-        A.NUME AS NUME_MEDIC,
-        A.PRENUME AS PRENUME_MEDIC,
-        C.NUME AS NUME_CLINICA
+
+        PETS.NUME AS PET_NAME,
+        PETS.TIP AS PET_TYPE,
+        PETS.RASA AS PET_BREED,
+        PETS.POZA AS PET_PHOTO,
+
+        A.PRENUME + ' ' + A.NUME AS DOCTOR_NAME,
+        A.POZA AS DOCTOR_PHOTO,
+
+        C.NAME AS CLINIC_NAME,
+
+        -- Principal service (appointment type)
+        (
+          SELECT TOP 1 S.DENUMIRE_SERVICIU
+          FROM PROGRAMARI_SERVICII PS
+          JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+          WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU = 'Appointment Type'
+        ) AS APPOINTMENT_TYPE,
+
+        -- Extras aggregate
+        (
+          SELECT STRING_AGG(S.DENUMIRE_SERVICIU, ', ')
+          FROM PROGRAMARI_SERVICII PS
+          JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+          WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU != 'Appointment Type'
+        ) AS EXTRA_SERVICES
+
       FROM PROGRAMARI P
       INNER JOIN PETS ON P.ID_PET = PETS.ID
+      INNER JOIN CLIENT_PROFILE CP ON PETS.ID_PET_OWNER = CP.ID
+      INNER JOIN CLINICS C ON P.ID_CLINICA = C.ID_CLINICA
       INNER JOIN ANGAJATI A ON P.ID_MEDIC = A.ID
-      INNER JOIN CLINICI C ON P.ID_CLINICA = C.ID
-      WHERE PETS.ID_PET_OWNER = @ID_PET_OWNER
-    `;
+      WHERE CP.ID = @CLIENT_ID
+        AND P.DATA_ORA_INCEPUT >= GETDATE()
+      ORDER BY P.DATA_ORA_INCEPUT ASC
 
-    if (status) {
-      query += ' AND P.STATUS = @STATUS';
-      request.input('STATUS', status);
-    }
+      `);
 
-    const result = await request.query(query);
-    res.json(result.recordset);
+    const appointments = result.recordset.map(appt => {
+      const startDate = new Date(appt.DATA_ORA_INCEPUT);
+      const endDate = new Date(appt.DATA_ORA_SFARSIT);
+      const durationMin = Math.floor((endDate - startDate) / 60000);
+
+      return {
+        data_start: appt.DATA_ORA_INCEPUT,
+        data_end: appt.DATA_ORA_SFARSIT,
+        duration: durationMin,
+
+        status: appt.STATUS,
+        pet_name: appt.PET_NAME,
+        pet_type: appt.PET_TYPE,
+        pet_breed: appt.PET_BREED,
+        pet_photo: appt.PET_PHOTO,
+
+        doctor_name: appt.DOCTOR_NAME,
+        doctor_photo: appt.DOCTOR_PHOTO,
+
+        service_name: appt.SERVICE_NAME,
+        service_duration: appt.SERVICE_DURATION,
+        clinic_name: appt.CLINIC_NAME,
+
+        appointment_type: appt.APPOINTMENT_TYPE || '',
+        extra_services: appt.EXTRA_SERVICES || ''
+      };
+    });
+
+    res.json(appointments);
   } catch (err) {
-    console.error('Eroare la GET /programari:', err);
+    console.error('Eroare la GET /myappointments:', err);
     res.status(500).json({ error: 'Eroare server' });
   }
 });
+
 
 // Public: lista serviciilor pentru orice clinică, pe baza ID-ului
 router.get('/clinic/:id/servicii', async (req, res) => {
@@ -133,7 +181,7 @@ router.get('/clinic/:clinicId/medici', petOwnerOnly, async (req, res) => {
     servicii.forEach((id, i) => request.input(`S${i}`, id));
 
     const result = await request.query(`
-      SELECT A.ID, A.NUME, A.PRENUME, A.TIP_ANGAJAT
+      SELECT A.ID, A.NUME, A.PRENUME, A.TIP_ANGAJAT, A.POZA
       FROM ANGAJATI A
       WHERE A.ID_CLINICA = @ID_CLINICA
         AND A.ID IN (
@@ -148,7 +196,8 @@ router.get('/clinic/:clinicId/medici', petOwnerOnly, async (req, res) => {
     const medici = result.recordset.map(m => ({
       ID: m.ID,
       FULL_NAME: `${m.PRENUME} ${m.NUME}`,
-      TIP_ANGAJAT: m.TIP_ANGAJAT
+      TIP_ANGAJAT: m.TIP_ANGAJAT,
+      POZA: m.POZA
     }));
 
     res.json(medici);

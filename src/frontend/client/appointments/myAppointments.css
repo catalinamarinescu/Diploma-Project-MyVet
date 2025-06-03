@@ -1,0 +1,135 @@
+.appointments-wrapper {
+  padding: 2rem;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  min-height: calc(100vh - 120px);
+}
+
+.appointments-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.appointments-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.appointments-header p {
+  color: #6b7280;
+}
+
+.appointments-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button-appointments {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.back-button-appointments:hover {
+    background-color: rgb(238, 222, 198);
+}
+
+
+.no-appointments-message {
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.appointment-date-block {
+  margin-bottom: 2.5rem;
+}
+
+.appointment-date-block h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.appointment-table {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+
+.appointment-table-header,
+.appointment-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
+  padding: 1rem;
+  align-items: center;
+}
+
+.appointment-table-header {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.appointment-row {
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.pet-cell, .doctor-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pet-cell img, .doctor-cell img {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  object-fit: cover;
+  background-color: #e5e7eb;
+}
+
+.status-badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.status-badge.confirmed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.appointments-disclaimer {
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  padding-top: 1rem;
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+

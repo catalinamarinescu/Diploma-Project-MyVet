@@ -1,91 +1,84 @@
-.step-section-clinic {
+.step-section-doctor {
   padding: 2rem;
   background-color: #fff2e1;
+  border-radius: 12px;
   margin-bottom: 2rem;
   text-align: center;
 }
 
-.section-title-clinic {
+.section-title-doctor {
   font-size: 1.5rem;
   font-weight: 700;
   color: #111827;
   margin-bottom: 0.25rem;
 }
 
-.section-subtitle-clinic {
+.section-subtitle-doctor {
   font-size: 0.95rem;
   color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-.clinic-hint-app {
-  font-size: 0.95rem;
-  color: #4b5563;
   margin-bottom: 1.5rem;
 }
 
-.clinic-card-container-app {
+.doctor-grid {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
-.clinic-tile-app {
-  display: flex;
-  align-items: center;
-  max-width: 500px;
-  width: 100%;
-  padding: 0.5rem 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #d1d5db;
+.doctor-card {
   background-color: #f9fafb;
+  border: 1px solid #d1d5db;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  text-align: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  text-align: left;
 }
 
-.clinic-tile-app.selected {
-  background-color: #f0fdf4;
-  border: 2px solid rgb(209, 150, 63);
+.doctor-card.selected {
+  border-color: rgb(209, 150, 63);
+  background-color: #f3f4f6;
 }
 
-.clinic-avatar-app {
-  width: 58px;
-  height: 58px;
-  border-radius: 9999px;
+.doctor-avatar-wrapper {
+  width: 200px;
+  height: 150px;
+  border-radius: 5px;
+  overflow: hidden;
   background-color: #e5e7eb;
-  margin-right: 1rem;
+  margin: 0 auto 1rem auto;
+  border: 1px solid #d1d5db;
 }
 
-.clinic-content-app {
-  flex-grow: 1;
-  margin-bottom: 1rem;
+.doctor-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.clinic-name-app {
+
+.doctor-name {
   font-size: 1.1rem;
   font-weight: 600;
   color: #111827;
   margin-bottom: 0.25rem;
 }
 
-.clinic-info-app {
-  font-size: 0.95rem;
+.doctor-role {
+  font-size: 0.9rem;
   color: #4b5563;
-  margin: 2px 0;
 }
 
-.nav-buttons-split-app1 {
+.nav-buttons-split-doctor {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
 }
 
-.btn-outline-app1 {
+.btn-outline-doctor {
   background-color: #ffffff;
   border: 1px solid #d1d5db;
   color: #1f2937;
@@ -95,8 +88,8 @@
   cursor: pointer;
 }
 
-.btn-next-app1 {
- background-color: rgb(238, 222, 198);
+.btn-next-doctor {
+  background-color: rgb(238, 222, 198);
   color: rgb(0, 0, 0);
   padding: 0.6rem 1.5rem;
   border: none;
@@ -107,7 +100,7 @@
   transition: background-color 0.2s ease;
 }
 
-.btn-next-app1:disabled {
+.btn-next-doctor:disabled {
   background-color: transparent;
   cursor: not-allowed;
 }

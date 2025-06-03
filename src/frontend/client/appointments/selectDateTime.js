@@ -104,9 +104,9 @@ const StepSelectDateTime = ({ formData, setFormData, onNext, onBack }) => {
   };
 
   return (
-    <div className="step-section">
+    <div className="step-section-dateT">
       <h3>Date & Time</h3>
-      <p>Step 6 of 6</p>
+      <p>Step 6 of 7</p>
 
       {loading ? <p>Loading slots...</p> : (
         <>
@@ -136,7 +136,8 @@ const StepSelectDateTime = ({ formData, setFormData, onNext, onBack }) => {
                     className={`time-btn ${formData.time === slot.start ? 'selected' : ''}`}
                     onClick={() => handleTimeSelect(slot.start, slot.end)}
                   >
-                    🕒 {slot.start} - {slot.end}
+                    <img src="/imagini/clock.png" alt="Clock" className="icon-clock" />
+                    {slot.start} - {slot.end}
                   </button>
                 ))}
               </div>
@@ -145,9 +146,9 @@ const StepSelectDateTime = ({ formData, setFormData, onNext, onBack }) => {
         </>
       )}
 
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Prev</button>
-        <button onClick={onNext} disabled={!formData.date || !formData.time}>Next</button>
+      <div className="nav-buttons-split-dateT">
+        <button className="btn-outline-dateT" onClick={onBack}>← Previous</button>
+        <button className="btn-next-dateT" onClick={onNext} disabled={!formData.date || !formData.time}>Next →</button>
       </div>
     </div>
   );

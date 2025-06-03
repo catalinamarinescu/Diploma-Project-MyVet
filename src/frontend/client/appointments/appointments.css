@@ -1,31 +1,32 @@
-.appointment-page {
+.appointment-wrapper {
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  min-height: calc(100vh - 120px);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.appointment-container {
   width: 100%;
   max-width: 1200px;
   background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   padding: 2rem;
   border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
 }
 
-
-.appointment-wrapper {
-  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
-  min-height: calc(100vh - 120px); /* ajustabil dacă Navbar + Footer au altă înălțime */
-  padding: 2rem 1rem;
+.appointment-topbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
-}
-
-.appointment-header {
-  text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .appointment-title {
   font-size: 2rem;
   font-weight: 700;
+  color: #111827;
   margin-bottom: 0.25rem;
-  color: #1f2937;
 }
 
 .appointment-subtitle {
@@ -33,65 +34,80 @@
   color: #6b7280;
 }
 
-.step-progress {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin: 1.5rem 0;
+.back-button {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
+.back-button:hover {
+  background-color: rgb(238, 222, 198);
+}
+
+/* Step progress with connecting lines */
+.step-progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
 
 .step-circle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 2px solid #d1d5db;
+  background-color: #ffffff;
+  color: #6b7280;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b7280;
-  background-color: white;
-  font-weight: 600;
+  z-index: 2;
 }
 
 .step-circle.active {
-  background-color: rgb(209, 150, 63);;
-  color: rgb(0, 0, 0);
-  border-color: rgb(209, 150, 63);;
+  background-color: rgb(209, 150, 63);
+  color: #000000;
+  border-color: rgb(209, 150, 63);
+}
+
+.step-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #d1d5db;
+  margin: 0 0.5rem;
+  z-index: 1;
 }
 
 .appointment-card {
-  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+  background-color: #fff2e1;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
-.appointment-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.view-my-appointments-btn {
+  display: inline-block;
   margin-bottom: 0.5rem;
-}
-
-.appointment-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: #000000;
+  font-size: 0.95rem;
   font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
+  color: #000000;
+  text-decoration: none;
+  background-color: transparent;
+  padding: 0.4rem 0.9rem;
   border-radius: 6px;
+  border: 1px solid #d1d5db;
   transition: background-color 0.2s ease;
 }
 
-.back-button:hover {
-  background-color: #e0e7ff;
+.view-my-appointments-btn:hover {
+  background-color: rgb(238, 222, 198);
 }

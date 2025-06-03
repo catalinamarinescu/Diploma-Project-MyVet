@@ -32,24 +32,33 @@ const WorkHoursForm = ({ initialHours = [], onSave, onCancel }) => {
 
   return (
     <form className="work-form" onSubmit={handleSubmit}>
-      {hours.map((h, i) => (
-        <div className="work-form-row" key={i}>
-          <label>{days[i]}</label>
-          <input
-            type="time"
-            value={h.startTime}
-            onChange={e => handleChange(i, 'startTime', e.target.value)}
-          />
-          -
-          <input
-            type="time"
-            value={h.endTime}
-            onChange={e => handleChange(i, 'endTime', e.target.value)}
-          />
-        </div>
-      ))}
-      <button className="save-btn" type="submit">Salvează</button>
-    </form>
+  {hours.map((h, i) => (
+    <div className="work-form-card" key={i}>
+      <div className="work-form-label">{days[i]}</div>
+      <div className="work-form-time-range">
+        <input
+          type="time"
+          value={h.startTime}
+          placeholder="hh:mm"
+          className={h.startTime ? '' : 'empty-time'}
+          onChange={e => handleChange(i, 'startTime', e.target.value)}
+        />
+        <span>to</span>
+        <input
+          type="time"
+          value={h.endTime}
+          onChange={e => handleChange(i, 'endTime', e.target.value)}
+        />
+      </div>
+    </div>
+  ))}
+
+  <div className="form-actions">
+    <button className="close-btn-calendar" type="button" onClick={onCancel}>Close</button>
+    <button className="save-btn-calendar" type="submit">Save Schedule</button>
+  </div>
+</form>
+
   );
 };
 

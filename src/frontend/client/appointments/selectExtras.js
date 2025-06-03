@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './selectPet.css';
+import './selectExtras.css';
 
 const StepSelectExtras = ({ formData, setFormData, onNext, onBack }) => {
   const token = localStorage.getItem('myvet_token');
@@ -12,7 +12,6 @@ const StepSelectExtras = ({ formData, setFormData, onNext, onBack }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // Filter services that are NOT appointment type
         const filtered = data.filter(s => s.tip.toLowerCase() !== 'appointment type');
         setExtras(filtered);
       });
@@ -36,26 +35,32 @@ const StepSelectExtras = ({ formData, setFormData, onNext, onBack }) => {
   if (!formData.selectedService) return null;
 
   return (
-    <div className="step-section">
-      <h3>Select Extra Services</h3>
-      <p>Step 4 of 6</p>
+    <div className="step-section-extra">
+      <h3 className="section-title-extra">Select Extra Services</h3>
+      <p className="section-subtitle-extra">Step 4 of 7</p>
 
-      <div className="card-container">
+      <div className="service-grid-extra">
         {extras.map((s) => (
           <div
             key={s.ID}
-            className={`card service-card ${formData.selectedExtras.includes(s.ID) ? 'selected' : ''}`}
+            className={`service-card-extra ${formData.selectedExtras.includes(s.ID) ? 'selected' : ''}`}
             onClick={() => handleExtraToggle(s.ID)}
           >
-            <h4>{s.denumire}</h4>
-            <p>{s.pret} RON • {s.durata} min</p>
+            <div className="service-header-extra">
+              <h4 className="service-title-extra">{s.denumire}</h4>
+              <span className="service-price-extra">{s.pret} RON</span>
+            </div>
+            <p className="service-desc-extra">{s.descriere}</p>
+            <p className="service-duration-extra">Duration: {s.durata} minutes</p>
           </div>
         ))}
       </div>
 
-      <div className="appointment-buttons">
-        <button onClick={onBack}>Prev</button>
-        <button onClick={onNext}>Next</button>
+      <div className="nav-buttons-split-extra">
+        <button className="btn-outline-extra" onClick={onBack}>← Previous</button>
+        <button className="btn-next-extra" onClick={onNext}>
+          Next →
+        </button>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const TYPE_COLORS = {
   'Medic veterinar': '#014421',
   'Asistent medical': '#3b82f6',
   'Receptioner': '#f59e0b',
-  'default': '#9ca3af'
+  'default': 'rgb(209, 150, 63)'
 };
 
 function toHM(val) {
@@ -68,7 +68,10 @@ const ScheduleManagement = () => {
           id: emp.ID,
           name: emp.FULL_NAME,
           type: emp.TIP_ANGAJAT,
-          color: TYPE_COLORS[emp.TIP_ANGAJAT] || TYPE_COLORS.default
+          color: TYPE_COLORS[emp.TIP_ANGAJAT] || TYPE_COLORS.default,
+          photo: emp.POZA
+            ? `http://localhost:5000/${emp.POZA}`
+            : '/default-doctor.png'
         }))
       ))
       .catch(err => console.error('Error loading employees:', err));
@@ -137,8 +140,6 @@ const ScheduleManagement = () => {
     );
 
     const data = await res.json();
-    console.log("DATA TIMESLOTS:", data);
-
     const programari = data
       .filter(s => s.type === 'booked')
       .map(s => s.details);
@@ -287,12 +288,11 @@ function parseAsLocal(input) {
 
 
   return (
+    <>      <Navbar />
     <div className="schedule-page">
-      <Navbar />
       <div className="schedule-header">
         <h2>Schedule Management</h2>
         <div className="action-buttons">
-          <button onClick={() => setShowExceptions(true)} className="btn-secondary">Afișează excepții</button>
           <button onClick={() => setShowWorkForm(true)} className="btn-secondary">Configurează program</button>
           <button onClick={() => setShowExceptionForm(true)} className="btn-secondary">Adaugă excepție</button>
         </div>
@@ -308,12 +308,11 @@ function parseAsLocal(input) {
               style={{ borderLeft: `4px solid ${emp.color}` }}
               onClick={() => setSelected(emp)}
             >
-              <div className="avatar" />
+              <img src={emp.photo} alt={emp.name} className="avatar" />
               <div className="info">
                 <strong>{emp.name}</strong>
                 <span className="specialty">{emp.type}</span>
               </div>
-              <div className="status-dot" style={{ backgroundColor: emp.color }} />
             </div>
           ))}
         </aside>
@@ -325,7 +324,6 @@ function parseAsLocal(input) {
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 businessHours={workingHours}
-                events={[...appointments, ...exceptions]}
                 dateClick={handleDateClick}
                 height="auto"
               />
@@ -386,7 +384,6 @@ function parseAsLocal(input) {
               onCancel={() => setShowWorkForm(false)}
               onSave={handleWorkHoursSave}
             />
-            <button className="close-btn" onClick={() => setShowWorkForm(false)}>Închide</button>
           </div>
         </div>
       )}
@@ -400,13 +397,13 @@ function parseAsLocal(input) {
               onSave={handleExceptionSave}
               onCancel={() => setShowExceptionForm(false)}
             />
-            <button className="close-btn" onClick={() => setShowExceptionForm(false)}>Închide</button>
           </div>
         </div>
       )}
 
       <Footer />
     </div>
+    </>
   );
 };
 
