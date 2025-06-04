@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Navbar from '../../navbar';
 import Footer from '../../footer';
+import CalendarModal from './calendar';
 import WorkHoursForm from './workHoursForm';
 import ExceptionForm from './exceptionForm';
 import './schedule.css';
@@ -140,9 +141,36 @@ const ScheduleManagement = () => {
     );
 
     const data = await res.json();
-    const programari = data
-      .filter(s => s.type === 'booked')
-      .map(s => s.details);
+   const programariMap = new Map();
+
+data
+  .filter(s => s.type === 'booked')
+  .forEach(s => {
+    const d = s.details || {};
+    const key = `${d.ownerName}-${d.petName}-${d.phone || ''}-${d.status || ''}`;
+
+    if (!programariMap.has(key)) {
+      programariMap.set(key, {
+        ...d,
+        times: [s.time]
+      });
+    } else {
+      programariMap.get(key).times.push(s.time);
+    }
+  });
+
+const programari = Array.from(programariMap.values()).map(p => {
+  const sorted = p.times.sort(); // în ordine cronologică
+  const start = sorted[0];
+  const end = new Date(`1970-01-01T${sorted.at(-1)}:00`);
+  end.setMinutes(end.getMinutes() + 30);
+  const endStr = end.toTimeString().substring(0, 5);
+
+  return {
+    ...p,
+    time: `${start} - ${endStr}`
+  };
+});
 
     const exceptiiMap = new Map();
 
@@ -279,6 +307,67 @@ const exceptii = Array.from(exceptiiMap.values());
     }
   };
 
+  const handleDeleteAppointment = async (id) => {
+  if (!window.confirm('Are you sure you want to delete this appointment?')) return;
+
+  try {
+    await fetch(`http://localhost:5000/api/clinic/appointments/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    // Refresh datele după ștergere
+    if (modalDate && selected) {
+      const slotRes = await fetch(
+        `http://localhost:5000/api/clinic/angajati/${selected.id}/timeslots?date=${modalDate}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = await slotRes.json();
+
+      const programariMap = new Map();
+      data.filter(s => s.type === 'booked').forEach(s => {
+        const d = s.details || {};
+        const key = `${d.ownerName}-${d.petName}-${d.phone || ''}-${d.status || ''}`;
+        if (!programariMap.has(key)) {
+          programariMap.set(key, { ...d, times: [s.time] });
+        } else {
+          programariMap.get(key).times.push(s.time);
+        }
+      });
+
+      const programari = Array.from(programariMap.values()).map(p => {
+        const sorted = p.times.sort();
+        const start = sorted[0];
+        const end = new Date(`1970-01-01T${sorted.at(-1)}:00`);
+        end.setMinutes(end.getMinutes() + 30);
+        return {
+          ...p,
+          time: `${start} - ${end.toTimeString().substring(0, 5)}`
+        };
+      });
+
+      const exceptiiMap = new Map();
+      data.filter(s => s.type === 'exception').forEach(s => {
+        if (!s.id || exceptiiMap.has(s.id)) return;
+        exceptiiMap.set(s.id, {
+          StartDateTime: s.start,
+          EndDateTime: s.end,
+          REASON: s.reason || 'Blocare',
+          ID: s.id
+        });
+      });
+
+      const exceptii = Array.from(exceptiiMap.values());
+      const libere = data.filter(s => s.type === 'free');
+      setModalData({ programari, exceptii, libere });
+    }
+  } catch (err) {
+    console.error('Eroare la ștergere programare:', err);
+    alert('A apărut o eroare la ștergere.');
+  }
+};
+
+
 function parseAsLocal(input) {
   if (!input) return null;
   if (input instanceof Date) return input;
@@ -328,48 +417,14 @@ function parseAsLocal(input) {
                 height="auto"
               />
 
-              {modalDate && (
-                <div className="modal-backdrop" onClick={() => setModalDate(null)}>
-                  <div className="modal" onClick={e => e.stopPropagation()}>
-                    <h3>Disponibilitate pentru {modalDate}</h3>
-
-                    <h4>Programări</h4>
-                    {modalData.programari.map((p, i) => (
-                      <div key={i} className="slot-row booked">
-                        <strong>{p.time}</strong><br />
-                        Stăpân: {p.ownerName}<br />
-                        Tel: {p.phone}<br />
-                        Animal: {p.petName}<br />
-                        Tip: {p.status || 'Nespecificat'}<br />
-                        {p.notes && <>Notițe: {p.notes}<br /></>}
-                      </div>
-                    ))}
-
-                     <h3>Excepții pentru {modalDate}</h3>
-                      <ul className="slot-list">
-                      {Array.isArray(modalData.exceptii) && modalData.exceptii.map((exc, index) => (
-                        <li key={index} className="slot-row exception">
-                          <span className="slot-time">
-                            {parseAsLocal(exc.StartDateTime)?.toLocaleTimeString('ro-RO', {
-                              hour: '2-digit', minute: '2-digit', hour12: false
-                            }) || '??'} – {parseAsLocal(exc.EndDateTime)?.toLocaleTimeString('ro-RO', {
-                              hour: '2-digit', minute: '2-digit', hour12: false
-                            }) || '??'}
-                          </span>
-                          <span className="slot-label">{exc.REASON || 'Blocare'}</span>
-                          <button onClick={() => handleDeleteException(exc.ID)} className="btn-delete">Șterge</button>
-                        </li>
-                      ))}
-                    </ul>
-                    <h4>Sloturi libere</h4>
-                    {modalData.libere.map((s, i) => (
-                      <div key={i} className="slot-row free">{s.time}</div>
-                    ))}
-
-                    <button className="close-btn" onClick={() => setModalDate(null)}>Închide</button>
-                  </div>
-                </div>
-              )}
+             {modalDate && (
+  <CalendarModal
+    modalDate={modalDate}
+    modalData={modalData}
+    onClose={() => setModalDate(null)}
+    onDeleteException={handleDeleteException}
+  />
+)}
             </>
           )}
         </section>

@@ -220,14 +220,29 @@ router.get('/angajati/:id/timeslots', clinicOnly, async (req, res) => {
         .input('DATE', dateStr)
         .query(`
           SELECT
-            P.DATA_ORA_INCEPUT AS [start],
-            P.DATA_ORA_SFARSIT AS [end],
-            PETS.NUME AS PetName,
-            CL.FIRST_NAME + ' ' + CL.LAST_NAME AS OwnerName,
-            CL.PHONE AS Phone,
-            P.STATUS AS AppointmentStatus,
-            P.NOTITE AS Notes,
-            P.ID_SERVICE AS ServiceId
+  P.ID,
+  P.DATA_ORA_INCEPUT AS [start],
+  P.DATA_ORA_SFARSIT AS [end],
+  PETS.NUME AS PetName,
+  CL.FIRST_NAME + ' ' + CL.LAST_NAME AS OwnerName,
+  CL.PHONE AS Phone,
+  P.STATUS AS AppointmentStatus,
+  P.NOTITE AS Notes,
+
+  -- Tip programare
+  (
+    SELECT TOP 1 S.DENUMIRE_SERVICIU
+    FROM PROGRAMARI_SERVICII PS
+    JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+    WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU = 'Appointment Type'
+  ) AS AppointmentType,
+
+  (
+    SELECT STRING_AGG(S.DENUMIRE_SERVICIU, ', ')
+    FROM PROGRAMARI_SERVICII PS
+    JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+    WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU != 'Appointment Type'
+  ) AS ExtraServices
           FROM PROGRAMARI P
           JOIN PETS ON P.ID_PET = PETS.ID
           JOIN CLIENT_PROFILE CL ON PETS.ID_PET_OWNER = CL.ID
@@ -292,13 +307,15 @@ router.get('/angajati/:id/timeslots', clinicOnly, async (req, res) => {
           slot.type = 'booked';
           slot.reason = 'Programare';
           slot.details = {
+            id: r.ID, 
             time: slot.time,
             petName: r.PetName,
             ownerName: r.OwnerName,
             phone: r.Phone,
             status: r.AppointmentStatus,
             notes: r.Notes,
-            serviceId: r.ServiceId
+            appointmentType: r.AppointmentType,
+            extraServices: r.ExtraServices
           };
           matched = true;
           break;
@@ -368,5 +385,41 @@ router.get('/programari', clinicOnly, async (req, res) => {
   }
 });
 
+router.delete('/appointments/:id', clinicOnly, async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const pool = await poolPromise;
+    await pool.request()
+      .input('ID', id)
+      .query(`
+        DELETE FROM PROGRAMARI_SERVICII WHERE ID_PROGRAMARE = @ID;
+        DELETE FROM PROGRAMARI WHERE ID = @ID;
+      `);
+    res.json({ success: true, message: 'Programare ștearsă.' });
+  } catch (err) {
+    console.error('Eroare DELETE appointment:', err);
+    res.status(500).json({ error: 'Eroare la ștergerea programării' });
+  }
+});
+
+router.get('/angajati/:id/appointments-dates', clinicOnly, async (req, res) => {
+  const medicId = parseInt(req.params.id);
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('ID_MEDIC', medicId)
+      .query(`
+        SELECT DISTINCT
+          CONVERT(VARCHAR(10), DATA_ORA_INCEPUT, 120) AS date
+        FROM PROGRAMARI
+        WHERE ID_MEDIC = @ID_MEDIC
+      `);
+
+    res.json(result.recordset); // [{ date: '2025-06-05' }, ...]
+  } catch (err) {
+    console.error('Eroare la GET appointments-dates:', err);
+    res.status(500).json({ error: 'Eroare server' });
+  }
+});
 
 module.exports = router;

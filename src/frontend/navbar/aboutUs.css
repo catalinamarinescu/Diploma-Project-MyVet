@@ -1,8 +1,11 @@
 /* ---------- HERO SECTION ---------- */
 .about-hero {
-  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
+   background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   text-align: center;
+  /* background-color: #e0f6ff; */
   padding: 80px 20px 60px;
+  min-height: 200px;
+  transform: translateZ(0); 
 }
 
 .badge {

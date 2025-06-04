@@ -1,0 +1,127 @@
+.modal-backdrop-calendar {
+ display: flex;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-calendar {
+  background: white;
+  width: 640px;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.header-calendar h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.subheader-calendar {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.tabs-calendar {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.tab-button-calendar {
+  flex: 1;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  color: #6b7280;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tab-button-calendar.active {
+  color: #1f2937;
+  border-bottom: 3px solid #3b82f6;
+  background: #f0f9ff;
+}
+
+.tab-content-calendar {
+  padding-top: 1rem;
+}
+
+.timeline-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.timeline-row-calendar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.time-label-calendar {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.event-label-calendar {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.list-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list-item-calendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.btn-delete-calendar {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-delete-calendar:hover {
+  background: #b91c1c;
+}
+
+.no-data-calendar {
+  font-style: italic;
+  color: #6b7280;
+}
+
+.close-btn-calendar {
+  margin-top: 1rem;
+  background: #d1d5db;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+} 
