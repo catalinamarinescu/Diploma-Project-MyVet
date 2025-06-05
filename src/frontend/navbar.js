@@ -5,28 +5,29 @@ import './navbar.css';
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [joinRequests, setJoinRequests] = useState([]);
-  const [showRequestsDropdown, setShowRequestsDropdown] = useState(false);
   const token = localStorage.getItem('myvet_token');
 
+  const [joinRequests, setJoinRequests] = useState([]);
+  const [newAppointments, setNewAppointments] = useState([]);
+  const [showRequestsDropdown, setShowRequestsDropdown] = useState(false);
+
   const [isAuthenticatedAsClient, setIsAuthenticatedAsClient] = useState(false);
-    const [isAuthenticatedAsClinic, setIsAuthenticatedAsClinic] = useState(false);
+  const [isAuthenticatedAsClinic, setIsAuthenticatedAsClinic] = useState(false);
 
   useEffect(() => {
-  const checkAuth = () => {
-    const userType = localStorage.getItem("userType");
-    setIsAuthenticatedAsClient(userType === "client");
-    setIsAuthenticatedAsClinic(userType == "clinic");
-  };
+    const checkAuth = () => {
+      const userType = localStorage.getItem("userType");
+      setIsAuthenticatedAsClient(userType === "client");
+      setIsAuthenticatedAsClinic(userType === "clinic");
+    };
 
-  checkAuth();
+    checkAuth();
+    window.addEventListener("storage", checkAuth);
 
-  window.addEventListener("storage", checkAuth); // ascultă și alte taburi sau schimbări
-
-  return () => {
-    window.removeEventListener("storage", checkAuth);
-  };
-}, [location]);
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, [location]);
 
   const handleLogout = () => {
     localStorage.removeItem("userType");
@@ -35,60 +36,80 @@ const Navbar = () => {
   };
 
   const handleJoinAction = async (requestId, accept) => {
-  try {
-    const res = await fetch(
-      `http://localhost:5000/api/clinic/join-requests/${requestId}/${accept ? 'accept' : 'reject'}`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/clinic/join-requests/${requestId}/${accept ? 'accept' : 'reject'}`,
+        {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` }
         }
+      );
+
+      if (res.ok) {
+        alert(`Request ${accept ? 'accepted' : 'rejected'}`);
+        await fetchRequests();
+        if (accept) {
+          window.dispatchEvent(new Event('patientUpdated'));
+        }
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Error processing request');
       }
-    );
-
-    if (res.ok) {
-      alert(`Request ${accept ? 'accepted' : 'rejected'}`);
-
-      // 🔄 Refetch cereri rămase (doar cele pending)
-      await fetchRequests();
-
-      // 🔔 Notifică alte componente (ex: ClinicPatients) să se actualizeze
-      if (accept) {
-        window.dispatchEvent(new Event('patientUpdated'));
-      }
-
-    } else {
-      const err = await res.json();
-      alert(err.error || 'Error processing request');
+    } catch (err) {
+      console.error('Join request action failed:', err);
+      alert('Server error');
     }
-  } catch (err) {
-    console.error('Join request action failed:', err);
-    alert('Server error');
-  }
-};
+  };
 
-const fetchRequests = async () => {
+  const fetchRequests = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/clinic/join-requests', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      const pending = data.filter(r => r.STATUS === 'pending');
+      setJoinRequests(pending);
+    } catch (err) {
+      console.error('Eroare la fetch cereri:', err);
+    }
+  };
+
+ const fetchNewAppointments = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/clinic/join-requests', {
+    const lastSeen = localStorage.getItem('lastSeenAppointments');
+
+    const res = await fetch(`http://localhost:5000/api/clinic/appointment-notifications${lastSeen ? `?after=${lastSeen}` : ''}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+
     const data = await res.json();
-
-    // 🔍 doar pending
-    const pending = data.filter(r => r.STATUS === 'pending');
-    setJoinRequests(pending);
-
-    console.log('Join requests:', pending);
+    setNewAppointments(data);
   } catch (err) {
-    console.error('Eroare la fetch cereri:', err);
+    console.error('Eroare fetch notificări programări:', err);
   }
 };
 
-useEffect(() => {
-  if (isAuthenticatedAsClinic) {
-    fetchRequests();
-  }
-}, [isAuthenticatedAsClinic]);
+
+  useEffect(() => {
+    if (isAuthenticatedAsClinic) {
+      fetchRequests();
+      fetchNewAppointments();
+    }
+  }, [isAuthenticatedAsClinic]);
+
+ const toggleDropdown = () => {
+  setShowRequestsDropdown(prev => {
+    const aboutToOpen = !prev;
+
+    if (aboutToOpen) {
+      localStorage.setItem('lastSeenAppointments', new Date().toISOString());
+    }
+
+    return aboutToOpen;
+  });
+};
+
+
 
   return (
     <nav className="navbar-home">
@@ -116,8 +137,6 @@ useEffect(() => {
             <Link to="/clinic/patients" className="nav-button-home">Patients</Link>
             <Link to="/clinic/calendar" className="nav-button-home">Calendar</Link>
             <Link to="/clinic/profile" className="nav-button-home">MyProfile</Link>
-            <div className="actions">
-        </div>
           </>
         )}
       </div>
@@ -131,23 +150,40 @@ useEffect(() => {
         ) : (
           <>
             {isAuthenticatedAsClinic && (
-              <div className="notif-container">
-                <button className="notif-btn" onClick={() => setShowRequestsDropdown(prev => !prev)}>🔔</button>
+             <div className="notif-container">
+                <button className="notif-btn" onClick={toggleDropdown}>
+                  🔔
+                  {(joinRequests.length > 0 || newAppointments.length > 0) && (
+                    <span className="notif-dot" />
+                  )}
+                </button>
                 {showRequestsDropdown && (
                   <div className="notif-dropdown">
-                    {joinRequests.length === 0 ? (
-                      <p className="no-requests">No requests</p>
+                    {joinRequests.length === 0 && newAppointments.length === 0 ? (
+                      <p className="no-requests">No notifications</p>
                     ) : (
-                      joinRequests.map((req, idx) => (
-                        <div key={idx} className="notif-item">
-                          <strong>{req.FIRST_NAME} {req.LAST_NAME}</strong>
-                          <p>{req.MESSAGE}</p>
-                          <div className="notif-actions">
-                            <button onClick={() => handleJoinAction(req.ID_REQUEST, true)}>Accept</button>
-                            <button onClick={() => handleJoinAction(req.ID_REQUEST, false)}>Reject</button>
+                      <>
+                        {joinRequests.map((req, idx) => (
+                          <div key={idx} className="notif-item">
+                            <strong>{req.FIRST_NAME} {req.LAST_NAME}</strong>
+                            <p>{req.MESSAGE}</p>
+                            <div className="notif-actions">
+                              <button onClick={() => handleJoinAction(req.ID_REQUEST, true)}>Accept</button>
+                              <button onClick={() => handleJoinAction(req.ID_REQUEST, false)}>Reject</button>
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        ))}
+
+                        {newAppointments.map((appt, idx) => (
+                          <div key={`appt-${idx}`} className="notif-item">
+                            <strong>Nouă programare</strong>
+                            <p>{appt.PET_NAME} la {appt.DOCTOR_NAME}</p>
+                            <small>
+  {appt.DATA_ORA_INCEPUT.split('T')[0]} {appt.DATA_ORA_INCEPUT.split('T')[1].slice(0, 5)}
+</small>
+                          </div>
+                        ))}
+                      </>
                     )}
                   </div>
                 )}

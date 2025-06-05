@@ -38,27 +38,26 @@ const CalendarModal = ({
               className={`tab-button-calendar ${activeTab === tab ? 'active' : ''}`}
               onClick={() => setActiveTab(tab)}
             >
-              {tab === 'libere' ? 'Timeline View' : tab === 'exceptii' ? 'Availability' : 'Summary'}
+              {tab === 'libere' ? 'Timeline View' : tab === 'exceptii' ? 'Exceptions' : 'Appointments'}
             </button>
           ))}
         </div>
 
         <div className="tab-content-calendar">
          {activeTab === 'libere' && (
-  <div className="timeline-calendar">
-    {modalData.libere.length > 0 ? (
-      modalData.libere.map((slot, idx) => (
-        <div key={idx} className="timeline-row-calendar">
-          <span className="time-label-calendar">{slot.time}</span>
-          <span className="event-label-calendar">No events scheduled</span>
-        </div>
-      ))
-    ) : (
-      <p className="no-data-calendar">Nu există sloturi disponibile pentru această zi.</p>
-    )}
-  </div>
-)}
-
+          <div className="timeline-calendar">
+            {modalData.libere.length > 0 ? (
+              modalData.libere.map((slot, idx) => (
+                <div key={idx} className="timeline-row-calendar">
+                  <span className="time-label-calendar">{slot.time}</span>
+                  <span className="event-label-calendar">No events scheduled</span>
+                </div>
+              ))
+            ) : (
+              <p className="no-data-calendar">Nu există sloturi disponibile pentru această zi.</p>
+            )}
+          </div>
+          )}
 
           {activeTab === 'exceptii' && (
             <div className="list-calendar">

@@ -59,8 +59,10 @@ router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
     const pool = await poolPromise;
 
     const existing = await pool.request()
-      .input('ID_PET', petId)
-      .query(`SELECT 1 FROM MEDICAL_RECORD WHERE ID_PET = @ID_PET`);
+  .input('ID_PET', petId)
+  .input('ID_CLINICA', clinicId)
+  .query(`SELECT 1 FROM MEDICAL_RECORD WHERE ID_PET = @ID_PET AND ID_CLINICA = @ID_CLINICA`);
+
 
     if (existing.recordset.length === 0) {
       // 👉 Nu există → INSERT

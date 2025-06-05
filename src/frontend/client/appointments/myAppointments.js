@@ -26,7 +26,7 @@ const MyAppointments = () => {
           month: 'long',
           day: 'numeric'
         });
-
+        console.log("APPOINTMENT RAW DATA:", data);
         if (!grouped[dateKey]) grouped[dateKey] = [];
         grouped[dateKey].push(appt);
       });
@@ -72,7 +72,7 @@ const MyAppointments = () => {
                 {appointments.map((appt, index) => (
                   <div className="appointment-row" key={index}>
                     <div>
-                      <strong>{new Date(appt.data_start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>
+                      <strong>{appt.data_start.split('T')[1].slice(0, 5)}</strong>
                     </div>
 
                     <div className="pet-cell">

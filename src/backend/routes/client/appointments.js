@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { DateTime } = require('luxon');
 const { poolPromise } = require('../../db');
 const { petOwnerOnly } = require('../middleware');
 
@@ -106,13 +107,20 @@ router.get('/appointments', petOwnerOnly, async (req, res) => {
       `);
 
     const appointments = result.recordset.map(appt => {
-      const startDate = new Date(appt.DATA_ORA_INCEPUT);
+      const localStart = new Date(
+  appt.DATA_ORA_INCEPUT.getFullYear(),
+  appt.DATA_ORA_INCEPUT.getMonth(),
+  appt.DATA_ORA_INCEPUT.getDate(),
+  appt.DATA_ORA_INCEPUT.getHours(),
+  appt.DATA_ORA_INCEPUT.getMinutes(),
+  appt.DATA_ORA_INCEPUT.getSeconds()
+);
       const endDate = new Date(appt.DATA_ORA_SFARSIT);
-      const durationMin = Math.floor((endDate - startDate) / 60000);
+      const durationMin = Math.floor((endDate - localStart) / 60000);
 
       return {
-        data_start: appt.DATA_ORA_INCEPUT,
-        data_end: appt.DATA_ORA_SFARSIT,
+        data_start:localStart,
+data_end: endDate,
         duration: durationMin,
 
         status: appt.STATUS,

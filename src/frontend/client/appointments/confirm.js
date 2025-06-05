@@ -76,7 +76,7 @@ const StepConfirm = ({ formData, onBack }) => {
 
     if (res.ok) {
       alert('Programare confirmată!');
-      window.location.href = '/';
+      window.location.href = '/client/myappointments';
     } else {
       alert('A apărut o eroare la salvarea programării.');
     }

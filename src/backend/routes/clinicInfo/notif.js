@@ -1,8 +1,9 @@
-
 const express = require('express');
 const router = express.Router();
 const { poolPromise } = require('../../db');
 const { clinicOnly } = require('../middleware');
+const sql = require('mssql');
+
 
 // ⬇️ RUTA PENTRU JOIN REQUESTS
 router.get('/join-requests', clinicOnly, async (req, res) => {
@@ -121,5 +122,46 @@ router.post('/join-requests/:id/reject', clinicOnly, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+router.get('/appointment-notifications', clinicOnly, async (req, res) => {
+  const clinicId = req.user.id; // asumat că user.id este ID-ul clinicii autentificate
+
+  try {
+     const pool = await poolPromise;
+    const after = req.query.after;
+    let condition = 'P.CREATED_AT >= DATEADD(MINUTE, -1440, GETDATE())';
+
+    if (after) {
+      condition = 'P.CREATED_AT > @AFTER';
+    }
+
+    const request = pool.request()
+      .input('ID_CLINICA', clinicId);
+
+    if (after) {
+      request.input('AFTER', sql.DateTime, new Date(after));
+    }
+
+    const result = await request.query(`
+      SELECT TOP 5 
+        P.ID,
+        P.DATA_ORA_INCEPUT,
+        PETS.NUME AS PET_NAME,
+        A.PRENUME + ' ' + A.NUME AS DOCTOR_NAME
+      FROM PROGRAMARI P
+      INNER JOIN PETS ON P.ID_PET = PETS.ID
+      INNER JOIN ANGAJATI A ON P.ID_MEDIC = A.ID
+      WHERE P.ID_CLINICA = @ID_CLINICA
+        AND ${condition}
+      ORDER BY P.CREATED_AT DESC
+    `);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Eroare notificări programări:', err);
+    res.status(500).json({ error: 'Eroare server notificări' });
+  }
+});
+
 
 module.exports = router;

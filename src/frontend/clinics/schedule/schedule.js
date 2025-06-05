@@ -418,13 +418,15 @@ function parseAsLocal(input) {
               />
 
              {modalDate && (
-  <CalendarModal
-    modalDate={modalDate}
-    modalData={modalData}
-    onClose={() => setModalDate(null)}
-    onDeleteException={handleDeleteException}
-  />
-)}
+                <CalendarModal
+                  modalDate={modalDate}
+                  modalData={modalData}
+                  onClose={() => setModalDate(null)}
+                  onDeleteException={handleDeleteException}
+                  onDeleteAppointment={handleDeleteAppointment}
+                  doctorName={selected?.name}
+                />
+              )}
             </>
           )}
         </section>
