@@ -17,16 +17,16 @@
 
 .add-visit-btn {
   background:transparent;
-  color: #014421;
-  border: none;
+  color: #000000;
+  border: 1px solid #d1d5db;
   padding: 8px 14px;
   border-radius: 6px;
-  font-weight: bold;
+  font-weight: 400px;
   cursor: pointer;
 }
 
 .add-visit-btn:hover {
-  background-color: #c5f8e0;
+  background-color: rgb(238, 222, 198);
 }
 
 .visit-form {
@@ -53,7 +53,7 @@
 }
 
 .visit-card {
-    background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
+    background: linear-gradient(to bottom, #f3f7f5, #e0f6ff);
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 16px 20px;
@@ -78,12 +78,12 @@
 }
 
 .edit-icon {
-  background: none;
+  background: transparent;
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
   padding: 4px;
-  color: #014421;
+  color: #000000;
 }
 
 .edit-icon:hover {

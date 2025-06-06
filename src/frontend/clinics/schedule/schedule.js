@@ -234,6 +234,7 @@ const exceptii = Array.from(exceptiiMap.values());
 
   const handleExceptionSave = async (exception) => {
   if (!selected) return;
+
   try {
     const res = await fetch(`http://localhost:5000/api/clinic/angajati/${selected.id}/exceptions`, {
       method: 'POST',
@@ -250,7 +251,6 @@ const exceptii = Array.from(exceptiiMap.values());
       return;
     }
 
-    // Reîncarcă datele de excepții și sloturi după POST
     if (modalDate) {
       const slotRes = await fetch(
         `http://localhost:5000/api/clinic/angajati/${selected.id}/timeslots?date=${modalDate}`,
@@ -258,23 +258,53 @@ const exceptii = Array.from(exceptiiMap.values());
       );
       const data = await slotRes.json();
 
-      const programari = data.filter(s => s.type === 'booked').map(s => s.details);
+      // 🔁 Reconstruim exceptiile robust
+      const exceptiiMap = new Map();
+      data.filter(s => s.type === 'exception').forEach(s => {
+        const id = s.id;
+        const startStr = s.start?.split('T')[0] + ' ' + s.start?.split('T')[1]?.substring(0, 5);
+        const endStr = s.end?.split('T')[0] + ' ' + s.end?.split('T')[1]?.substring(0, 5);
+        const start = parseAsLocal(startStr);
+        const end = parseAsLocal(endStr);
 
-      const exceptii = data
-        .filter(s => s.type === 'exception')
-        .map(s => {
-          const start = new Date(s.start);
-          const end = new Date(s.end);
-          return {
-            StartDateTime: start,
-            EndDateTime: end,
-            REASON: s.reason,
-            ID: s.id
-          };
+        if (!id || !start || !end || isNaN(start) || isNaN(end)) return;
+
+        exceptiiMap.set(id, {
+          StartDateTime: start,
+          EndDateTime: end,
+          REASON: s.reason || 'Blocare',
+          ID: id
         });
+      });
+
+      const exceptii = Array.from(exceptiiMap.values());
+
+      // reconstruim și programările
+      const programariMap = new Map();
+      data.filter(s => s.type === 'booked').forEach(s => {
+        const d = s.details || {};
+        const key = `${d.ownerName}-${d.petName}-${d.phone || ''}-${d.status || ''}`;
+        if (!programariMap.has(key)) {
+          programariMap.set(key, { ...d, times: [s.time] });
+        } else {
+          programariMap.get(key).times.push(s.time);
+        }
+      });
+
+      const programari = Array.from(programariMap.values()).map(p => {
+        const sorted = p.times.sort();
+        const start = sorted[0];
+        const end = new Date(`1970-01-01T${sorted.at(-1)}:00`);
+        end.setMinutes(end.getMinutes() + 30);
+        return {
+          ...p,
+          time: `${start} - ${end.toTimeString().substring(0, 5)}`
+        };
+      });
 
       const libere = data.filter(s => s.type === 'free');
 
+      // ✅ actualizăm calendarul
       setModalData({ programari, exceptii, libere });
     }
 
@@ -284,6 +314,7 @@ const exceptii = Array.from(exceptiiMap.values());
     alert('A apărut o eroare la salvarea excepției.');
   }
 };
+
 
 
   const handleDeleteException = async (id) => {
@@ -298,7 +329,7 @@ const exceptii = Array.from(exceptiiMap.values());
     });
     const exData = await exRes.json();
     setExceptions(Array.isArray(exData) ? exData : []);
-
+    console.log(exData);
     if (modalDate) {
       const filtered = Array.isArray(exData)
         ? exData.filter(e => e.StartDateTime && e.StartDateTime.startsWith(modalDate))
@@ -323,6 +354,8 @@ const exceptii = Array.from(exceptiiMap.values());
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const data = await slotRes.json();
+      console.log("🟡 Sloturi după salvare excepție:", data);
+
 
       const programariMap = new Map();
       data.filter(s => s.type === 'booked').forEach(s => {

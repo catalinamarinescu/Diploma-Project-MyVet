@@ -24,14 +24,14 @@
   padding: 0.6rem 1.4rem;
   font-weight: 600;
   border-radius: 8px;
-  background-color: #014421;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: 1px solid #d1d5db;
   transition: background-color 0.2s ease;
 }
 
 .services1-actions-button:hover {
-  background-color: #026c35;
+ background-color: rgb(238, 222, 198);
 }
 
 .service-list {
@@ -71,6 +71,7 @@
   padding: 0.3rem 0.7rem;
   border-radius: 1rem;
   font-size: 0.75rem;
+  margin-right: 10px;
   font-weight: 600;
 }
 
@@ -99,8 +100,8 @@
 }
 
 .service-card-actions button {
-  background: #e8f5e9;
-  color: #1b5e20;
+  background: transparent;
+  color: black;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -109,17 +110,15 @@
 }
 
 .service-card-actions button:hover {
-  background-color: #c8e6c9;
+  color: #045306;
 }
 
 .service-card-actions .delete {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: transparent;
 }
 
 .service-card-actions .delete:hover {
-  background-color: #ffcdd2;
-  color: #b71c1c;
+  color: #045306;
 }
 
 /* === Modal === */

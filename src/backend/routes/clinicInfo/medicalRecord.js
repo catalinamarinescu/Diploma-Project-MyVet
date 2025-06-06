@@ -65,22 +65,7 @@ router.put('/pet/:id/medical-record', clinicOnly, async (req, res) => {
 
 
     if (existing.recordset.length === 0) {
-      // 👉 Nu există → INSERT
-      await pool.request()
-        .input('ID_PET', petId)
-        .input('LAST_CHECKUP_DATE', LAST_CHECKUP_DATE)
-        .input('WEIGHT_KG', WEIGHT_KG)
-        .input('SEX', SEX)
-        .input('ALLERGIES', ALLERGIES)
-        .input('NOTES', NOTES)
-        .input('ID_CLINICA', clinicId)
-        .input('STATUS', STATUS)
-        .query(`
-          INSERT INTO MEDICAL_RECORD (ID_PET, LAST_CHECKUP_DATE, WEIGHT_KG, SEX, ALLERGIES, NOTES, ID_CLINICA, STATUS)
-          VALUES (@ID_PET, @LAST_CHECKUP_DATE, @WEIGHT_KG, @SEX, @ALLERGIES, @NOTES, @ID_CLINICA, @STATUS)
-        `);
-
-      return res.status(201).json({ message: 'Medical record created' });
+      return res.status(404).json({ error: 'Medical record does not exist. Use POST to create it.' });
     }
 
     // 👉 Există → UPDATE

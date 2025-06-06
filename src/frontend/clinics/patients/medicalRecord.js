@@ -92,7 +92,7 @@ const MedicalRecord = ({ petId, onClose }) => {
 
         <div className="modal-header-md">
           <h2>Medical File: {data.PET_NAME}</h2>
-          <span className={`badge ${formData.status.toLowerCase()}`}>
+          <span className={`badge2 ${formData.status.toLowerCase()}`}>
             {formData.status}
           </span>
           <p className="sub-info-md">

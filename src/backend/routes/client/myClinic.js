@@ -7,44 +7,56 @@ const { petOwnerOnly } = require('../middleware');
 router.get('/my-clinic', petOwnerOnly, async (req, res) => {
   const ownerId = req.user.id;
   const rawClinicId = req.query.clinicId;
-const clinicId = parseInt(rawClinicId);
-
+  const clinicId = parseInt(rawClinicId);
 
   if (!clinicId) return res.status(400).json({ error: 'clinicId is required' });
 
   try {
     const pool = await poolPromise;
-    const result = await pool.request()
+
+    // 1. Preia informațiile despre clinică (indiferent de animale)
+    const clinicResult = await pool.request()
       .input('OWNER_ID', ownerId)
       .input('CLINIC_ID', sql.Int, clinicId)
       .query(`
         SELECT 
-          C.ID_CLINICA, CI.NAME, C.ADDRESS, CI.DESCRIERE,
-          P.ID, P.NUME, P.RASA, P.TIP, P.VARSTA, P.POZA
+          C.ID_CLINICA, CI.NAME, C.ADDRESS, CI.DESCRIERE
         FROM PATIENTS_OWNER PO
         JOIN CLINICS C ON C.ID_CLINICA = PO.ID_CLINICA
         LEFT JOIN CLINIC_INFO CI ON CI.ID_CLINICA = C.ID_CLINICA
-        LEFT JOIN PETS P ON P.ID_PET_OWNER = PO.ID_PET_OWNER
-        LEFT JOIN MEDICAL_RECORD MR ON MR.ID_PET = P.ID AND MR.ID_CLINICA = PO.ID_CLINICA
         WHERE PO.ID_PET_OWNER = @OWNER_ID
         AND PO.ID_CLINICA = @CLINIC_ID
-        AND MR.ID_PET IS NOT NULL
       `);
 
-    const clinic = result.recordset[0];
-    if (!clinic) return res.status(404).json({ error: 'Clinic not found' });
+    if (clinicResult.recordset.length === 0) {
+      return res.status(404).json({ error: 'Clinic not found' });
+    }
 
-    const pets = result.recordset
-      .filter(r => r.ID != null)
-      .map(r => ({
-        ID: r.ID,
-        NUME: r.NUME,
-        RASA: r.RASA,
-        TIP: r.TIP,
-        VARSTA: r.VARSTA,
-        POZA: r.POZA
-      }));
+    const clinic = clinicResult.recordset[0];
 
+    // 2. Preia animalele explicit înregistrate în clinică (din PETS_CLINICI)
+    const petsResult = await pool.request()
+      .input('OWNER_ID', ownerId)
+      .input('CLINIC_ID', sql.Int, clinicId)
+      .query(`
+        SELECT 
+          P.ID, P.NUME, P.RASA, P.TIP, P.VARSTA, P.POZA
+        FROM PETS_CLINICI PC
+        JOIN PETS P ON P.ID = PC.ID_PET
+        WHERE PC.ID_CLINICA = @CLINIC_ID
+          AND P.ID_PET_OWNER = @OWNER_ID
+      `);
+
+    const pets = petsResult.recordset.map(r => ({
+      ID: r.ID,
+      NUME: r.NUME,
+      RASA: r.RASA,
+      TIP: r.TIP,
+      VARSTA: r.VARSTA,
+      POZA: r.POZA
+    }));
+
+    // 3. Răspunsul final
     res.json({
       NAME: clinic.NAME,
       ADDRESS: clinic.ADDRESS,

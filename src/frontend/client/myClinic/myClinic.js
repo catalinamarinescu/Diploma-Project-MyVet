@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Navbar from '../../navbar';
 import Footer from '../../footer';
 import './myClinic.css';
@@ -73,16 +73,16 @@ const MyClinicPage = () => {
   return (
     <div className="myclinic-page">
       <Navbar />
-
+       <div style={{ flex: 1 }}>
       <div className="myclinic-header">
         <div>
           <h1>{clinic.NAME}</h1>
           <p><strong>{clinic.ADDRESS}</strong></p>
           <p>{clinic.DESCRIPTION}</p>
-          <h2>Manage your pet records here</h2>
+          <h2>Here you can register your pet as a patient to our clinic!</h2>
         </div>
         <div>
-          <button className="schedule-btn-clinic">Schedule Appointment</button>
+          <Link to="/client/appointments" className="schedule-btn-clinic">Schedule Appointment</Link>
         </div>
       </div>
 
@@ -90,14 +90,14 @@ const MyClinicPage = () => {
         <div className="registered-section">
           {registeredPets.length === 0 ? (
             <div className="no-pets-section">
-              <p>Nu ai încă animale înregistrate la această clinică.</p>
+              <p>You do not have any pets registered at this clinic yet.</p>
               <button className="schedule-btn-clinic" onClick={loadUnregisteredPets}>
-                Adaugă animal în clinică
+                +Add pet
               </button>
             </div>
           ) : (
             <>
-              <p className="section-label">Animalele tale înregistrate:</p>
+              <p className="section-label">Registered pets:</p>
               <div className="pets-grid-myclinic">
                 {registeredPets.map(pet => (
                   <div className="pet-card-myclinic" key={pet.ID}>
@@ -115,7 +115,7 @@ const MyClinicPage = () => {
               </div>
               <div className="myclinic-actions">
                 <button className="schedule-btn-clinic" onClick={loadUnregisteredPets}>
-                  Adaugă mai multe animale
+                  Add more pets
                 </button>
               </div>
             </>
@@ -124,12 +124,12 @@ const MyClinicPage = () => {
       ) : (
         <>
           <div className="register-header">
-            <p>Selectează animalele pe care vrei să le înregistrezi:</p>
+            <p>Select the pets you want to register:</p>
           </div>
 
           <div className="pets-grid-myclinic">
             {unregisteredPets.length === 0 ? (
-              <p className="no-unregistered">Toate animalele tale sunt deja înregistrate în clinică.</p>
+              <p className="no-unregistered">All your pets are already registered with the clinic</p>
             ) : (
               unregisteredPets.map(pet => (
                 <div className="pet-card-myclinic" key={pet.ID}>
@@ -143,7 +143,7 @@ const MyClinicPage = () => {
                   <p>{pet.RASA}</p>
                   <p>{pet.VARSTA} years old</p>
                   <button className="schedule-btn-clinic" onClick={() => registerPet(pet.ID)}>
-                    Înregistrează acest animal
+                    Register
                   </button>
                 </div>
               ))
@@ -152,12 +152,12 @@ const MyClinicPage = () => {
 
           <div className="myclinic-actions">
             <button className="back-btn-myclinic" onClick={() => setShowRegisterPets(false)}>
-              Înapoi
+              Back
             </button>
           </div>
         </>
       )}
-
+      </div>
       <Footer />
     </div>
   );

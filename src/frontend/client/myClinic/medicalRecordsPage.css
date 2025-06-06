@@ -160,3 +160,18 @@
   border: 2px solid #c1f0d1;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
+
+.record-btn {
+  background:transparent;
+  color: #000000;
+   border: 1px solid #d1d5db;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.record-btn:hover {
+  background-color: rgb(238, 222, 198);
+}

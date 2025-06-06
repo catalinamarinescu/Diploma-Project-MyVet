@@ -48,7 +48,7 @@
   font-size: 1.5rem;
 }
 
-.badge.healthy {
+.badge2.healthy {
   background: #e6f7ec;
   color: #28a745;
   padding: 5px 12px;
@@ -162,30 +162,30 @@ background-color: white;
 }
 
 .primary-btn-md {
-  background-color: #ffffff;
-  color: #014421;
+  background-color: transparent;
+  color: #000000;
   padding: 10px 18px;
-  border: none;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
 }
 
 .primary-btn-md:hover  {
-  background-color: #cbf0dd;
+   background-color: rgb(238, 222, 198);
 } 
 
 .secondary-btn-md {
   background-color: transparent;
-  color: #014421;
+  color: #000000;
   padding: 10px 18px;
-  border: none;
+  border: 1px solid #d1d5db;
   cursor: pointer;
   font-weight: 500;
 }
 
 .secondary-btn-md:hover {
-    background-color: #cbf0dd;
+    background-color: rgb(238, 222, 198);
 }
 
 .medical-select-md,
@@ -209,12 +209,12 @@ background-color: white;
   cursor: pointer;
 }
 
-.badge.healthy {
+.healthy2 {
   background: #e6f7ec;
   color: #28a745;
 }
 
-.badge.unhealthy {
+.badge2.unhealthy {
   background: #fdecea;
   color: #dc3545;
 }

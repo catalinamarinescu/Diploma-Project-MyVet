@@ -4,9 +4,8 @@
   height: 500px; /* mai înalt */
   padding: 0;
   margin: 0;
-  background: #f0f0f0;
+  background: #ffffff;
 }
-
 
 .clinic-text {
   flex: 1;
@@ -32,7 +31,6 @@
 
 .clinic-text h1 {
   font-size: 55px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #014421;
 }
 
@@ -43,9 +41,9 @@
 }
 
 .join-btn {
-  background: #014421;
-  color: white;
-  border: none;
+  background-color: rgb(236, 209, 169);
+  color: rgb(0, 0, 0);
+  border: 1px solid #d1d5db;
   font-size: 20px;
   padding: 10px 20px;
   border-radius: 8px;
@@ -55,22 +53,22 @@
 }
 
 .join-btn:hover{
-  background-color: #012713;
+  background-color: rgb(236, 189, 117);
 }
 
 .clinic-info-wrapper {
   text-align: center;
   padding: 3rem 2rem;
-  background: linear-gradient(to bottom right, #e5f9eb, #d3f0d4);
+   background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
 }
 
-.section-title {
+.section-title-clinic {
   font-size: 2rem;
   font-weight: bold;
   color: #00421f;
 }
 
-.section-subtitle {
+.section-subtitle-clinic {
   color: #444;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
@@ -79,29 +77,29 @@
   margin-right: auto;
 }
 
-.toggle-tabs {
+.toggle-tabs-clinic {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.toggle-tabs button {
-  padding: 0.7rem 1.5rem;
-  border: none;
-  background: #f0f0f0;
-  border-radius: 10px;
+.toggle-tabs-clinic button {
+  padding: 0.5rem 1.3rem;
+  border: 1px solid #d1d5db;
+  background: transparent;
+  border-radius: 6px;
   font-weight: 600;
-  color: #00421f;
+  color: #000000;
   cursor: pointer;
 }
 
-.toggle-tabs .active-tab {
-  background-color: #dcfce7;
-  color: #00421f;
+.toggle-tabs-clinic .active-tab-clinic {
+ background-color: rgb(238, 222, 198);
+  color: #000000;
 }
 
-.filter-buttons {
+.filter-buttons-clinic {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -109,26 +107,29 @@
   margin-bottom: 2rem;
 }
 
-.filter-buttons button {
+.filter-buttons-clinic button {
   padding: 0.5rem 1.2rem;
-  border: 1px solid #00421f;
+border: 1px solid #d1d5db;
   border-radius: 8px;
-  background: white;
-  color: #00421f;
+  background:transparent;
+  color: #000000;
   cursor: pointer;
 }
 
-.filter-buttons .selected {
-  background-color: #dcfce7;
+.filter-buttons-clinic .selected {
+  background-color: rgb(238, 222, 198);
 }
 
-.service-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.service-cards-clinic {
+ display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.service-card {
+.service-card-clinic {
   background-color: #f6fdf7;
   border-radius: 16px;
   padding: 1.5rem;
@@ -139,18 +140,18 @@
   justify-content: space-between;
 }
 
-.service-card h3 {
+.service-card-clinic h3 {
   margin: 0.5rem 0;
   font-size: 30px;
   color: #001b10;
 }
 
-.service-card .description {
+.service-card-clinic .description {
   color: #555;
   flex-grow: 1;
 }
 
-.service-card .badge {
+.service-card-clinic .badge {
   background-color: #e8f5e9;
   color: #1b5e20;
   padding: 0.3rem 0.8rem;
@@ -158,22 +159,23 @@
   font-size: 0.8rem;
   font-weight: 600;
   width:100px;
+  text-align: center;
   display: inline-block;
 }
 
-.card-footer {
+.card-footer-clinic {
   margin-top: 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card-footer .price {
+.card-footer-clinic .price {
   font-weight: bold;
   color: #00421f;
 }
 
-.team-cards {
+.team-cards-clinic {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
@@ -182,7 +184,7 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.team-card {
+.team-card-clinic {
   background: #f7f5f5;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   border-radius: 12px;
@@ -191,14 +193,14 @@
   flex-direction: column;
   padding: 0;
   transition: transform 0.2s ease;
-  width: 300px;
+  width: 350px;
 }
 
-.team-card:hover {
+.team-card-clinic:hover {
   transform: translateY(-4px);
 }
 
-.team-card  h4 {
+.team-card-clinic  h3 {
   font-size: 1.5rem;
   color: #111827;
   font-weight: 900;
@@ -206,7 +208,7 @@
   text-align: left;
 }
 
-.team-card  p {
+.team-card-clinic  p {
   font-size: 0.95rem;
   color: #4b5563;
   margin: 0 1rem;
@@ -214,7 +216,7 @@
   margin-bottom: 5px;
 }
 
-.team-card .badge {
+.team-card-clinic .badge {
   display: inline-block;
   background-color: #e5f5ea;
   color: #227227;
@@ -225,7 +227,7 @@
 }
 
 
-.team-avatar {
+.team-avatar-clinic {
     width: 100%;
     height: 220px;
     object-fit: cover;
@@ -235,9 +237,9 @@
 }
 
 
-.team-avatar.initials {
-  background-color: #e6fff0;
-  color: #00421f;
+.team-avatar-clinic.initials {
+  background-color: #eaeaea;
+  color: #000000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,18 +264,19 @@
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
+  width: 70%;
+  max-width: 200px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .modal textarea {
-  width: 100%;
+  width: 90%;
   min-height: 100px;
   padding: 0.5rem;
   border-radius: 8px;
   border: 1px solid #ccc;
   margin-bottom: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .modal-actions {
@@ -295,4 +298,16 @@
 
 .cancel-btn {
   background-color: #ccc;
+}
+
+.badge-clinic {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  left: 10px;
+  width:100px;
+  display: inline-block;
 }

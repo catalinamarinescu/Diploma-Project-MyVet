@@ -25,15 +25,15 @@
   margin-left: 0.5rem ;
   padding: 0.6rem 1.2rem;
   font-weight: 600;
-  border: none;
+  border: 1px solid #d1d5db;
   background-color: transparent;
-  color: #014421;
+  color: #000000;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .employees-add-btn:hover {
-  background-color: #d1e7dd;
+  background-color: rgb(238, 222, 198);
 }
 
 .employee-list {
@@ -111,8 +111,8 @@
   background-color: #cccccc;
   color: #014421;
   padding: 0.2rem 0.7rem;
-  border: 1px solid #cad8d1;
-  border-radius: 20px;
+  border: 1px;
+  border-radius: 2px;
   font-size: 0.85rem;
   margin-top: 10px;
 }
@@ -130,12 +130,12 @@
   cursor: pointer;
   border: none;
   background-color: white;
-  color: #014421;
+  color: #000000;
   transition: background-color 0.2s ease;
 }
 
 .employees-card-actions button:hover {
-  background-color: #e6f4ea;
+ color: #064c1a;
 }
 
 /* === Modal === */

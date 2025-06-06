@@ -1,191 +1,105 @@
 .privacy-container {
-    background-color: #f8f8f8;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  background: #f0fdf4;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.navbar-privacy {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f8f8;
-    padding: 15px 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.logo-privacy {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(214, 184, 139);
-}
-
-.navbar-privacy-buttons {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-privacy-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #014421;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background 0.3s;
-}
-
-.nav-privacy-button:hover {
-    background-color: #012010;
-}
-
-.auth-privacy-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.login-privacy-button, .sign-privacy-up-button {
-    text-decoration: none;
-    background: #000000;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 7px;
-    font-size: 14px;
-    transition: background 0.3s;
-}
-
-.login-privacy-button:hover, .sign-privacy-up-button:hover {
-    background-color: #012010;
-}
-
-.sign-privacy-up-button {
-    margin-right: 50px;
-}
-
-.privacy-box {
-  background-color: #adc6b8;
-  align-items: center;
-  margin-top: 100px;
-  margin-bottom: 70px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 1200px;
-  min-height: 600px;
-  padding: 60px 80px;
+.privacy-hero {
   text-align: center;
-  box-sizing: border-box;
+  padding: 80px 20px;
+  background: linear-gradient(to bottom, #e6fff4, #d1f1ff);
 }
 
-.privacy-box h1 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 50px;
+.privacy-hero h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
-.privacy-box h3 {
-    text-align: left;
-    margin-left: 100px;
+.privacy-hero .highlight {
+  color: #e69e3f;
 }
 
-.privacy-box p, ul {
-    margin-left: 100px;
-    margin-right: 100px;
-    text-align: left;
+.privacy-hero .badge {
+  display: inline-block;
+  background: #dcfce7;
+  color: #047857;
+  padding: 6px 14px;
+  font-weight: 600;
+  border-radius: 20px;
+  font-size: 14px;
 }
 
-.privacy-box li {
-    margin-left: -22px;
+.last-updated {
+  color: #065f46;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
-.footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    background-color: #014421;
-    padding: 0px;
-    flex-wrap: nowrap;
-    min-height: 300px;
-    border-top: 1px solid #ccc;
+.privacy-section {
+  padding: 60px 80px;
+  background: #ffffff;
 }
 
-.footer-column {
-    flex: 1;
-    padding: 20px;
-    text-align: left;
-    flex-direction: column;
-    display: flex;
+.privacy-section.dark {
+  background: #014421;
+  color: #ffffff;
 }
-  
-  .footer-column:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    background-color: white; /* sau altă culoare dacă vrei */
-  }
-  
-  .footer-logo {
-    color:rgb(214, 184, 139);
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .footer-column p, .footer-column a {
-    color: #f7f7f7;
-    font-size: 16px;
-    margin: 8px 0;
-    text-decoration: none;
-  }
-  
-  .quick-links {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .quick-links h4 {
-    color: #f7f7f7;
-    text-decoration: solid;
-  }
-  
-  .quick-links li {
-    margin-bottom: 10px;
-  }
-  
-  .quick-links a:hover {
-    color: #a1a7a4;
-    text-decoration: underline;
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: flex;
-    margin-top: 10px;
-    gap: 15px;
-    margin-left: 0px;
-  }
-  
-  .social-icons img {
-    width: 28px;
-    height: 28px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    align-self: left;
-  }
-  
-  .social-icons img:hover {
-    transform: scale(1.2);
-    filter: brightness(1.2);
-  }
-  
-  .copyright {
-    font-size: 14px;
-    color: #ffffff;
-    margin-top: 20px;
-  }
+
+.privacy-section.light {
+  background: #f9fafb;
+}
+
+.privacy-section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.data-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.data-categories h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.checklist li {
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+
+.sharing-columns {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.sharing-columns div {
+  flex: 1;
+  min-width: 250px;
+}
+
+.sharing-columns h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.sharing-columns ul {
+  padding-left: 20px;
+}
+
+.sharing-columns li {
+  margin-bottom: 8px;
+}

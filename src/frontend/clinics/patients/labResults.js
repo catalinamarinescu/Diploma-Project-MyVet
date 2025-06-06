@@ -84,10 +84,10 @@ const LabResultsTab = ({ petId }) => {
       </div>
 
       {labResults.map(result => (
-      <div className="lab-card" key={result.ID}>
+      <div className="lab-card1" key={result.ID}>
         <div className="lab-header-row">
           <h4>{result.NAME}</h4>
-          <span className={`badge ${result.STATUS.toLowerCase()}`}>{result.STATUS}</span>
+          <span className={`badge1 ${result.STATUS.toLowerCase()}`}>{result.STATUS}</span>
         </div>
         <p className="lab-date">{new Date(result.TEST_DATE).toLocaleDateString()}</p>
         <p className="lab-summary">{result.SUMMARY}</p>

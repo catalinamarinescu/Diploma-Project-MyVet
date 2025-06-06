@@ -59,7 +59,6 @@ const ExpandablePatientCard = ({ patient, clinicId }) => {
         </div>
         <div className="patient-info">
           <h3>{patient.LAST_NAME}, {patient.FIRST_NAME}</h3>
-          <p className="last-visit">Last visit: unknown</p>
         </div>
       </div>
 
@@ -74,19 +73,16 @@ const ExpandablePatientCard = ({ patient, clinicId }) => {
                 <p><i className="fa fa-envelope"></i> {ownerProfile.EMAIL}</p>
                 <p><i className="fa fa-phone"></i> {ownerProfile.PHONE}</p>
                 <p><i className="fa fa-map-marker"></i> {ownerProfile.ADDRESS}</p>
-                <div className="owner-actions">
-                  <button className="appointment-btn">Schedule Appointment</button>
-                </div>
               </>
             ) : (
-              <p>Nu s-au putut încărca detaliile.</p>
+              <p>Unable to load details.</p>
             )}
           </div>
 
           <div className="details-right">
-            <h4>Animale înregistrate în această clinică</h4>
+            <h4>Registered pets</h4>
             {registeredPets.length === 0 ? (
-              <p>Nu există animale înregistrate.</p>
+              <p>There are no pets registered.</p>
             ) : (
               <div className="pet-list">
                 {registeredPets.map(pet => (
@@ -104,7 +100,7 @@ const ExpandablePatientCard = ({ patient, clinicId }) => {
                     <div className="pet-info-box">
                       <strong>{pet.NUME}</strong>
                       <p>{pet.TIP} • {pet.RASA} • {pet.VARSTA} ani</p>
-                      <span className={`health-badge ${pet.STATUS === 'Healthy' ? 'healthy' : 'unhealthy'}`}>
+                      <span className={`health-badge1 ${pet.STATUS === 'Healthy' ? 'healthy' : 'unhealthy'}`}>
                         {pet.STATUS || 'Unknown'}
                       </span>
                     </div>

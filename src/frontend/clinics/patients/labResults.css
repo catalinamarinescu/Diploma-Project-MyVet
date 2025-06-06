@@ -25,21 +25,26 @@
 }
 
 .lab-add-form textarea {
-  min-width: 150px;
+  min-width: 180px;
   min-height: 38px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .lab-add-form button {
   background: transparent;
-  color: #014421;
+  color: #000000;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
 }
 
-.lab-card {
-  background: linear-gradient(to bottom right, #f2f9f3, #d3f0d4);
+.lab-add-form button:hover {
+  color: rgb(1, 61, 9);
+}
+
+.lab-card1 {
+  background: linear-gradient(to bottom, #f3f7f5, #e0f6ff);
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 16px 20px;
@@ -71,7 +76,7 @@
   font-size: 0.95rem;
 }
 
-.badge {
+.badge1 {
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -79,27 +84,14 @@
   text-transform: uppercase;
 }
 
-.badge.normal {
+.badge1.normal {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
 
-.badge.abnormal {
+.badge1.abnormal {
   background-color: #ffebee;
   color: #c62828;
 }
 
-.download-btn {
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-  background-color: #f0f0f0;
-  color: #014421;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-}
 
-.download-btn:hover {
-  background-color: #d9e5de;
-}

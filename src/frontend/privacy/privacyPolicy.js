@@ -1,116 +1,99 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import Navbar from "../navbar";
+import Footer from "../footer";
 import "./privacyPolicy.css";
 
 const PrivacyPolicy = () => {
-    return (
-        <div className="privacy-container">
-            <nav className="navbar-privacy">
-                <div className="logo-privacy">
-                    MyVet
-                </div>
-                <div className="navbar-privacy-buttons">
-                    <Link to="/" className="nav-privacy-button">
-                        Home
-                    </Link>
-                    <Link to="/about" className="nav-privacy-button">
-                        AboutUs
-                    </Link>
-                    <Link to="/petinfo" className="nav-privacy-button">
-                        Find more about your pet!
-                    </Link>
-                    <Link to="/pharmacy" className="nav-privacy-button">
-                        Pharmacy&Accesories
-                    </Link>
-                    <Link to="/map" className="nav-privacy-button">
-                        Map
-                    </Link> 
-                </div>
-                <div className="auth-privacy-buttons">
-                    <Link to="/login" className="login-privacy-button">
-                        Login
-                    </Link>
-                    <Link to="/accountType" className="sign-privacy-up-button">
-                        Sign up
-                    </Link>
-                </div>
-            </nav>
-            <div className="privacy-box">
-                <h1>Privacy Policy</h1>
-                <p>Welcome to MyVet — your digital guide for discovering pet-friendly locations, clinics, 
-                and useful pet care suggestions. We are committed to protecting your privacy and 
-                handling your data responsibly.</p>
-                <h3>We collect only a minimal amount of data, such as:</h3>
-                <ul>
-                    <li>Email address (only if you create an account)</li>
-                    <li>Location (optional) if you use the "Find Nearby" feature</li>
-                </ul>
-                <p>We do not collect sensitive personal data or any financial/payment information.</p>
-                <h3>The limited data we collect is used to:</h3>
-                <ul>
-                    <li>Personalize your experience on the platform</li>
-                    <li>Improve our platform based on anonymous usage patterns</li>
-                </ul>
-                <p>We never sell your information or share it with third-party companies for advertising.</p>
-                <h3>We use third-party APIs such as: </h3>
-                <ul>
-                    <li>Esri (ArcGIS) for displaying maps</li>
-                    <li>TheCatAPI / TheDogAPI for pet breed information</li>
-                </ul>
-                <p>These platforms may collect anonymous technical data (like IP address or browser type). 
-                    You can review their own privacy policies on their websites.</p>
-                <p>We use appropriate technical measures to keep your information secure. However, no online platform is entirely immune to security risks.</p>
-                <h3>Your Rights</h3>
-                <ul>
-                    <li>Request access to the data we hold about you</li>
-                    <li>Ask for your account or data to be deleted</li>
-                    <li>Opt out of email updates or notifications</li>
-                </ul>
-                <h3>Contact</h3>
-                <p>Have questions about privacy?
-                📧 Email us at: support@myvet.com</p>   
-            </div>
-            <footer className="footer">
-            <div className="footer-column">
-                    <h2 className="footer-logo">MyVet</h2>
-                    <p>+40 712 345 678</p>
-                    <p>support@myvet.com</p>
-                    <p>Str. Animăluțelor nr. 5, București</p>
-                    <div className="social-icons-privacy">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/instagram.png" alt="Instagram" />
-                    </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/facebook.png" alt="Facebook" />
-                    </a>
-                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/imagini/tiktok.png" alt="TikTok" />
-                    </a>
-                    </div>
-                </div>
+  return (
+    <div className="privacy-container">
+      <Navbar />
 
-                <div className="footer-column">
-                   <ul className="quick-links">
-                   <h4>Quick Links</h4>
-                   <li><a href="/">Home</a></li>     
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/petinfo">Find more about your pet!</a></li>
-                    <li><a href="/pharmacy">Pharmacy</a></li>
-                    <li><a href="/map">Map</a></li>
-                    </ul>       
-                </div>
+      <section className="privacy-hero">
+        <div className="badge">Privacy & Security</div>
+        <h1><span>Privacy</span> <span className="highlight">Policy</span></h1>
+        <p>Your privacy matters to us. Learn how we protect your information and your pets' data on our platform.</p>
+      </section>
 
-                <div className="footer-column">
-                    <ul className="quick-links">
-                    <li><a href="/privacypolicy">Privacy Policy</a></li>
-                    <li><a href="/accessibility">Accessibility</a></li>
-                    <li><a href="/terms">Terms & Conditions</a></li>
-                    </ul>
-                    <p className="copyright">© 2025 by MyVet</p>
-                </div>
-            </footer>
+      <section className="privacy-section">
+        <h2>Our Commitment</h2>
+        <p>
+          At MyVet, we understand that your personal information and your pets'
+          medical records are sensitive and important to you.
+        </p>
+        <p>
+          This Privacy Policy explains how we collect, use, protect, and share
+          information when you use our veterinary platform that connects pet
+          owners with trusted clinics.
+        </p>
+      </section>
+
+      <section className="privacy-section dark">
+        <h2>Information We Collect</h2>
+        <p>
+          We collect information to provide better services to all our users —
+          from pet owners to veterinary clinics.
+        </p>
+
+        <div className="data-categories">
+          <div>
+            <h4>Pet Owners</h4>
+            <p>Personal & Pet Information</p>
+          </div>
+          <div>
+            <h4>Clinics</h4>
+            <p>Business & Staff Details</p>
+          </div>
+          <div>
+            <h4>Medical Records</h4>
+            <p>Treatment History</p>
+          </div>
+          <div>
+            <h4>Usage Data</h4>
+            <p>Platform Analytics</p>
+          </div>
         </div>
-    );
+      </section>
+
+      <section className="privacy-section light">
+        <h2>How We Use Your Data</h2>
+        <ul className="checklist">
+          <li><strong>✔ Service Delivery:</strong> facilitate appointments, maintain medical records</li>
+          <li><strong>✔ Communication:</strong> reminders, notifications</li>
+          <li><strong>✔ Platform Improvement:</strong> usage insights</li>
+          <li><strong>✔ Security & Compliance:</strong> meet legal requirements</li>
+        </ul>
+      </section>
+
+      <section className="privacy-section dark">
+        <h2>Data Sharing Policy</h2>
+        <p>
+          We only share your information when necessary to provide our services or when required by law.
+        </p>
+        <div className="sharing-columns">
+          <div>
+            <h4>We Share With:</h4>
+            <ul>
+              <li>Authorized veterinary staff</li>
+              <li>Emergency care providers</li>
+              <li>Payment processors</li>
+              <li>Legal authorities (if required)</li>
+            </ul>
+          </div>
+          <div>
+            <h4>We Never Share:</h4>
+            <ul>
+              <li>Data with advertisers</li>
+              <li>Information for marketing</li>
+              <li>Personal data without consent</li>
+              <li>Medical records publicly</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default PrivacyPolicy;

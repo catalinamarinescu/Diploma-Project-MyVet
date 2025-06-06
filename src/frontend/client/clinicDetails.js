@@ -65,19 +65,19 @@ const ClientClinicDetails = () => {
                 </div>
             
             <div className="clinic-info-wrapper">
-                <h2 className="section-title">Get to Know Our Services and Team</h2>
-                <p className="section-subtitle">
+                <h2 className="section-title-clinic">Get to Know Our Services and Team</h2>
+                <p className="section-subtitle-clinic">
                     We offer a wide range of veterinary services and have a team of dedicated professionals ready to care for your pets.
                 </p>
 
-                <div className="toggle-tabs">
-                    <button className={!viewTeam ? "active-tab" : ""} onClick={() => setViewTeam(false)}>Services</button>
-                    <button className={viewTeam ? "active-tab" : ""} onClick={() => setViewTeam(true)}>Our Team</button>
+                <div className="toggle-tabs-clinic">
+                    <button className={!viewTeam ? "active-tab-clinic" : ""} onClick={() => setViewTeam(false)}>Services</button>
+                    <button className={viewTeam ? "active-tab-clinic" : ""} onClick={() => setViewTeam(true)}>Our Team</button>
                 </div>
 
                 {!viewTeam && (
                     <>
-                    <div className="filter-buttons">
+                    <div className="filter-buttons-clinic">
                         {uniqueTypes.map((tip, i) => (
                         <button
                             key={i}
@@ -90,16 +90,16 @@ const ClientClinicDetails = () => {
                         <button onClick={() => setSelectedType(null)}>All Services</button>
                     </div>
 
-                    <div className="service-cards">
+                    <div className="service-cards-clinic">
                         {(clinic?.servicii || [])
                         .filter(s => !selectedType || s.tip === selectedType)
                         .map((s, i) => (
-                            <div key={i} className="service-card">
+                            <div key={i} className="service-card-clinic">
                             <div className="badge">{s.tip}</div>
                             <h3>{s.denumire}</h3>
-                            <p className="description">{s.descriere}</p>
-                            <div className="card-footer">
-                                <span className="price">{s.pret} RON</span>
+                            <p className="description-clinic">{s.descriere}</p>
+                            <div className="card-footer-clinic">
+                                <span className="price-clinic">{s.pret} RON</span>
                             </div>
                             </div>
                         ))}
@@ -108,22 +108,22 @@ const ClientClinicDetails = () => {
                 )}
 
                {clinic && viewTeam && (
-                <div className="team-cards">
+                <div className="team-cards-clinic">
                     {clinic.angajati.map((a, i) => (
-                    <div key={i} className="team-card">
+                    <div key={i} className="team-card-clinic">
                         {a.poza ? (
                         <img
                             src={`http://localhost:5000/${a.poza}`}
                             alt={`${a.nume} ${a.prenume}`}
-                            className="team-avatar"
+                            className="team-avatar-clinic"
                         />
                         ) : (
-                        <div className="team-avatar initials">
+                        <div className="team-avatar-clinic initials">
                             {a.nume[0]}{a.prenume[0]}
                         </div>
                         )}
                         <h3>{a.nume} {a.prenume}</h3>
-                        <span className="badge">{a.tip}</span>
+                        <span className="badge-clinic">{a.tip}</span>
                         <p>Email: {a.email}</p>
                         <p>Phone: {a.telefon}</p>
                     </div>

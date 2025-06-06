@@ -55,8 +55,8 @@ Layout general
 
 .edit-profile-btn {
   background: transparent;
-  color: #00421f;
-  border: none;
+  color: #000000;
+    border: 1px solid #d1d5db;
   padding: 0.6rem 1rem;
   border-radius: 8px;
   cursor: pointer;
@@ -64,7 +64,7 @@ Layout general
 }
 
 .edit-profile-btn:hover {
-  background: #dafde3;
+  background:rgb(238, 222, 198);
 }
 
 /* Tabs */

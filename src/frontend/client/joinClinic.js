@@ -42,9 +42,9 @@ const JoinClinicForm = ({ clinicId, onClose }) => {
           value={joinMessage}
           onChange={(e) => setJoinMessage(e.target.value)}
         />
-        <div className="form-buttons">
-          <button onClick={handleJoinClinic}>Send</button>
-          <button onClick={onClose}>Cancel</button>
+        <div className="form-buttons-clinic">
+          <button onClick={handleJoinClinic} className="submit-btn">Send</button>
+          <button onClick={onClose} className="cancel-form-btn ">Cancel</button>
         </div>
       </div>
     </div>

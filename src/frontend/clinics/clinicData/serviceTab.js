@@ -124,11 +124,12 @@ const ServicesTab = () => {
           <div className="service1-card" key={s.id}>
             <div className="service-card1-header">
               <h3>{s.denumire}</h3>
-              <span className="service1-badge-service">{s.tip}</span>
+              <span className="service1-badge-service">{s.tip}  </span>
+               <p className="service1-duration"> {s.durata} min</p>
             </div>
             <p>{s.descriere}</p>
             <p className="service1-price">{s.pret} RON</p>
-            <p className="service1-duration">{s.durata} min</p> {/* Nou */}
+            
             <div className="service-card-actions">
               <button onClick={() => handleModalOpen(s)}>Edit</button>
               <button onClick={() => handleDelete(s.id)} className="delete">Delete</button>

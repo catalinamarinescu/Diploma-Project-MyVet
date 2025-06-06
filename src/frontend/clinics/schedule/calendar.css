@@ -93,16 +93,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f9fafb;
+  background: linear-gradient(to bottom, #e9fef1, #e0f6ff);
   border: 1px solid #e5e7eb;
   padding: 0.75rem;
   border-radius: 8px;
 }
 
 .btn-delete-calendar {
-  background: #dc2626;
-  color: white;
-  border: none;
+  background:  transparent;
+  color: rgb(0, 0, 0);
+  border: 1px solid #d1d5db;
   padding: 0.4rem 0.6rem;
   border-radius: 5px;
   cursor: pointer;
@@ -110,7 +110,7 @@
 }
 
 .btn-delete-calendar:hover {
-  background: #b91c1c;
+  background: rgb(238, 222, 198);
 }
 
 .no-data-calendar {

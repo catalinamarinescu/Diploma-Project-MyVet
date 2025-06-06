@@ -15,6 +15,8 @@ const ExceptionForm = ({ date, onSave, onCancel }) => {
     const endTime = formatAsLocal(day, end);
 
     onSave({ StartDateTime: startTime, EndDateTime: endTime, Reason: reason });
+    console.log("🟡 Sloturi după salvare excepție:", { StartDateTime: startTime, EndDateTime: endTime, Reason: reason });
+
   };
 
   const formatAsLocal = (date, time) => {

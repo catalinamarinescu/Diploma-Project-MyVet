@@ -161,7 +161,7 @@ const EmployeesTab = () => {
               <p><strong>Email:</strong> {e.email}</p>
               <p><strong>Phone:</strong> {e.telefon}</p>
               {e.servicii && e.servicii.length > 0 && (
-                <span className='badge2'>{e.servicii.join(', ')}</span>
+                <span className='badge2'>{e.servicii.join(', ')} </span>
               )}
             </div>
             <div className="employees-card-actions">

@@ -73,7 +73,6 @@ const VaccinationTab = ({ petId }) => {
             <th>Date Administered</th>
             <th>Next Due Date</th>
             <th>Status</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -93,7 +92,6 @@ const VaccinationTab = ({ petId }) => {
                   <option value="Upcoming">Upcoming</option>
                 </select>
               </td>
-              <td>Edit</td>
             </tr>
           ))}
         </tbody>

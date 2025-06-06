@@ -2,7 +2,6 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
   background: white;
   color: #1f2937;
   padding-top: 60px;
@@ -99,6 +98,7 @@ body {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background-color: #f3f4f6;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .clinic-profile-form-card textarea {
@@ -116,13 +116,13 @@ body {
   padding: 0.5rem 1rem;
   font-weight: 100px;
   background: transparent;
-  color: #014421;
-  border: none;
+  color: #000000;
+  border: 1px solid #d1d5db;
   cursor: pointer;
 }
 
 .clinic-edit-button:hover {
-  background-color: #d1d5db;
+  background-color: rgb(238, 222, 198);
 }
 
 .clinic-edit-actions {

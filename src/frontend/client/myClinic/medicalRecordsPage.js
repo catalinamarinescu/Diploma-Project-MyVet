@@ -88,7 +88,7 @@ const MedicalRecordsPage = () => {
                   <p><i className="fa fa-envelope"></i> {clinic.EMAIL}</p>
                 </div>
                 <button
-                  className="add-visit-btn"
+                  className="record-btn"
                   onClick={() => setExpandedClinicId(
                     expandedClinicId === clinic.ID_CLINICA ? null : clinic.ID_CLINICA
                   )}

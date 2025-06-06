@@ -40,6 +40,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 0.25rem;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .checkbox-list {
@@ -56,7 +57,7 @@
   font-size: 0.95rem;
 }
 
-.form-actions {
+.form-buttons-clinic {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -65,8 +66,8 @@
 
 .submit-btn {
  background-color: #ffffff;
-  color:#00421f;
-  border-color: #00421f;
+  color:#000000;
+  border: 1px solid #d1d5db;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   cursor: pointer;;
@@ -74,13 +75,17 @@
 
 .cancel-form-btn {
  background-color: #ffffff;
-  color:#00421f;
-  border-color: #00421f;
+  color:#000000;
+  border: 1px solid #d1d5db;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.submit-btn:hover .cancel-form-btn:hover {
-    background-color: #c0bdbd;
+.submit-btn:hover{
+    background-color: rgb(238, 222, 198);
+}
+
+.cancel-form-btn:hover{
+    background-color: rgb(238, 222, 198);
 }

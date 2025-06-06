@@ -28,12 +28,16 @@
 
 .add-btn {
   background: transparent;
-  color: #155724;
+  color: #000000;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.add-btn:hover {
+  color: rgb(1, 61, 9);
 }
 
 .vaccination-table {

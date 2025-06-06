@@ -98,7 +98,7 @@
   background-color: #b1f2ce;
 }
 
-.health-badge {
+.health-badge1 {
   display: inline-block;
   margin-top: 6px;
   padding: 4px 10px;
@@ -106,13 +106,14 @@
   font-weight: 600;
   border-radius: 999px;
   color: #014421;
+  align-self: flex-start;
 }
 
-.health-badge.healthy {
+.health-badge1.healthy {
   background-color: #d3f0da;
 }
 
-.health-badge.unhealthy {
+.health-badge1.unhealthy {
   background-color: #eebcc1;
   color: red;
 }
