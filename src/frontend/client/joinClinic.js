@@ -38,7 +38,7 @@ const JoinClinicForm = ({ clinicId, onClose }) => {
       <div className="modal">
         <h3>Send Join Request</h3>
         <textarea
-          placeholder="Write a short message to the clinic..."
+          placeholder="Please provide your full name, age, and a brief motivation for your application."
           value={joinMessage}
           onChange={(e) => setJoinMessage(e.target.value)}
         />

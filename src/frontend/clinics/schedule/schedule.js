@@ -415,8 +415,8 @@ function parseAsLocal(input) {
       <div className="schedule-header">
         <h2>Schedule Management</h2>
         <div className="action-buttons">
-          <button onClick={() => setShowWorkForm(true)} className="btn-secondary">Configurează program</button>
-          <button onClick={() => setShowExceptionForm(true)} className="btn-secondary">Adaugă excepție</button>
+          <button onClick={() => setShowWorkForm(true)} className="btn-secondary">Set the Work Schedule</button>
+          <button onClick={() => setShowExceptionForm(true)} className="btn-secondary">Add Exception</button>
         </div>
       </div>
 
@@ -468,7 +468,7 @@ function parseAsLocal(input) {
       {showWorkForm && (
         <div className="modal-backdrop" onClick={() => setShowWorkForm(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <h3>Configurează programul de lucru</h3>
+            <h3>Set the Work Schedule</h3>
             <WorkHoursForm
               initialHours={[]}
               onCancel={() => setShowWorkForm(false)}
@@ -481,7 +481,7 @@ function parseAsLocal(input) {
       {showExceptionForm && (
         <div className="modal-backdrop" onClick={() => setShowExceptionForm(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <h3>Adaugă excepție pentru {modalDate || new Date().toISOString().split('T')[0]}</h3>
+            <h3>Add Execption for {modalDate || new Date().toISOString().split('T')[0]}</h3>
             <ExceptionForm
               date={modalDate || new Date().toISOString().split('T')[0]}
               onSave={handleExceptionSave}

@@ -15,7 +15,7 @@ const ServicesTab = () => {
   const token = localStorage.getItem('myvet_token');
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 4;
 
   const fetchServices = async () => {
     try {

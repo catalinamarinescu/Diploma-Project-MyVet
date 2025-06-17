@@ -101,7 +101,7 @@ const ClientProfile = () => {
               <div className="profile-summary">
                 <h3>Account Summary</h3>
                 <p><strong>Pets:</strong> {summary.pets}</p>
-                <p><strong>Future Appointments:</strong> 0</p>
+                <p><strong>Future Appointments:</strong> {summary.appointments}</p>
                 <p><strong>Fav Clinics:</strong> {summary.favorites}</p>
               </div>
             </div>

@@ -28,7 +28,7 @@ const CalendarModal = ({
           <h3>{new Date(modalDate).toLocaleDateString('en-US', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
           })}</h3>
-          <p className="subheader-calendar">Schedule overview for Dr. {doctorName} - General Practice</p>
+          <p className="subheader-calendar">Schedule overview for Dr. {doctorName}</p>
         </div>
 
         <div className="tabs-calendar">
@@ -38,7 +38,7 @@ const CalendarModal = ({
               className={`tab-button-calendar ${activeTab === tab ? 'active' : ''}`}
               onClick={() => setActiveTab(tab)}
             >
-              {tab === 'libere' ? 'Timeline View' : tab === 'exceptii' ? 'Exceptions' : 'Appointments'}
+              {tab === 'libere' ? 'Available Slots' : tab === 'exceptii' ? 'Exceptions' : 'Appointments'}
             </button>
           ))}
         </div>
@@ -54,7 +54,7 @@ const CalendarModal = ({
                 </div>
               ))
             ) : (
-              <p className="no-data-calendar">Nu există sloturi disponibile pentru această zi.</p>
+              <p className="no-data-calendar">0 slots available</p>
             )}
           </div>
           )}
@@ -68,7 +68,7 @@ const CalendarModal = ({
                     {parseAsLocal(exc.EndDateTime)?.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' })}
                   </strong>
                   <span>{exc.REASON}</span>
-                  <button onClick={() => onDeleteException(exc.ID)} className="btn-delete-calendar">Șterge</button>
+                  <button onClick={() => onDeleteException(exc.ID)} className="btn-delete-calendar">Delete</button>
                 </div>
               )) : <p className="no-data-calendar">No exceptions set for this date.</p>}
             </div>
@@ -86,7 +86,7 @@ const CalendarModal = ({
     Extra: {p.extraServices || '—'}<br />
     {p.notes && <>Notes: {p.notes}</>}
                   </div>
-                  <button onClick={() => onDeleteAppointment?.(p.id)} className="btn-delete-calendar">Șterge</button>
+                  <button onClick={() => onDeleteAppointment?.(p.id)} className="btn-delete-calendar">Delete</button>
                 </div>
               )) : <p className="no-data-calendar">No appointments found.</p>}
             </div>

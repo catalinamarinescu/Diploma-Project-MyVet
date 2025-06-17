@@ -98,13 +98,7 @@
 }
 
 .employees-badge {
-  background-color: #cdedd7;
-  color: #014421;
-  padding: 0.3rem 0.8rem;
-  border: 1px solid #cce3d6;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  margin-top: 10px;
+  color: #a3a3a3;
 }
 
 .badge2 {
@@ -215,7 +209,11 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
-
+.badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
 .badge2 {
   background-color: #e6f5ea;
   color: #00421f;

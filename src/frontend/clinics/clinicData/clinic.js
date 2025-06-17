@@ -158,6 +158,15 @@ const ClinicDashboard = () => {
                     onChange={(e) => setFormValues({ ...formValues, longitudine: e.target.value })}
                   />
                 </div>
+                <div>
+                  <label>Adress:</label>
+                  <input
+                    type="text"
+                    disabled={!editMode}
+                    value={formValues.adresa}
+                    onChange={(e) => setFormValues({ ...formValues, adresa: e.target.value })}
+                  />
+                </div>
               </div>
 
               {editMode && (

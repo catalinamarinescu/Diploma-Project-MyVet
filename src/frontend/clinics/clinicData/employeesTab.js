@@ -161,8 +161,14 @@ const EmployeesTab = () => {
               <p><strong>Email:</strong> {e.email}</p>
               <p><strong>Phone:</strong> {e.telefon}</p>
               {e.servicii && e.servicii.length > 0 && (
-                <span className='badge2'>{e.servicii.join(', ')} </span>
-              )}
+              <div className="badge-container">
+                {e.servicii.map((serviciu, index) => (
+                  <span key={index} className="badge2">
+                    {serviciu}
+                  </span>
+                ))}
+              </div>
+            )}
             </div>
             <div className="employees-card-actions">
               <button onClick={() => handleModalOpen(e)}>Edit</button>
