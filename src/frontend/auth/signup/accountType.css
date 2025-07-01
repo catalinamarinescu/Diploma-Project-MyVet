@@ -1,5 +1,12 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .account-type-page {
   padding: 40px 20px;
+  position: relative;
   background: linear-gradient(to right, #ecfdf5, #eef7ff);
   min-height: 100vh;
   font-family: sans-serif;

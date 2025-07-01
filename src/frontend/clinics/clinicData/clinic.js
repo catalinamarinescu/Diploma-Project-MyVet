@@ -30,13 +30,13 @@ const ClinicDashboard = () => {
         const data = await res.json();
         setClinicData(data);
         setFormValues({
-          name: data.name,
-          descriere: data.descriere,
-          latitudine: data.latitudine,
-          longitudine: data.longitudine,
-          adresa: data.adresa
-        });
-      } catch (err) {
+            name: data.name || '',
+            descriere: data.descriere || '',
+            latitudine: data.latitudine?.toString() || '',
+            longitudine: data.longitudine?.toString() || '',
+            adresa: data.adresa || ''
+          });
+        } catch (err) {
         console.error('Eroare la preluare:', err);
       }
     };
@@ -82,13 +82,13 @@ const ClinicDashboard = () => {
     }
 
     try {
-      await fetch('http://localhost:5000/api/clinic/images', {
+      await fetch('http://localhost:5000/api/images', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData
       });
 
-      const res = await fetch('http://localhost:5000/api/clinic/images', {
+      const res = await fetch('http://localhost:5000/api/images', {
         headers: { Authorization: `Bearer ${token}` }
       });
 

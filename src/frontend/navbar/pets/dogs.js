@@ -7,17 +7,23 @@ const Dogs = () => {
   const [dogs, setDogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("az");
+  const [loadTime, setLoadTime] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const dogsPerPage = 8;
 
   useEffect(() => {
+    const start = performance.now();
     fetch("https://api.thedogapi.com/v1/breeds", {
       headers: {
         "x-api-key": "live_bRwnTjFBkF8LpACwVXiO9nw8aKBpIgtIKuCvDXUHeZlyrDpyFfXvg209xYTaiJxt"
       }
     })
       .then((res) => res.json())
-      .then((data) => setDogs(data))
+      .then((data) => { const end = performance.now();
+      const duration = (end - start).toFixed(2);
+      console.log(`Timp încărcare The Dog API: ${duration} ms`);
+      setLoadTime(duration);
+      setDogs(data)})
       .catch((err) => console.error("Error fetching dog data:", err));
   }, []);
 

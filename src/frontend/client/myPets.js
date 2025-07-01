@@ -99,7 +99,14 @@ const MyPets = () => {
           </div>
         ))}
 
-        <div className="add-pet-box" onClick={() => setShowForm(true)}>
+           <div
+            className="add-pet-box"
+            onClick={() => {
+              setForm({ id: null, nume: '', tip: '', rasa: '', varsta: '' });
+              setPetImage(null);
+              setShowForm(true);
+            }}
+          >
           <div className="add-icon-pet">🐾</div>
           <h4>Add a New Pet</h4>
           <p>Register your pet to manage their health records</p>

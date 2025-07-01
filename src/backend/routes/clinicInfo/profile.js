@@ -20,7 +20,21 @@ router.get('/clinic/profile', clinicOnly, async (req, res) => {
         FROM CLINIC_INFO
         WHERE ID_CLINICA = @ID_CLINICA
       `);
+
     const info = infoRes.recordset[0];
+
+    if (!info) {
+      return res.status(200).json({
+        name: '',
+        descriere: '',
+        latitudine: '',
+        longitudine: '',
+        adresa: '',
+        imagini: [],
+        servicii: [],
+        angajati: []
+      });
+    }
 
     // 2. Imagini
     const imgRes = await pool.request()
@@ -124,34 +138,63 @@ router.put('/clinic/profile', clinicOnly, async (req, res) => {
   try {
     const pool = await poolPromise;
 
-    await pool.request()
+    // Verificăm dacă profilul există
+    const check = await pool.request()
       .input('ID_CLINICA', clinicID)
-      .input('NAME', name)
-      .input('DESCRIERE', descriere)
-      .input('LATITUDINE', latitudine)
-      .input('LONGITUDINE', longitudine)
-      .input('ADRESA', adresa)
       .query(`
-        UPDATE CLINIC_INFO
-        SET NAME = @NAME,
-            DESCRIERE = @DESCRIERE,
-            LATITUDINE = @LATITUDINE,
-            LONGITUDINE = @LONGITUDINE,
-            ADRESA = @ADRESA
+        SELECT COUNT(*) AS count
+        FROM CLINIC_INFO
         WHERE ID_CLINICA = @ID_CLINICA
       `);
 
-      await addClinicToArcGIS({
-        lat: latitudine,
-        lon: longitudine,
-        name,
-        descriere: descriere,
-        adresa: adresa
-      });  
+    const profilExistent = check.recordset[0].count > 0;
 
-    res.status(200).json({ message: 'Profil actualizat cu succes!' });
+    if (profilExistent) {
+      // 🟢 UPDATE
+      await pool.request()
+        .input('ID_CLINICA', clinicID)
+        .input('NAME', name)
+        .input('DESCRIERE', descriere)
+        .input('LATITUDINE', latitudine)
+        .input('LONGITUDINE', longitudine)
+        .input('ADRESA', adresa)
+        .query(`
+          UPDATE CLINIC_INFO
+          SET NAME = @NAME,
+              DESCRIERE = @DESCRIERE,
+              LATITUDINE = @LATITUDINE,
+              LONGITUDINE = @LONGITUDINE,
+              ADRESA = @ADRESA
+          WHERE ID_CLINICA = @ID_CLINICA
+        `);
+    } else {
+      // 🆕 INSERT
+      await pool.request()
+        .input('ID_CLINICA', clinicID)
+        .input('NAME', name)
+        .input('DESCRIERE', descriere)
+        .input('LATITUDINE', latitudine)
+        .input('LONGITUDINE', longitudine)
+        .input('ADRESA', adresa)
+        .query(`
+          INSERT INTO CLINIC_INFO (ID_CLINICA, NAME, DESCRIERE, LATITUDINE, LONGITUDINE, ADRESA)
+          VALUES (@ID_CLINICA, @NAME, @DESCRIERE, @LATITUDINE, @LONGITUDINE, @ADRESA)
+        `);
+    }
+
+    // Opțional – sincronizare cu ArcGIS
+    await addClinicToArcGIS({
+      lat: parseFloat(latitudine),
+      lon: parseFloat(longitudine),
+      name,
+      descriere,
+      adresa
+    });
+
+    res.status(200).json({ message: profilExistent ? 'Profil actualizat.' : 'Profil creat.' });
+
   } catch (err) {
-    console.error('Eroare la actualizare profil:', err);
+    console.error('Eroare la salvarea profilului:', err);
     res.status(500).json({ error: 'Eroare server' });
   }
 });

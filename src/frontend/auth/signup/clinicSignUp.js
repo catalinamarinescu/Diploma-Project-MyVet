@@ -32,10 +32,9 @@ const ClinicSignUp = () => {
 
   return (
     <div className="signup-page">
-      <Link to="/accountType" className="back-btn">← Back to Account Type</Link>
+      <Link to="/accountType" className="back-btn1">← Back to Account Type</Link>
 
       <div className="signup-left">
-        <span className="badge">📄 Veterinary Clinic</span>
         <h1>Join MyVet's Professional Network</h1>
         <p>
           Connect with pet owners, manage your practice efficiently, and grow your

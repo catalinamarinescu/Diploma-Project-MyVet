@@ -76,13 +76,13 @@ const MyClinicPage = () => {
        <div style={{ flex: 1 }}>
       <div className="myclinic-header">
         <div>
+           <div className="myclinic-header-buttons">
+              <Link to="/client/appointments" className="schedule-btn-clinic">Schedule Appointment</Link>
+          </div>
           <h1>{clinic.NAME}</h1>
           <p><strong>{clinic.ADDRESS}</strong></p>
           <p>{clinic.DESCRIPTION}</p>
           <h2>Here you can register your pet as a patient to our clinic!</h2>
-        </div>
-        <div>
-          <Link to="/client/appointments" className="schedule-btn-clinic">Schedule Appointment</Link>
         </div>
       </div>
 

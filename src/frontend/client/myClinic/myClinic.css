@@ -166,3 +166,9 @@ body {
 .back-btn-myclinic:hover {
   background-color:  rgb(238, 222, 198);
 }
+
+.myclinic-header-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: right;
+}

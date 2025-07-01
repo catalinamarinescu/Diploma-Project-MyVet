@@ -1,12 +1,19 @@
+html, body, #root {
+  margin-top: 0px;
+  padding: 0;
+  height: 100%;
+}
+
 .signup-page {
   display: flex;
+  position: relative;
   flex-wrap: wrap;
-  min-height: 90vh;
+  min-height: 100vh;
   background: linear-gradient(to right, #f0fdf4, #eef7ff);
   padding: 30px 20px 40px;
 }
 
-.back-btn {
+.back-btn1 {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -14,7 +21,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #014421;
-  background-color: #f6f6f6;
+  background-color: transparent;
   padding: 8px 14px;
   border: none;
   z-index: 1000;

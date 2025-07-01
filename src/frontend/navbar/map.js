@@ -12,7 +12,7 @@ const Map = () => {
 
   useEffect(() => {
     let view;
-
+    const loadStart = performance.now();
     loadModules(["esri/WebMap", "esri/views/MapView"], { css: true })
       .then(([WebMap, MapView]) => {
         const webmap = new WebMap({
@@ -30,7 +30,10 @@ const Map = () => {
 
         setView(view);
         view.when(() => {
+           const loadEnd = performance.now();
+          const loadDuration = loadEnd - loadStart;
           const layer = view.map.allLayers.items.find(l => l.type === "feature");
+          console.log(`⏱️ Harta s-a încărcat în ${loadDuration.toFixed(2)} ms`);
           setLayer(layer);
           if (layer) {
             layer.refresh();
