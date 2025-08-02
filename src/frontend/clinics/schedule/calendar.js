@@ -80,11 +80,11 @@ const CalendarModal = ({
                 <div key={i} className="list-item-calendar">
                   <div>
                      <strong>{p.time}</strong> – {p.petName} ({p.ownerName})<br />
-    Tel: {p.phone}<br />
-    Status: {p.status || 'Nespecificat'}<br />
-    Tip programare: <em>{p.appointmentType || '—'}</em><br />
-    Extra: {p.extraServices || '—'}<br />
-    {p.notes && <>Notes: {p.notes}</>}
+                      Tel: {p.phone}<br />
+                      Status: {p.status || 'Nespecificat'}<br />
+                      Tip programare: <em>{p.appointmentType || '—'}</em><br />
+                      Extra: {p.extraServices || '—'}<br />
+                      {p.notes && <>Notes: {p.notes}</>}
                   </div>
                   <button onClick={() => onDeleteAppointment?.(p.id)} className="btn-delete-calendar">Delete</button>
                 </div>

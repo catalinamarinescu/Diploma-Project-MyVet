@@ -93,23 +93,6 @@ router.get('/angajati/:id/exceptions', clinicOnly, async (req, res) => {
   }
 });
 
-// POST add a new exception
-// 1. First, revert your frontend parseLocalDate function back to the original:
-const parseLocalDate = (str) => {
-  try {
-    if (!str || typeof str !== 'string') return null;
-    const cleaned = str.replace('T', ' ').replace('Z', '').split('.')[0];
-    const [d, t] = cleaned.split(' ');
-    const [y, m, day] = d.split('-').map(Number);
-    const [h, min] = t.split(':').map(Number);
-    return new Date(y, m - 1, day, h, min);
-  } catch {
-    return null;
-  }
-};
-
-// 2. Update your backend workingHours.js - fix the POST exceptions endpoint:
-// REMOVE the toUTC function entirely and update the POST route:
 
 router.post('/angajati/:id/exceptions', clinicOnly, async (req, res) => {
   const angajatId = parseInt(req.params.id);
@@ -220,33 +203,33 @@ router.get('/angajati/:id/timeslots', clinicOnly, async (req, res) => {
         .input('DATE', dateStr)
         .query(`
           SELECT
-  P.ID,
-  P.DATA_ORA_INCEPUT AS [start],
-  P.DATA_ORA_SFARSIT AS [end],
-  PETS.NUME AS PetName,
-  CL.FIRST_NAME + ' ' + CL.LAST_NAME AS OwnerName,
-  CL.PHONE AS Phone,
-  P.STATUS AS AppointmentStatus,
-  P.NOTITE AS Notes,
+          P.ID,
+          P.DATA_ORA_INCEPUT AS [start],
+          P.DATA_ORA_SFARSIT AS [end],
+          PETS.NUME AS PetName,
+          CL.FIRST_NAME + ' ' + CL.LAST_NAME AS OwnerName,
+          CL.PHONE AS Phone,
+          P.STATUS AS AppointmentStatus,
+          P.NOTITE AS Notes,
 
-  -- Tip programare
-  (
-    SELECT TOP 1 S.DENUMIRE_SERVICIU
-    FROM PROGRAMARI_SERVICII PS
-    JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
-    WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU = 'Appointment Type'
-  ) AS AppointmentType,
+          -- Tip programare
+          (
+            SELECT TOP 1 S.DENUMIRE_SERVICIU
+            FROM PROGRAMARI_SERVICII PS
+            JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+            WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU = 'Appointment Type'
+          ) AS AppointmentType,
 
-  (
-    SELECT STRING_AGG(S.DENUMIRE_SERVICIU, ', ')
-    FROM PROGRAMARI_SERVICII PS
-    JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
-    WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU != 'Appointment Type'
-  ) AS ExtraServices
-          FROM PROGRAMARI P
-          JOIN PETS ON P.ID_PET = PETS.ID
-          JOIN CLIENT_PROFILE CL ON PETS.ID_PET_OWNER = CL.ID
-          WHERE P.ID_MEDIC = @ID_MEDIC AND CAST(P.DATA_ORA_INCEPUT AS DATE) = @DATE
+          (
+            SELECT STRING_AGG(S.DENUMIRE_SERVICIU, ', ')
+            FROM PROGRAMARI_SERVICII PS
+            JOIN SERVICII S ON S.ID = PS.ID_SERVICIU
+            WHERE PS.ID_PROGRAMARE = P.ID AND S.TIP_SERVICIU != 'Appointment Type'
+          ) AS ExtraServices
+                  FROM PROGRAMARI P
+                  JOIN PETS ON P.ID_PET = PETS.ID
+                  JOIN CLIENT_PROFILE CL ON PETS.ID_PET_OWNER = CL.ID
+                  WHERE P.ID_MEDIC = @ID_MEDIC AND CAST(P.DATA_ORA_INCEPUT AS DATE) = @DATE
 
         `),
       pool.request()
@@ -264,28 +247,27 @@ router.get('/angajati/:id/timeslots', clinicOnly, async (req, res) => {
     ]);
 
    const parseDT = s => {
-    if (!s) return new Date();
+      if (!s) return new Date();
 
-    let dt;
-    if (s instanceof Date) {
-      dt = s;
-    } else if (typeof s === 'string') {
-      const cleaned = s.replace('T', ' ').replace('Z', '').split('.')[0];
-      const [datePart, timePart] = cleaned.split(' ');
-      if (datePart && timePart) {
-        const [y, m, d] = datePart.split('-').map(Number);
-        const [h, min] = timePart.split(':').map(Number);
-        dt = new Date(y, m - 1, d, h, min);
+      let dt;
+      if (s instanceof Date) {
+        dt = s;
+      } else if (typeof s === 'string') {
+        const cleaned = s.replace('T', ' ').replace('Z', '').split('.')[0];
+        const [datePart, timePart] = cleaned.split(' ');
+        if (datePart && timePart) {
+          const [y, m, d] = datePart.split('-').map(Number);
+          const [h, min] = timePart.split(':').map(Number);
+          dt = new Date(y, m - 1, d, h, min);
+        }
       }
-    }
 
-    // rotunjim milisecundele/secundele
-    if (dt instanceof Date && !isNaN(dt)) {
-      return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), 0, 0);
-    }
+      if (dt instanceof Date && !isNaN(dt)) {
+        return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), 0, 0);
+      }
 
-    return new Date(s);
-  };
+      return new Date(s);
+    };
     
     const overlaps = (aStart, aEnd, bStart, bEnd) => aStart < bEnd && aEnd > bStart;
 
@@ -327,13 +309,11 @@ router.get('/angajati/:id/timeslots', clinicOnly, async (req, res) => {
       for (const r of exceptions.recordset) {
         const start = parseDT(r.start);
         const end = parseDT(r.end);
-        const rStart = parseDT(r.start);
-        const rEnd = parseDT(r.end);
         if (overlaps(slotStart, slotEnd, start, end)) {
           slot.type = 'exception';
           slot.reason = r.REASON || 'Blocare';
           slot.start = r.start;
-          slot.end = r.end;     // 👈 NECESAR
+          slot.end = r.end;
           slot.id = r.ID;
           matched = true;
           break;

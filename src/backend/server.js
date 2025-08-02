@@ -23,9 +23,9 @@ const medrecRoute = require('./routes/clinicInfo/medicalRecord');
 const myClinicRoute = require('./routes/client/myClinic');
 const appointmentsRoute = require('./routes/client/appointments');
 const workingHoursRoute = require('./routes/clinicInfo/workingHours');
-// Middleware
-app.use(cors()); // permite cereri de pe alte porturi (ex: React)
-app.use(express.json()); // permite parsarea JSON-ului din request body
+
+app.use(cors());
+app.use(express.json());
 
 app.use('/api', authRoutes);
 app.use('/api', loginRoutes);
